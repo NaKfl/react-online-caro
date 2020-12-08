@@ -3,26 +3,26 @@ import { Drawer } from 'antd';
 import UserItem from 'app/components/UserItem';
 import PropTypes from 'prop-types';
 
-export type UserItemType = {
+export type UserListType = {
+  userList: Array<PropTypes.object>,
   visible: Boolean,
   onClose: PropTypes.func,
 };
 
-export const UserList = (props: UserItemType) => {
-  const { visible, onClose } = props;
+export const UserList = (props: UserListType) => {
+  const { visible, onClose, userList } = props;
   return (
     <>
       <Drawer
         title="Basic Drawer"
         placement="right"
-        // closable={false}
+        closable={false}
         onClose={onClose}
         visible={visible}
       >
-        <UserItem></UserItem>
-        <UserItem></UserItem>
-        <UserItem></UserItem>
-        <UserItem></UserItem>
+        {userList.map((item, index) => {
+          return <UserItem key={index} user={item}></UserItem>;
+        })}
       </Drawer>
     </>
   );

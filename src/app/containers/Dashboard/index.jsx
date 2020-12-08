@@ -6,11 +6,16 @@ import { useHooks } from './hooks';
 
 const Dashboard = props => {
   const { states, selectors, table, handlers } = useHooks(props);
+  const { userListOnline } = selectors;
   const { toggleUserList } = states;
   const { handleOnClose, handleToggle } = handlers;
   return (
     <CommonLayout>
-      <UserList visible={toggleUserList} onClose={handleOnClose}></UserList>
+      <UserList
+        userList={userListOnline}
+        visible={toggleUserList}
+        onClose={handleOnClose}
+      ></UserList>
       <StyledButton
         type="primary"
         onClick={() => {
