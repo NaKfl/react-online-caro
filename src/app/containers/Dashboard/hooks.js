@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import socket from 'config/socket';
+import socket from 'configs/socket';
 export const useHooks = () => {
   const [toggleUserList, setToggleUserList] = useState(false);
   const [userListOnline, setUserListOnline] = useState([]);
