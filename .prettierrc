@@ -6,5 +6,6 @@
   "singleQuote": true,
   "trailingComma": "all",
   "arrowParens": "avoid",
-  "eol": "lf"
+  "eol": "lf",
+  "endOfLine": "auto"
 }
