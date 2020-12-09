@@ -14,7 +14,7 @@ const UserItem = (props: UserItemType) => {
     <div className="user-item">
       <Badge status="success" />
       <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-      <Text>{user.userName}</Text>
+      <Text>{user.name}</Text>
     </div>
   );
 };

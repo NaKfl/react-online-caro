@@ -3,7 +3,7 @@ import request, { handleGeneralError } from './index';
 
 export const login = payload => {
   return request(BASE_URL, {
-    url: 'auth/login',
+    url: 'api/user/',
     method: 'POST',
     data: {
       ...payload,
@@ -16,7 +16,7 @@ export const login = payload => {
 
 export const register = payload => {
   return request(BASE_URL, {
-    url: 'auth/register',
+    url: 'api/user/register',
     method: 'POST',
     data: {
       ...payload,

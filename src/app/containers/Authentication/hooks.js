@@ -8,9 +8,11 @@ import {
   makeSelectIsAuthenticated,
   makeSelectAuthenticationStatus,
   makeSelectAuthenticationError,
+  makeSelectAuthenticationInfo,
 } from './selectors';
 import { ACTION_STATUS } from 'utils/constants';
 import { notifyError, notifySuccess } from 'utils/notify';
+import socket from 'configs/socket';
 
 export const useHooks = () => {
   const history = useHistory();
@@ -20,13 +22,19 @@ export const useHooks = () => {
   );
   const isAuthenticated = useSelector(makeSelectIsAuthenticated);
   const status = useSelector(makeSelectAuthenticationStatus);
+  const info = useSelector(makeSelectAuthenticationInfo);
 
-  // TODO
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     history.push('/dashboard');
-  //   }
-  // }, [isAuthenticated, history]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/dashboard');
+    }
+  }, [isAuthenticated, history]);
+
+  useEffect(() => {
+    if (status === ACTION_STATUS.SUCCESS) {
+      socket.emit('client-login', { user: info });
+    }
+  }, [info, status]);
 
   const onFinish = useCallback(
     values => {
@@ -82,15 +90,16 @@ export const useLogout = () => {
   const { pathname } = useLocation();
   const { logout } = useActions({ logout: actions.logout });
   const isAuthenticated = useSelector(makeSelectIsAuthenticated);
+  const info = useSelector(makeSelectAuthenticationInfo);
 
-  // TODO
-  // useEffect(() => {
-  //   if (!pathname.includes('/login') && !isAuthenticated) {
-  //     history.push('/login');
-  //   }
-  // }, [isAuthenticated, history, pathname]);
+  useEffect(() => {
+    if (!pathname.includes('/login') && !isAuthenticated) {
+      history.push('/login');
+    }
+  }, [isAuthenticated, history, pathname]);
 
   const onLogout = useCallback(() => {
+    socket.emit('client-logout', { user: info });
     logout();
   }, [logout]);
 
