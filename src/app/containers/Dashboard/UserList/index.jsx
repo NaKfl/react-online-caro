@@ -20,8 +20,8 @@ export const UserList = (props: UserListType) => {
         onClose={onClose}
         visible={visible}
       >
-        {userList.map((item, index) => {
-          return <UserItem key={index} user={item}></UserItem>;
+        {userList.map(item => {
+          return <UserItem key={item.id} user={item}></UserItem>;
         })}
       </Drawer>
     </>

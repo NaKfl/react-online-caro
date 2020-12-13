@@ -4,7 +4,7 @@ import { getAccessToken } from 'utils/localStorageUtils';
 
 const createClient = baseURL =>
   axios.create({
-    baseURL,
+    baseURL: `${baseURL}/api`,
     headers: {
       'Content-Type': 'application/json',
       Authorization: getAccessToken() ? `Bearer ${getAccessToken()}` : '',
