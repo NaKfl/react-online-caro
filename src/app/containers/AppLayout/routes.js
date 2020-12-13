@@ -1,12 +1,17 @@
 import { Dashboard } from 'app/containers/Dashboard/Loadable';
 import { Login } from 'app/containers/Login/Loadable';
 import { Register } from 'app/containers/Register/Loadable';
-
+import { Game } from 'app/containers/Game/Loadable';
 export const privateRoutes = [
   {
     path: '/',
     component: Dashboard,
     key: 'home',
+  },
+  {
+    path: '/game',
+    component: Game,
+    key: 'game',
   },
 ];
 
