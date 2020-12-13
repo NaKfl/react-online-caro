@@ -5,6 +5,7 @@ export const useHooks = () => {
   const [userListOnline, setUserListOnline] = useState([]);
 
   socket.on('onlineUser', res => {
+    console.log('res', res);
     setUserListOnline(res);
   });
 

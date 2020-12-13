@@ -17,3 +17,8 @@ export const makeSelectAuthenticationError = createSelector(
   selectAuthenticationState,
   authentication => get('error', authentication),
 );
+
+export const makeSelectAuthenticationInfo = createSelector(
+  selectAuthenticationState,
+  authentication => get('info', authentication),
+);
