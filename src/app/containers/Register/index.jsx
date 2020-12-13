@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { useInjectSaga, useInjectReducer } from 'utils/reduxInjectors';
 import saga from './saga';
-import useHooks, { useMessage } from './hooks';
+import useHooks from './hooks';
 import { sliceKey, reducer } from './slice';
 import { Link } from 'react-router-dom';
 import { StyledRegister } from './styles';
@@ -16,33 +16,33 @@ import {
   CheckSquareOutlined,
 } from '@ant-design/icons';
 import { ACTION_STATUS } from 'utils/constants';
+import { useTranslation } from 'react-i18next';
 
-export const Register = () => {
+export const Register = memo(() => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
   const { handlers, selectors } = useHooks();
-  const { onFinish, onFinishFailed } = handlers;
+  const { onFinish } = handlers;
   const { status } = selectors;
-  useMessage();
+  const { t } = useTranslation();
 
   return (
     <StyledRegister>
-      <Form
-        className="register-form"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Title className="register-form-title">Register</Title>
+      <Form className="register-form" onFinish={onFinish}>
+        <Title className="register-form-title">{t('Register.title')}</Title>
         <Form.Item
           name="name"
           rules={[
             {
               required: true,
-              message: 'Please input your Name!',
+              message: t('Register.messageEmptyName'),
             },
           ]}
         >
-          <Input prefix={<UserOutlined />} placeholder="Name" />
+          <Input
+            prefix={<UserOutlined />}
+            placeholder={t('Register.labelName')}
+          />
         </Form.Item>
 
         <Form.Item
@@ -50,15 +50,18 @@ export const Register = () => {
           rules={[
             {
               type: 'email',
-              message: 'The input is not valid E-mail!',
+              message: t('Register.messageInvalidEmail'),
             },
             {
               required: true,
-              message: 'Please input your Email!',
+              message: t('Register.messageEmptyEmail'),
             },
           ]}
         >
-          <Input prefix={<MailOutlined />} placeholder="Email" />
+          <Input
+            prefix={<MailOutlined />}
+            placeholder={t('Register.labelEmail')}
+          />
         </Form.Item>
 
         <Form.Item
@@ -67,15 +70,15 @@ export const Register = () => {
           rules={[
             {
               required: true,
-              message: 'Please input your Password!',
+              message: t('Register.messageEmptyPassword'),
             },
-            { min: 6, message: 'Must be minimum 6 characters!' },
+            { min: 6, message: t('Register.messageMinPassword') },
           ]}
         >
           <Input.Password
             prefix={<LockOutlined />}
             type="password"
-            placeholder="Password"
+            placeholder={t('Register.labelPassword')}
           />
         </Form.Item>
 
@@ -86,7 +89,7 @@ export const Register = () => {
           rules={[
             {
               required: true,
-              message: 'Please confirm your Password!',
+              message: t('Register.messageEmptyConfirmPassword'),
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -94,7 +97,9 @@ export const Register = () => {
                   return Promise.resolve();
                 }
 
-                return Promise.reject('Passwords do not match!');
+                return Promise.reject(
+                  t('Register.messageInvalidConfirmPassword'),
+                );
               },
             }),
           ]}
@@ -102,7 +107,7 @@ export const Register = () => {
           <Input.Password
             prefix={<CheckSquareOutlined />}
             type="password"
-            placeholder="Confirm Password"
+            placeholder={t('Register.labelConfirmPassword')}
           />
         </Form.Item>
 
@@ -112,16 +117,15 @@ export const Register = () => {
             htmlType="submit"
             loading={status === ACTION_STATUS.PENDING}
           >
-            Register
+            {t('Register.btnRegister')}
           </Button>
         </Form.Item>
         <span className="register-form-login">
-          Or
-          <Link to="/login"> Login </Link>
+          <Link to="/login"> {t('Register.linkLogin')}</Link>
         </span>
       </Form>
     </StyledRegister>
   );
-};
+});
 
-export default memo(Register);
+export default Register;

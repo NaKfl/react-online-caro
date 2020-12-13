@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import set from 'lodash/fp/set';
 import flow from 'lodash/fp/flow';
 import { ACTION_STATUS } from 'utils/constants';
-
 export const initialState = {
   status: '',
   error: null,
@@ -28,10 +27,6 @@ const registerSlice = createSlice({
         set('error', action.payload),
         set('status', ACTION_STATUS.FAILED),
       )(state);
-    },
-
-    reset(state) {
-      return set('error', null), set('status', '')(state);
     },
   },
 });

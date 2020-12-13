@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
-import { StyledLayout, StyledContent } from './styles';
+import { StyledLayout, StyledContent } from '../styles';
 import Header from './Header';
-import Footer from './Footer';
+import Footer from '../Footer';
 
-export const CommonLayout = ({ children }) => (
+export const PrivateLayout = ({ children }) => (
   <StyledLayout>
     <Header />
     <StyledContent>{children}</StyledContent>
@@ -11,4 +11,4 @@ export const CommonLayout = ({ children }) => (
   </StyledLayout>
 );
 
-export default memo(CommonLayout);
+export default memo(PrivateLayout);

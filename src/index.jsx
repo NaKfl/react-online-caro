@@ -8,15 +8,17 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { App } from 'app';
+import Popup from 'app/containers/Popup';
 import { HelmetProvider } from 'react-helmet-async';
 import { configureAppStore } from 'store/configureStore';
 
-//TODO
-// import { isAuthenticated } from 'utils/localStorageUtils';
+import { isAuthenticated } from 'utils/localStorageUtils';
+import './locales/i18n';
+
 const initialState = {
-  //   authentication: {
-  //     isAuthenticated: isAuthenticated(),
-  //   },
+  authentication: {
+    isAuthenticated: isAuthenticated(),
+  },
 };
 
 const store = configureAppStore(initialState);
@@ -27,6 +29,7 @@ const ConnectedApp = ({ Component }) => (
     <HelmetProvider>
       <React.StrictMode>
         <Component />
+        <Popup />
       </React.StrictMode>
     </HelmetProvider>
   </Provider>

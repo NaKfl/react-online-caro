@@ -1,9 +1,9 @@
-import { WEB_API as BASE_URL } from 'configs';
+import { WEB_API } from 'configs';
 import request, { handleGeneralError } from './index';
 
 export const login = payload => {
-  return request(BASE_URL, {
-    url: 'api/user/',
+  return request(WEB_API, {
+    url: 'user',
     method: 'POST',
     data: {
       ...payload,
@@ -15,8 +15,8 @@ export const login = payload => {
 };
 
 export const register = payload => {
-  return request(BASE_URL, {
-    url: 'api/user/register',
+  return request(WEB_API, {
+    url: 'user/register',
     method: 'POST',
     data: {
       ...payload,
@@ -28,7 +28,7 @@ export const register = payload => {
 };
 
 export const google = payload => {
-  return request(BASE_URL, {
+  return request(WEB_API, {
     url: 'auth/google',
     method: 'POST',
     data: {
@@ -41,7 +41,7 @@ export const google = payload => {
 };
 
 export const facebook = payload => {
-  return request(BASE_URL, {
+  return request(WEB_API, {
     url: 'auth/facebook',
     method: 'POST',
     data: {
