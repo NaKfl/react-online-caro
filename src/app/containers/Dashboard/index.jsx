@@ -4,7 +4,7 @@ import { StyledButton, StyledDashboard } from './styles';
 import { useHooks } from './hooks';
 
 export const Dashboard = props => {
-  const { states, selectors, table, handlers } = useHooks(props);
+  const { states, selectors, handlers } = useHooks(props);
   const { userListOnline } = selectors;
   const { toggleUserList } = states;
   const { handleOnClose, handleToggle } = handlers;

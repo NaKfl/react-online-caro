@@ -1,42 +1,35 @@
 import moment from 'moment';
 import isNil from 'lodash/fp/isNil';
-const AUTH_INFO_KEY = 'AuthenticationInfo';
+import get from 'lodash/fp/get';
+import { AUTH_INFO_KEY } from './constants';
 
 export const storeAuthInfo = authInfo => {
   localStorage.setItem(AUTH_INFO_KEY, JSON.stringify(authInfo));
 };
 
 export const isValidAuthInfo = authInfo => {
-  const { expiresIn } = authInfo.token;
+  const expiresIn = get('token.expiresIn', authInfo);
   return moment(expiresIn) >= moment();
 };
 
 export const getAuthInfo = () => {
-  try {
-    const authInfo = JSON.parse(localStorage.getItem(AUTH_INFO_KEY));
-    if (!isNil(authInfo) && isValidAuthInfo(authInfo)) {
-      return authInfo;
-    }
-    return null;
-  } catch (error) {
-    console.log('Error: ', error);
-    return null;
+  const authInfo = JSON.parse(localStorage.getItem(AUTH_INFO_KEY));
+  if (!isNil(authInfo) && isValidAuthInfo(authInfo)) {
+    return authInfo;
   }
+  return null;
 };
 
 export const getAccessToken = () => {
-  const authInfo = getAuthInfo();
-  return !isNil(authInfo) ? authInfo.token.accessToken : '';
+  return getAuthInfo()?.token?.accessToken;
 };
 
 export const getRefreshToken = () => {
-  const authInfo = getAuthInfo();
-  return !isNil(authInfo) ? authInfo.token.refreshToken : '';
+  return getAuthInfo()?.token?.refreshToken;
 };
 
 export const getEmailUser = () => {
-  const authInfo = getAuthInfo();
-  return !isNil(authInfo) ? authInfo.user.email : '';
+  return getAuthInfo()?.user?.email;
 };
 
 export const isAuthenticated = () => {

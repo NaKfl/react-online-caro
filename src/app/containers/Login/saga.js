@@ -11,7 +11,7 @@ function* loginTask(action) {
   const { response, error } = yield call(loginAPI, action.payload);
   if (response) {
     yield call(storeAuthInfo, response.result);
-    yield put(actions.loginSuccess(response));
+    yield put(actions.loginSuccess());
   } else {
     yield put(actions.loginFailed(error.data));
   }
@@ -36,6 +36,8 @@ function* loginServiceTask(action) {
       receivedData = yield call(loginServiceFacebookAPI, action.payload.data);
       break;
     }
+    default:
+      break;
   }
   const { response, error } = receivedData;
   if (response) {

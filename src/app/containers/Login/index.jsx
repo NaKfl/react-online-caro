@@ -1,48 +1,42 @@
-import React, { memo } from 'react';
-import { useInjectSaga } from 'utils/reduxInjectors';
-import saga from './saga';
-import useHooks, { useMessage } from './hooks';
-import { sliceKey } from './slice';
-import { Link } from 'react-router-dom';
-import { ACTION_STATUS } from 'utils/constants';
-import {
-  StyledLogin,
-  StyledGoogleButton,
-  StyledFacebookButton,
-} from './styles';
-import Form from 'app/components/Form';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import Button from 'app/components/Button';
+import Form from 'app/components/Form';
 import Input from 'app/components/Input';
 import Title from 'app/components/Title';
-import { MailOutlined, LockOutlined } from '@ant-design/icons';
-import GoogleLogin from 'react-google-login';
+import { FACEBOOK_ID, GOOGLE_ID } from 'configs';
+import React, { memo } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin from 'react-google-login';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { ACTION_STATUS } from 'utils/constants';
+import useHooks from './hooks';
+import {
+  StyledFacebookButton,
+  StyledGoogleButton,
+  StyledLogin,
+} from './styles';
 
-export const Login = () => {
-  useInjectSaga({ key: sliceKey, saga });
+export const Login = memo(() => {
   const { handlers, selectors } = useHooks();
-  const { onFinish, onFinishFailed, handleLoginService } = handlers;
+  const { onFinish, handleLoginService } = handlers;
   const { status } = selectors;
-  useMessage();
+  const { t } = useTranslation();
 
   return (
     <StyledLogin>
-      <Form
-        className="login-form"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Title className="login-form-title">Login</Title>
+      <Form className="login-form" onFinish={onFinish}>
+        <Title className="login-form-title">{t('Login.title')}</Title>
         <Form.Item
           name="email"
           rules={[
             {
               type: 'email',
-              message: 'The input is not valid E-mail!',
+              message: t('Login.messageInvalidEmail'),
             },
             {
               required: true,
-              message: 'Please input your Email!',
+              message: t('Login.messageEmptyEmail'),
             },
           ]}
         >
@@ -53,7 +47,7 @@ export const Login = () => {
           rules={[
             {
               required: true,
-              message: 'Please input your Password!',
+              message: t('Login.messageEmptyPassword'),
             },
           ]}
         >
@@ -64,7 +58,7 @@ export const Login = () => {
           />
         </Form.Item>
         <Form.Item className="login-form-forgot">
-          <a href="">Forgot password ?</a>
+          <Link to="/forgot-password"> {t('Login.forgotPassword')} </Link>
         </Form.Item>
         <Form.Item className="login-form-button login-form-button-local">
           <Button
@@ -72,18 +66,18 @@ export const Login = () => {
             htmlType="submit"
             loading={status === ACTION_STATUS.PENDING}
           >
-            Login
+            {t('Login.btnLogin')}
           </Button>
         </Form.Item>
         <GoogleLogin
-          clientId="518404312823-ibh4ph48o4p3ad7b6f4jd4eoiv6m4o7l.apps.googleusercontent.com"
+          clientId={GOOGLE_ID}
           render={renderProps => (
             <StyledGoogleButton
               className="login-form-button"
               onClick={renderProps.onClick}
               disabled={renderProps.disabled}
             >
-              Google Login
+              {t('Login.btnLoginGoogle')}
             </StyledGoogleButton>
           )}
           buttonText="Google Login"
@@ -93,13 +87,11 @@ export const Login = () => {
               data: receivedData && receivedData.accessToken,
             })
           }
-          onFailure={res => console.log(res)}
           cookiePolicy={'single_host_origin'}
         />
         <FacebookLogin
-          appId="703530593917463"
+          appId={FACEBOOK_ID}
           fields="name,email,picture"
-          // onClick={(res)=>console.log(res)}
           callback={receivedData =>
             handleLoginService({
               service: 'facebook',
@@ -111,17 +103,16 @@ export const Login = () => {
               className="login-form-button"
               onClick={renderProps.onClick}
             >
-              Facebook Login
+              {t('Login.btnLoginFacebook')}
             </StyledFacebookButton>
           )}
         />
         <span className="login-form-register">
-          Or
-          <Link to="/register"> Register </Link>
+          <Link to="/register"> {t('Login.linkRegister')} </Link>
         </span>
       </Form>
     </StyledLogin>
   );
-};
+});
 
-export default memo(Login);
+export default Login;

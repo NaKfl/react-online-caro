@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import set from 'lodash/fp/set';
 import flow from 'lodash/fp/flow';
+import set from 'lodash/fp/set';
 import { ACTION_STATUS } from 'utils/constants';
 export const initialState = {
   isAuthenticated: false,
-  info: null,
   status: '',
   error: null,
 };
@@ -20,10 +19,9 @@ const authenticationSlice = createSlice({
       )(state);
     },
 
-    loginSuccess(state, action) {
+    loginSuccess(state) {
       return flow(
         set('isAuthenticated', true),
-        set('info', action.payload.user),
         set('status', ACTION_STATUS.SUCCESS),
       )(state);
     },
@@ -66,10 +64,6 @@ const authenticationSlice = createSlice({
         set('status', ''),
         set('error', null),
       )(state);
-    },
-
-    reset(state) {
-      return flow(set('error', null), set('status', ''))(state);
     },
   },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-const AuthRoute = ({ component, layout: Layout, ...rest }) => {
+const PublicRoute = ({ component, layout: Layout, ...rest }) => {
   const renderFn = Component => props => {
     if (!!Component) {
       return (
@@ -14,4 +14,4 @@ const AuthRoute = ({ component, layout: Layout, ...rest }) => {
   return <Route {...rest} render={renderFn(component)} />;
 };
 
-export default AuthRoute;
+export default PublicRoute;

@@ -38,7 +38,10 @@
     "stylelint": "^13.7.2",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-processor-styled-components": "^1.10.0"
+    "stylelint-processor-styled-components": "^1.10.0",
+    "react-i18next": "11.3.4",
+    "i18next": "19.3.4",
+    "i18next-browser-languagedetector": "4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,7 +50,8 @@
     "lint": "yarn eslint -- src",
     "lint:fix": "yarn eslint -- --fix src",
     "lint:css": "stylelint src/**/*.css",
-    "prettify": "prettier --write"
+    "prettify": "prettier --write",
+    "extract-lang": "i18next-scanner --config ./internals/scripts/i18next-scanner.config.js"
   },
   "browserslist": {
     "production": [
@@ -77,5 +81,8 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "devDependencies": {
+    "i18next-scanner": "2.11.0"
   }
 }

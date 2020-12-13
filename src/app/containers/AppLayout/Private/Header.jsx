@@ -1,16 +1,14 @@
-import React, { memo } from 'react';
-import { StyledHeader } from './styles';
-import Menu from 'app/components/Menu';
 import Avatar from 'app/components/Avatar';
 import Dropdown from 'app/components/Dropdown';
-import { useInjectSaga } from 'utils/reduxInjectors';
-import { useLogout } from 'app/containers/Authentication/hooks';
-import sagaAuthentication from 'app/containers/Authentication/saga';
-import { sliceKey } from 'app/containers/Authentication/slice';
+import Menu from 'app/components/Menu';
+import { useLogout } from 'app/containers/Login/hooks';
+import React, { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { StyledHeader } from '../styles';
 
 export const Header = () => {
-  useInjectSaga({ key: sliceKey, saga: sagaAuthentication });
+  const { t } = useTranslation();
   const { handlers } = useLogout();
   const { onLogout } = handlers;
 
@@ -20,7 +18,7 @@ export const Header = () => {
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/">{t('Header.linkHome')}</Link>
           </Menu.Item>
         </Menu>
       </div>
@@ -30,9 +28,9 @@ export const Header = () => {
           overlay={
             <Menu>
               <Menu.Item>
-                <Link to="/profile">Profile</Link>
+                <Link to="/profile">{t('Header.linkProfile')}</Link>
               </Menu.Item>
-              <Menu.Item onClick={onLogout}>Logout</Menu.Item>
+              <Menu.Item onClick={onLogout}>{t('Header.linkLogout')}</Menu.Item>
             </Menu>
           }
         >

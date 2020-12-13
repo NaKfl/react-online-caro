@@ -1,14 +1,13 @@
 import axios from 'axios';
 import isNil from 'lodash/fp/isNil';
-// import { getAccessToken } from 'utils/localStorageUtils';
+import { getAccessToken } from 'utils/localStorageUtils';
 
 const createClient = baseURL =>
   axios.create({
     baseURL,
     headers: {
       'Content-Type': 'application/json',
-      //TODO
-      // Authorization:`Bearer ${getAccessToken()}`
+      Authorization: getAccessToken() ? `Bearer ${getAccessToken()}` : '',
     },
   });
 
@@ -16,7 +15,6 @@ const request = (baseURL, options) => {
   const onSuccess = response => response;
   const onError = error => Promise.reject(error.response || error.message);
   const client = createClient(baseURL);
-
   return client(options).then(onSuccess).catch(onError);
 };
 
