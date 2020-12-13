@@ -14,7 +14,7 @@ export const isValidAuthInfo = authInfo => {
 
 export const getAuthInfo = () => {
   const authInfo = JSON.parse(localStorage.getItem(AUTH_INFO_KEY));
-  if (!isNil(authInfo) && isValidAuthInfo(authInfo)) {
+  if (!isNil(authInfo) /*&& isValidAuthInfo(authInfo)*/) {
     return authInfo;
   }
   return null;

@@ -1,13 +1,10 @@
 import useActions from 'hooks/useActions';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  makeSelectAuthenticationStatus,
-  makeSelectAuthenticationInfo,
-} from './selectors';
+import { makeSelectAuthenticationStatus } from './selectors';
 import { actions } from './slice';
-import { ACTION_STATUS } from 'utils/constants';
 import socket from 'utils/socket';
+import { getAuthInfo } from 'utils/localStorageUtils';
 
 export const useHooks = () => {
   const { login, loginService } = useActions(
@@ -15,8 +12,6 @@ export const useHooks = () => {
     [actions],
   );
   const status = useSelector(makeSelectAuthenticationStatus);
-  const info = useSelector(makeSelectAuthenticationInfo);
-
   const onFinish = useCallback(
     values => {
       login(values);
@@ -31,12 +26,6 @@ export const useHooks = () => {
     [loginService],
   );
 
-  useEffect(() => {
-    if (status === ACTION_STATUS.SUCCESS) {
-      socket.emit('client-login', { user: info });
-    }
-  }, [info, status]);
-
   return {
     handlers: { onFinish, handleLoginService },
     selectors: { status },
@@ -44,13 +33,15 @@ export const useHooks = () => {
 };
 
 export const useLogout = () => {
-  const info = useSelector(makeSelectAuthenticationInfo);
   const { logout } = useActions({ logout: actions.logout });
 
   const onLogout = useCallback(() => {
+    const userInfo = getAuthInfo()?.user;
+    if (userInfo) {
+      socket.emit('client-logout', { user: userInfo });
+    }
     logout();
-    socket.emit('client-login', { user: info });
-  }, [info, logout]);
+  }, [logout]);
 
   return {
     handlers: { onLogout },
