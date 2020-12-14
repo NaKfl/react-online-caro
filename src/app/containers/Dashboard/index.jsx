@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import UserList from './UserList';
 import { StyledButton, StyledDashboard } from './styles';
 import { useHooks } from './hooks';
-
+import RoomList from './RoomList';
 export const Dashboard = props => {
   const { states, selectors, handlers } = useHooks(props);
   const { userListOnline } = selectors;
@@ -11,6 +11,9 @@ export const Dashboard = props => {
   return (
     <StyledDashboard>
       <div>
+        <div>
+          <RoomList />
+        </div>
         <UserList
           userList={userListOnline}
           visible={toggleUserList}

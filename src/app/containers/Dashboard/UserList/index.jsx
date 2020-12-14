@@ -14,7 +14,7 @@ export const UserList = (props: UserListType) => {
   return (
     <>
       <Drawer
-        title="Basic Drawer"
+        title="Users Online"
         placement="right"
         closable={false}
         onClose={onClose}
