@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import UserList from './UserList';
+import Chat from './Chat';
 import { StyledButton, StyledDashboard } from './styles';
 import { useHooks } from './hooks';
 
@@ -8,23 +9,24 @@ export const Dashboard = props => {
   const { userListOnline } = selectors;
   const { toggleUserList } = states;
   const { handleOnClose, handleToggle } = handlers;
+
   return (
     <StyledDashboard>
-      <div>
-        <UserList
-          userList={userListOnline}
-          visible={toggleUserList}
-          onClose={handleOnClose}
-        ></UserList>
-        <StyledButton
-          type="primary"
-          onClick={() => {
-            handleToggle();
-          }}
-        >
-          Open
-        </StyledButton>
-      </div>
+      <Chat />
+
+      <UserList
+        userList={userListOnline}
+        visible={toggleUserList}
+        onClose={handleOnClose}
+      ></UserList>
+      <StyledButton
+        type="primary"
+        onClick={() => {
+          handleToggle();
+        }}
+      >
+        Open
+      </StyledButton>
     </StyledDashboard>
   );
 };

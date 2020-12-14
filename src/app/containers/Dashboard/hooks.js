@@ -1,23 +1,18 @@
 import { useState, useCallback, useEffect } from 'react';
 import socket from 'utils/socket';
-import { getAuthInfo } from 'utils/localStorageUtils';
+import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 export const useHooks = () => {
   const [toggleUserList, setToggleUserList] = useState(false);
   const [userListOnline, setUserListOnline] = useState([]);
 
   useEffect(() => {
-    const userInfo = getAuthInfo()?.user;
-    socket.on('onlineUser', res => {
-      const listUser = res.filter(user => user.email !== userInfo.email);
-      const removeDuplicate = listUser.reduce((acc, curr) => {
-        if (!acc.find(item => item.email === curr.email)) acc.push(curr);
-        return acc;
-      }, []);
-      setUserListOnline(removeDuplicate);
+    const user = getUserFromStorage();
+    if (user) socket.emit('client-connect', { user });
+
+    socket.on('server-send-user-list', ({ listUser }) => {
+      const users = listUser.filter(item => item.email !== user.email);
+      setUserListOnline(users);
     });
-    if (userInfo) {
-      socket.emit('client-login', { user: userInfo });
-    }
   }, []);
 
   const handleToggle = useCallback(() => {

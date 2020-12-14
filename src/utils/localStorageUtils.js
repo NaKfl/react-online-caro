@@ -28,8 +28,8 @@ export const getRefreshToken = () => {
   return getAuthInfo()?.token?.refreshToken;
 };
 
-export const getEmailUser = () => {
-  return getAuthInfo()?.user?.email;
+export const getUser = () => {
+  return getAuthInfo()?.user;
 };
 
 export const isAuthenticated = () => {
