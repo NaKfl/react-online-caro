@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import UserList from './UserList';
-import Chat from './Chat';
+import Chat from 'app/containers/Chat';
 import { StyledButton, StyledDashboard } from './styles';
 import { useHooks } from './hooks';
 

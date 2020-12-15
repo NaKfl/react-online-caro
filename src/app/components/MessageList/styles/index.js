@@ -4,7 +4,7 @@ import { COLOR } from 'styles/colorPalette';
 export const StyledMessageList = styled.div`
   width: 350px;
   & > * {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
   padding: 10px 20px 5px 20px;
   background-color: white;
