@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Row } from 'antd';
 const SizeOfSquare = ({ size }) => {
   if (typeof size === 'undefined') return `20px`;
   if (size === 'null') return `20px`;
@@ -7,10 +8,11 @@ const SizeOfSquare = ({ size }) => {
   const result = height < width ? `${height}px` : `${width}px`;
   return result;
 };
+
 export const StyledLayoutGame = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   height: 100%;
 `;
@@ -41,4 +43,23 @@ export const StyledBoard = styled.div`
 `;
 export const StyledGameInfo = styled.div`
   width: 220px;
+`;
+
+export const StyledRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-column-gap: 30px;
+`;
+
+export const StyledSideRight = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  & > * {
+    width: 80%;
+  }
+`;
+export const StyledSideLeft = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;

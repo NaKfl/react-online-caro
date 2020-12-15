@@ -41,7 +41,7 @@ export const RoomList = props => {
       <Row>
         {listRoom.map(room => {
           return (
-            <Col key={room.id} style={{ padding: '15px' }} span={6}>
+            <Col key={room.id} style={{ padding: '15px' }} span={4}>
               <Room
                 id={room.id}
                 handleJoinRoom={handleJoinRoom}

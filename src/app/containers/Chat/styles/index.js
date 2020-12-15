@@ -3,10 +3,16 @@ import styled from 'styled-components';
 export const StyledChat = styled.div`
   display: flex;
   flex-direction: column;
+  height: ${({ height }) =>
+    typeof height === 'string' && height.includes('%')
+      ? `${height}`
+      : height
+      ? `${height}px`
+      : `350px`};
 
   .chat-list {
     display: inline-block;
-    height: 350px;
+    height: 100%;
     overflow-y: auto;
   }
 
