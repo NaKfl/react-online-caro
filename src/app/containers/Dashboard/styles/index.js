@@ -9,6 +9,20 @@ export const StyledDashboard = styled.div`
     align-items: center;
     flex-wrap: wrap;
   }
+  .group-right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 63.75px);
+    margin: -25px;
+    margin-left: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    .list-user {
+      flex: 1;
+      padding-bottom: 10px;
+    }
+  }
 `;
 export const StyledButton = styled(Button)`
   position: fixed;

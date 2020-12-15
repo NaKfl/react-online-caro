@@ -1,9 +1,10 @@
 import React, { memo } from 'react';
 import UserList from './UserList';
 import Chat from 'app/containers/Chat';
-import { StyledButton, StyledDashboard } from './styles';
+import { StyledDashboard } from './styles';
 import { useHooks } from './hooks';
 import RoomList from './RoomList';
+import { Col, Row } from 'antd';
 export const Dashboard = props => {
   const { states, selectors, handlers } = useHooks(props);
   const { userListOnline } = selectors;
@@ -12,8 +13,8 @@ export const Dashboard = props => {
 
   return (
     <StyledDashboard>
-      <div>
-        <div>
+      <Row justify="space-between">
+        <Col flex={1}>
           <RoomList
             listRoom={[
               { status: 'AVAILABLE', name: '1' },
@@ -23,22 +24,18 @@ export const Dashboard = props => {
               { status: 'AVAILABLE', name: '5' },
             ]}
           />
-        </div>
-        <Chat />
-        <UserList
-          userList={userListOnline}
-          visible={toggleUserList}
-          onClose={handleOnClose}
-        ></UserList>
-        <StyledButton
-          type="primary"
-          onClick={() => {
-            handleToggle();
-          }}
-        >
-          Open
-        </StyledButton>
-      </div>
+        </Col>
+        <Col className="group-right-panel">
+          <div className="list-user">
+            <UserList
+              userList={userListOnline}
+              visible={toggleUserList}
+              onClose={handleOnClose}
+            ></UserList>
+          </div>
+          <Chat />
+        </Col>
+      </Row>
     </StyledDashboard>
   );
 };

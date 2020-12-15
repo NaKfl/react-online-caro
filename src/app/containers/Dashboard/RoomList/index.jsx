@@ -41,7 +41,7 @@ export const RoomList = props => {
       <Row>
         {listRoom.map(room => {
           return (
-            <Col style={{ padding: '15px' }} span={4}>
+            <Col style={{ padding: '15px' }} span={6}>
               <Room status={room.status} name={room.name} />
             </Col>
           );
