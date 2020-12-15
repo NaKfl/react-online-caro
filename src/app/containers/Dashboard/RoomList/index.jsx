@@ -5,7 +5,12 @@ import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
   const { selectors, handlers, states } = useHooks(props);
-  const { handleOnChangeRadio, handleSearch, handleJoinRoom } = handlers;
+  const {
+    handleOnChangeRadio,
+    handleSearch,
+    handleJoinRoom,
+    handleCreateRoom,
+  } = handlers;
   const { listRoom } = selectors;
   return (
     <div>
@@ -24,7 +29,7 @@ export const RoomList = props => {
           </Radio.Group>
         </Col>
         <Col>
-          <Button>Create Room</Button>
+          <Button onClick={handleCreateRoom}>Create Room</Button>
         </Col>
         <Col style={{ padding: '0 20px' }}>
           <Input.Search
@@ -39,7 +44,7 @@ export const RoomList = props => {
         </Col>
       </Row>
       <Row>
-        {listRoom.map(room => {
+        {listRoom.map((room, index) => {
           return (
             <Col key={room.id} style={{ padding: '15px' }} span={4}>
               <Room

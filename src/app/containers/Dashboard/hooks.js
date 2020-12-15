@@ -4,14 +4,17 @@ import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 export const useHooks = () => {
   const [toggleUserList, setToggleUserList] = useState(false);
   const [userListOnline, setUserListOnline] = useState([]);
-
+  const [roomList, setRoomList] = useState([]);
   useEffect(() => {
     const user = getUserFromStorage();
     if (user) socket.emit('client-connect', { user });
-
+    socket.emit('client-get-rooms');
     socket.on('server-send-user-list', ({ listUser }) => {
       const users = listUser.filter(item => item.email !== user.email);
       setUserListOnline(users);
+    });
+    socket.on('server-send-room-list', ({ listRoom }) => {
+      setRoomList(listRoom);
     });
   }, []);
 
@@ -26,6 +29,7 @@ export const useHooks = () => {
   return {
     selectors: {
       userListOnline,
+      roomList,
     },
     handlers: {
       handleToggle,
