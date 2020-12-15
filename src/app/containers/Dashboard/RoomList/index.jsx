@@ -4,7 +4,7 @@ import React, { memo } from 'react';
 import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
-  const { selectors, handlers, states } = useHooks(props);
+  const { selectors, handlers } = useHooks(props);
   const { handleOnChangeRadio, handleSearch, handleJoinRoom } = handlers;
   const { listRoom } = selectors;
   return (
@@ -39,7 +39,7 @@ export const RoomList = props => {
         </Col>
       </Row>
       <Row>
-        {listRoom.map(room => {
+        {listRoom.map((room, index) => {
           return (
             <Col key={room.id} style={{ padding: '15px' }} span={6}>
               <Room

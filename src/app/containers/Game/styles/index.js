@@ -15,19 +15,24 @@ export const StyledLayoutGame = styled.div`
   height: 100%;
 `;
 export const StyledSquare = styled.div`
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+  font-family: 'Fredoka One', cursive !important;
+  font-weight: 500;
+  font-size: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: white;
   /* border: 1px solid rgba(0, 0, 0, 0.45); */
   box-shadow: #0c0c0c 0 0 4px;
+  color: ${({ children }) => (children === 'x' ? 'red' : 'blue')};
   height: ${props => SizeOfSquare(props)};
   width: ${props => SizeOfSquare(props)};
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.15s ease;
   &:hover {
-    transform: scale(1.15);
+    transform: scale(0.95);
     border: 1.5px solid rgba(0, 0, 0, 0.8);
   }
 `;

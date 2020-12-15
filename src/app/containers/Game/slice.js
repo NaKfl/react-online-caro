@@ -5,7 +5,7 @@ import concat from 'lodash/concat';
 import { ACTION_STATUS } from 'utils/constants';
 export const initialState = {
   squarePerRow: 16,
-  boardHistory: [Array(16).fill('')],
+  boardHistory: [Array(256).fill(null)],
   xIsNext: true,
 };
 const gameSlice = createSlice({
@@ -18,8 +18,8 @@ const gameSlice = createSlice({
       return flow(
         set(`temp[${action.payload.position}]`, content),
         state.boardHistory.push(temp),
-      );
+      )(state);
     },
   },
 });
-export const { action, reducer, name: sliceKey } = gameSlice;
+export const { actions, reducer, name: sliceKey } = gameSlice;
