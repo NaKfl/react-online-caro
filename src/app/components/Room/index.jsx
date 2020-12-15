@@ -21,7 +21,9 @@ export const Room = props => {
           </Link>,
           <div style={{ fontWeight: 700 }}>{`View`}</div>,
         ]}
-        onClick={() => handleJoinRoom(id)}
+        onClick={() => {
+          if (status !== 'PLAYING') handleJoinRoom(id);
+        }}
       >
         <Row justify="space-between" align="middle" className="status-line">
           <Row align="middle" style={{ color: STATUS[status].color }}>
