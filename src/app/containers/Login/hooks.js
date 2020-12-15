@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { makeSelectAuthenticationStatus } from './selectors';
 import { actions } from './slice';
 import socket from 'utils/socket';
-import { getAuthInfo } from 'utils/localStorageUtils';
+import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 
 export const useHooks = () => {
   const { login, loginService } = useActions(
@@ -36,10 +36,9 @@ export const useLogout = () => {
   const { logout } = useActions({ logout: actions.logout });
 
   const onLogout = useCallback(() => {
-    const userInfo = getAuthInfo()?.user;
-    if (userInfo) {
-      socket.emit('client-logout', { user: userInfo });
-    }
+    const user = getUserFromStorage();
+    if (user) socket.emit('client-logout', { user });
+
     logout();
   }, [logout]);
 

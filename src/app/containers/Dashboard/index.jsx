@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import UserList from './UserList';
+import Chat from 'app/containers/Chat';
 import { StyledButton, StyledDashboard } from './styles';
 import { useHooks } from './hooks';
 import RoomList from './RoomList';
@@ -8,6 +9,7 @@ export const Dashboard = props => {
   const { userListOnline } = selectors;
   const { toggleUserList } = states;
   const { handleOnClose, handleToggle } = handlers;
+
   return (
     <StyledDashboard>
       <div>
@@ -22,6 +24,7 @@ export const Dashboard = props => {
             ]}
           />
         </div>
+        <Chat />
         <UserList
           userList={userListOnline}
           visible={toggleUserList}

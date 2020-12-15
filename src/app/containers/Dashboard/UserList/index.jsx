@@ -1,15 +1,8 @@
 import React, { memo } from 'react';
 import { Drawer } from 'antd';
 import UserItem from 'app/components/UserItem';
-import PropTypes from 'prop-types';
 
-export type UserListType = {
-  userList: Array<PropTypes.object>,
-  visible: Boolean,
-  onClose: PropTypes.func,
-};
-
-export const UserList = (props: UserListType) => {
+export const UserList = props => {
   const { visible, onClose, userList } = props;
   return (
     <>
