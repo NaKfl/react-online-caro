@@ -24,7 +24,8 @@ export const StyledHeader = styled(Header)`
 `;
 
 export const StyledContent = styled(Content)`
-  padding: 50px;
+  padding: 25px;
+  position: relative;
 `;
 
 export const StyledFooter = styled(Footer)`

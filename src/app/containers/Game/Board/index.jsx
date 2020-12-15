@@ -1,19 +1,23 @@
 import { memo } from 'react';
 import { StyledBoard } from '../styles';
-import { Row, Col } from 'app/components/Grid';
+import { Row } from 'app/components/Grid';
 import Square from '../Square';
-const Board = memo(({ size, boardLayout, squarePerRow }) => {
+const Board = memo(({ size, boardCurrent, squarePerRow, handleClick }) => {
   const renderRow = i => {
     return (
       <Row key={i}>
-        {boardLayout[0].map((square, index) => (
-          <Square size={size} key={index} />
+        {boardCurrent.map((_, index) => (
+          <Square
+            size={size}
+            key={index}
+            onClick={() => handleClick(squarePerRow * i + index)}
+          />
         ))}
       </Row>
     );
   };
   const renderRows = () => {
-    return <>{boardLayout[0].map((_, i) => renderRow(i))}</>;
+    return <>{boardCurrent.map((_, i) => renderRow(i))}</>;
   };
   return <StyledBoard>{renderRows()}</StyledBoard>;
 });
