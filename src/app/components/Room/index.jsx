@@ -13,7 +13,7 @@ import { STATUS } from 'utils/constants';
 import { StyledRoom } from './styles';
 
 export const Room = props => {
-  const { status } = props;
+  const { status, name } = props;
 
   return (
     <>
@@ -30,7 +30,7 @@ export const Room = props => {
             <span className="status">{STATUS[status].title}</span>
           </Row>
         </Row>
-        <div className="room-number">001</div>
+        <div className="room-number">{name}</div>
       </StyledRoom>
     </>
   );

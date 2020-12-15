@@ -4,11 +4,12 @@ import { Col, Row, Radio, Typography, Input, Button } from 'antd';
 import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
-  const { selectors, handlers, states } = useHooks();
-  const { handleOnChangeRadio } = handlers;
+  const { selectors, handlers, states } = useHooks(props);
+  const { handleOnChangeRadio, handleSearch } = handlers;
+  const { listRoom } = selectors;
   return (
     <div>
-      <Row className="filter-room" justify="space-between" align="middle">
+      <Row justify="space-between" align="middle">
         <Col style={{ padding: '0 20px' }}>
           <Radio.Group
             onChange={handleOnChangeRadio}
@@ -28,8 +29,8 @@ export const RoomList = props => {
         <Col style={{ padding: '0 20px' }}>
           <Input.Search
             placeholder="Input search text"
-            // onSearch={this.handleSearch}
-            // onChange={this.handleSearch}
+            onSearch={handleSearch}
+            onChange={handleSearch}
             allowClear
           />
         </Col>
@@ -38,15 +39,13 @@ export const RoomList = props => {
         </Col>
       </Row>
       <Row>
-        <Col style={{ padding: '15px' }} span={4}>
-          <Room status="AVAILABLE" />
-        </Col>
-        <Col style={{ padding: '15px' }} span={4}>
-          <Room status="PLAYING" />
-        </Col>
-        <Col style={{ padding: '15px' }} span={4}>
-          <Room status="PLAYING" />
-        </Col>
+        {listRoom.map(room => {
+          return (
+            <Col style={{ padding: '15px' }} span={4}>
+              <Room status={room.status} name={room.name} />
+            </Col>
+          );
+        })}
       </Row>
     </div>
   );

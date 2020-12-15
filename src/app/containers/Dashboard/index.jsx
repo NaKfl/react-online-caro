@@ -12,7 +12,15 @@ export const Dashboard = props => {
     <StyledDashboard>
       <div>
         <div>
-          <RoomList />
+          <RoomList
+            listRoom={[
+              { status: 'AVAILABLE', name: '1' },
+              { status: 'AVAILABLE', name: '2' },
+              { status: 'AVAILABLE', name: '3' },
+              { status: 'AVAILABLE', name: '4' },
+              { status: 'AVAILABLE', name: '5' },
+            ]}
+          />
         </div>
         <UserList
           userList={userListOnline}
