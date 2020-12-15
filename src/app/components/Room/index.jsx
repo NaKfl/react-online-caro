@@ -1,26 +1,24 @@
 import React, { memo } from 'react';
-import {
-  SettingOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-  CheckCircleFilled,
-  ExclamationCircleFilled,
-  InfoCircleFilled,
-  ClockCircleFilled,
-} from '@ant-design/icons';
+import { CheckCircleFilled } from '@ant-design/icons';
 import { Row } from 'antd';
 import { STATUS } from 'utils/constants';
 import { StyledRoom } from './styles';
-
+import { Link } from 'react-router-dom';
 export const Room = props => {
-  const { status, name } = props;
-
+  const { status, name, id } = props;
   return (
     <>
       <StyledRoom
         hoverable
         actions={[
-          <div style={{ fontWeight: 700 }}>{`Join Room`}</div>,
+          <Link
+            to={{
+              pathname: `/game`,
+              search: `?room=${id}`,
+            }}
+          >
+            <div style={{ fontWeight: 700 }}>{`Join Room`}</div>
+          </Link>,
           <div style={{ fontWeight: 700 }}>{`View`}</div>,
         ]}
       >

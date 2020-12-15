@@ -4,7 +4,7 @@ import { Col, Row, Radio, Typography, Input, Button } from 'antd';
 import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
-  const { selectors, handlers, states } = useHooks(props);
+  const { selectors, handlers } = useHooks(props);
   const { handleOnChangeRadio, handleSearch } = handlers;
   const { listRoom } = selectors;
   return (
@@ -39,10 +39,10 @@ export const RoomList = props => {
         </Col>
       </Row>
       <Row>
-        {listRoom.map(room => {
+        {listRoom.map((room, index) => {
           return (
-            <Col style={{ padding: '15px' }} span={4}>
-              <Room status={room.status} name={room.name} />
+            <Col style={{ padding: '15px' }} span={4} key={index}>
+              <Room status="AVAILABLE" name={index} {...room} />
             </Col>
           );
         })}
