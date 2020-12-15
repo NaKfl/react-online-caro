@@ -6,7 +6,7 @@ export const StyledChat = styled.div`
 
   .chat-list {
     display: inline-block;
-    height: 400px;
+    height: 350px;
     overflow-y: auto;
   }
 

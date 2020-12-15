@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
+import { Button, Col, Input, Radio, Row, Typography } from 'antd';
 import Room from 'app/components/Room';
-import { Col, Row, Radio, Typography, Input, Button } from 'antd';
+import React, { memo } from 'react';
 import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
@@ -41,7 +41,7 @@ export const RoomList = props => {
       <Row>
         {listRoom.map(room => {
           return (
-            <Col key={room.id} style={{ padding: '15px' }} span={4}>
+            <Col key={room.id} style={{ padding: '15px' }} span={6}>
               <Room
                 id={room.id}
                 handleJoinRoom={handleJoinRoom}
