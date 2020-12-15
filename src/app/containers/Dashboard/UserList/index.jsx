@@ -7,7 +7,7 @@ export const UserList = props => {
   return (
     <>
       <Drawer
-        title="Basic Drawer"
+        title="Users Online"
         placement="right"
         closable={false}
         onClose={onClose}
