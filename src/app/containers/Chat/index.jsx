@@ -1,26 +1,4 @@
-import React, { memo } from 'react';
-import MessageList from 'app/components/MessageList';
-import ChatInput from 'app/components/ChatInput';
+import ChatWorld from './ChatWorld';
+import ChatRoom from './ChatRoom';
 
-import { StyledChat } from './styles';
-import { useHooks } from './hooks';
-
-export const Chat = props => {
-  const { states, selectors, handlers } = useHooks(props);
-  const { messages } = states;
-  const { inputRef, listRef } = selectors;
-  const { handleOnPressEnter } = handlers;
-
-  return (
-    <StyledChat>
-      <MessageList ref={listRef} className="chat-list" messages={messages} />
-      <ChatInput
-        ref={inputRef}
-        className="chat-input"
-        onPressEnter={handleOnPressEnter}
-      />
-    </StyledChat>
-  );
-};
-
-export default memo(Chat);
+export { ChatWorld, ChatRoom };

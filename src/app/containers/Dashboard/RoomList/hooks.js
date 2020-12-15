@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export const useHooks = props => {
+  const history = useHistory();
   const [filter, setFilter] = useState(null);
   const [searchText, setSearchText] = useState(null);
   const [listRoom, setListRoom] = useState(props.listRoom);
@@ -13,7 +15,7 @@ export const useHooks = props => {
       );
       setListRoom(list);
     } else setListRoom(roomData);
-  }, [searchText, filter]);
+  }, [searchText, filter, roomData]);
 
   const handleOnChangeRadio = useCallback(e => {
     console.log({ e });
@@ -26,6 +28,13 @@ export const useHooks = props => {
     else setSearchText(input.target.value);
   }, []);
 
+  const handleJoinRoom = useCallback(
+    id => {
+      history.push(`game/${id}`);
+    },
+    [history],
+  );
+
   return {
     selectors: {
       listRoom,
@@ -33,6 +42,7 @@ export const useHooks = props => {
     handlers: {
       handleOnChangeRadio,
       handleSearch,
+      handleJoinRoom,
     },
     states: {},
   };

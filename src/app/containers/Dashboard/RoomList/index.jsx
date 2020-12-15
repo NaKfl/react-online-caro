@@ -5,7 +5,7 @@ import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
   const { selectors, handlers, states } = useHooks(props);
-  const { handleOnChangeRadio, handleSearch } = handlers;
+  const { handleOnChangeRadio, handleSearch, handleJoinRoom } = handlers;
   const { listRoom } = selectors;
   return (
     <div>
@@ -41,8 +41,13 @@ export const RoomList = props => {
       <Row>
         {listRoom.map(room => {
           return (
-            <Col style={{ padding: '15px' }} span={4}>
-              <Room status={room.status} name={room.name} />
+            <Col key={room.id} style={{ padding: '15px' }} span={4}>
+              <Room
+                id={room.id}
+                handleJoinRoom={handleJoinRoom}
+                status={room.status}
+                name={room.name}
+              />
             </Col>
           );
         })}

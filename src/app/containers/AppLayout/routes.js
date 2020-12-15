@@ -9,7 +9,7 @@ export const privateRoutes = [
     key: 'home',
   },
   {
-    path: '/game',
+    path: '/game/:id',
     component: Game,
     key: 'game',
   },
