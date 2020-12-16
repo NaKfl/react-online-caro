@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Row } from 'antd';
+import { COLOR } from 'styles/colorPalette';
 const SizeOfSquare = ({ size }) => {
   if (typeof size === 'undefined') return `20px`;
   if (size === 'null') return `20px`;
@@ -43,7 +43,7 @@ export const StyledBoard = styled.div`
   transition: all 0.15s ease;
   backdrop-filter: blur(10px);
   background-color: #f8f8f8;
-  box-shadow: #727272 0 0 15px;
+  box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
   padding: 8px;
 `;
 export const StyledGameInfo = styled.div`

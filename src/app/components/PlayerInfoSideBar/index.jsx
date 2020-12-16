@@ -10,12 +10,15 @@ import {
 } from './styles';
 import PlayerCard from 'app/components/PlayerCard';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const PlayerInfoSideBar = ({ host, guest, room, ...rest }) => {
   return (
     <StyledPlayerInfoSideBar {...rest}>
       <StyledRoomInfoGroup>
-        <StyledBackButton icon={<ArrowLeftOutlined />}></StyledBackButton>
+        <Link to="/">
+          <StyledBackButton icon={<ArrowLeftOutlined />}></StyledBackButton>
+        </Link>
         <StyledRoomName>{room}</StyledRoomName>
       </StyledRoomInfoGroup>
       <StyledPanel>

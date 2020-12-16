@@ -35,21 +35,18 @@ export const useHooks = props => {
     else setSearchText(input.target.value);
   }, []);
 
-  const handleCreateRoom = useCallback(
-    input => {
-      const rooms = roomData.map(room => room.name);
-      const nameRoom = rooms.length > 0 ? Math.max(...rooms) + 1 : 1;
-      const id = uuidv4();
-      const room = {
-        id,
-        name: nameRoom || 1,
-        status: 'AVAILABLE',
-      };
-      socket.emit('client-create-room', { user: user, room: room });
-      history.push(`game/${id}`);
-    },
-    [roomData],
-  );
+  const handleCreateRoom = useCallback(() => {
+    const rooms = roomData.map(room => room.name);
+    const nameRoom = rooms.length > 0 ? Math.max(...rooms) + 1 : 1;
+    const id = uuidv4();
+    const room = {
+      id,
+      name: nameRoom || 1,
+      status: 'AVAILABLE',
+    };
+    socket.emit('client-create-room', { user: user, room: room });
+    history.push(`game/${id}`);
+  }, [history, roomData, user]);
 
   const handleJoinRoom = useCallback(
     id => {

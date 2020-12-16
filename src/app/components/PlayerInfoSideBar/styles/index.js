@@ -80,4 +80,5 @@ export const StyledRoomName = styled.div`
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 1px;
+  box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
 `;

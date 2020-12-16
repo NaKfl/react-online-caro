@@ -12,7 +12,8 @@ export const StyledPlayerCard = styled.div`
 
   border-radius: 20px;
   background-color: ${COLOR.PRIMARY};
-  box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
+  box-shadow: 0px 0px 16px 4px rgb(0 0 0 / 25%);
+
   color: ${COLOR.WHITE};
 `;
 
