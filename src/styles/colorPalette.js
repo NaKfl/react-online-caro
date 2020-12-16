@@ -4,5 +4,6 @@ export const COLOR = {
   GRAY: '#c9cbff',
   NICKEL: '#808080',
   WHITE: '#ffff',
-  SHADOW_GRAY: 'rgba(0, 0, 0, 0.01)',
+  SHADOW_GRAY: 'rgba(0, 0, 0, 0.08)',
+  RED: '#ED553B',
 };

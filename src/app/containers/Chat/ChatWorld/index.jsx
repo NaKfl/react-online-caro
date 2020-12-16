@@ -5,14 +5,15 @@ import ChatInput from 'app/components/ChatInput';
 import { StyledChat } from '../styles';
 import { useHooks } from './hooks';
 
-export const Chat = () => {
+export const Chat = props => {
+  const { height } = props;
   const { states, selectors, handlers } = useHooks();
   const { messages } = states;
   const { inputRef, listRef } = selectors;
   const { handleOnPressEnter } = handlers;
 
   return (
-    <StyledChat>
+    <StyledChat height={height}>
       <MessageList ref={listRef} className="chat-list" messages={messages} />
       <ChatInput
         ref={inputRef}

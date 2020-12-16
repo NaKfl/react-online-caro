@@ -8,7 +8,6 @@ export const StyledChatInput = styled(Input)`
   border-radius: 0.4em;
   padding: 10px;
   height: 40px;
-  width: 350px;
   box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
 `;
 
