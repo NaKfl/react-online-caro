@@ -11,10 +11,10 @@ export const useHooks = props => {
   const roomData = props.listRoom;
   const user = getUserFromStorage();
   useEffect(() => {
-    socket.emit('get-list-room');
-    socket.on('list-room', data => {
-      setListRoom(data);
-    });
+    // socket.emit('get-list-room');
+    // socket.on('list-room', data => {
+    //   setListRoom(data);
+    // });
     if (searchText) {
       let list = roomData.filter(
         room =>

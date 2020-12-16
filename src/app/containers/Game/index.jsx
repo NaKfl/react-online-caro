@@ -10,7 +10,6 @@ import { sliceKey, reducer } from './slice';
 import { useInjectReducer } from 'utils/reduxInjectors';
 import { useHooks } from './hook';
 import Board from './Board';
-import Row from 'app/components/Row';
 import { ChatRoom } from 'app/containers/Chat';
 import { useParams } from 'react-router-dom';
 import PlayerInfoSideBar from 'app/components/PlayerInfoSideBar';
@@ -19,13 +18,13 @@ export const Game = memo(props => {
   useInjectReducer({ key: sliceKey, reducer });
   const { id: roomId } = useParams();
   const { selector, handlers } = useHooks(props);
-  const { boards } = selector;
+  const { boards, roomPanel } = selector;
   const { height, width } = useWindowSize();
   return (
     <StyledLayoutGame>
       <StyledRow justify="space-between" align="middle">
         <StyledSideLeft>
-          <PlayerInfoSideBar />
+          <PlayerInfoSideBar {...roomPanel} />
         </StyledSideLeft>
         <Board
           boardCurrent={boards[boards.length - 1]}

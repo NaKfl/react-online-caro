@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledPlayerCard, StyledName, StyledLevel } from './styles';
 import AvatarSpin from 'app/components/AvatarSpin';
 
-const PlayerCard = ({ user, ...rest }) => {
+const PlayerCard = ({ user, isHost, ...rest }) => {
   return (
     <StyledPlayerCard {...rest}>
       <StyledName>{user?.name ?? 'Waiting for others . . .'}</StyledName>
@@ -14,7 +14,7 @@ const PlayerCard = ({ user, ...rest }) => {
           'https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif'
         }
       />
-      <StyledLevel>{user?.level ?? 'Level unknown'}</StyledLevel>
+      <StyledLevel>{isHost ? 'Host' : 'Guest'}</StyledLevel>
     </StyledPlayerCard>
   );
 };

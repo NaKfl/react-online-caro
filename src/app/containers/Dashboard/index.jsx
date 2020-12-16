@@ -25,7 +25,7 @@ export const Dashboard = props => {
               onClose={handleOnClose}
             ></UserList>
           </div>
-          <ChatWorld height={500} />
+          <ChatWorld height="50%" />
         </Col>
       </Row>
     </StyledDashboard>

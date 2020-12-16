@@ -6,8 +6,8 @@ export const StyledPlayerCard = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 220px;
-  width: 220px;
+  width: 12vw;
+  height: 12vw;
   padding-bottom: 13px;
 
   border-radius: 20px;

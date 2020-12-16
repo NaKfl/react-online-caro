@@ -13,6 +13,11 @@ export const useHooks = props => {
   const [boards, setBoards] = useState([Array(16 * 16).fill(null)]);
   const room = useParams();
   const boardHistory = useSelector(makeBoardHistory);
+  const [roomPanel, setRoomPanel] = useState({
+    host: null,
+    guest: null,
+    room: null,
+  });
 
   const handleClickSquare = position => {
     socket.emit('play-chess', position, user);
@@ -37,9 +42,21 @@ export const useHooks = props => {
   useEffect(() => {
     const user = getUserFromStorage();
     if (user) socket.emit('client-join-wait-room', { roomId: room.id, user });
+
+    socket.on('server-send-join-user', ({ guestUser, hostUser, room }) => {
+      console.log('{ guestUser, hostUser, room }', {
+        guestUser,
+        hostUser,
+        room,
+      });
+      setRoomPanel(preState => ({ ...preState, host: hostUser, room }));
+      if (guestUser.id !== hostUser.id)
+        setRoomPanel(preState => ({ ...preState, guest: guestUser, room }));
+    });
   }, []);
+
   return {
-    selector: { squarePerRow, boards },
+    selector: { squarePerRow, boards, user, roomPanel },
     handlers: { handleClickSquare },
   };
 };

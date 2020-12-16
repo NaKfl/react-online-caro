@@ -19,14 +19,14 @@ const PlayerInfoSideBar = ({ host, guest, room, ...rest }) => {
         <Link to="/">
           <StyledBackButton icon={<ArrowLeftOutlined />}></StyledBackButton>
         </Link>
-        <StyledRoomName>{room}</StyledRoomName>
+        <StyledRoomName>{`Room ${room?.name}`}</StyledRoomName>
       </StyledRoomInfoGroup>
       <StyledPanel>
         <PlayerCard user={guest} />
         <StyledScore>{guest?.score ?? 0}</StyledScore>
         <StyledDivider />
         <StyledScore>{guest?.score ?? 0}</StyledScore>
-        <PlayerCard user={host} />
+        <PlayerCard user={host} isHost />
       </StyledPanel>
     </StyledPlayerInfoSideBar>
   );
