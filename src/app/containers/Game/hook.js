@@ -18,25 +18,41 @@ export const useHooks = props => {
     guest: null,
     room: null,
   });
-
+  const [status, setStatus] = useState(null);
   const handleClickSquare = position => {
-    socket.emit('play-chess', position, user);
+    socket.emit('play-chess', position, room);
     // const temp = [...boards];
     // temp[temp.length - 1][position] = [turn];
     // setBoards(temp);
   };
   socket.emit('join-room', { room: room.id, user });
   useEffect(() => {
+    let something = (function () {
+      var executed = false;
+      return function () {
+        if (!executed) {
+          executed = true;
+          socket.on('get-boads', data => {
+            setBoards([data]);
+          });
+        }
+      };
+    })();
+    something();
     let time;
     clearTimeout(time);
     time = setTimeout(() => {
       socket.on('get-boards', data => {
         setBoards([data]);
       });
-    }, 150);
+      socket.on('get-status', data => {
+        setStatus(data);
+      });
+    }, 200);
     return () => {
       socket.off('get-boards');
       socket.off('join-room');
+      socket.off('get-status');
     };
   });
   useEffect(() => {
@@ -56,7 +72,7 @@ export const useHooks = props => {
   }, []);
 
   return {
-    selector: { squarePerRow, boards, user, roomPanel },
+    selector: { squarePerRow, boards, status, roomPanel, user },
     handlers: { handleClickSquare },
   };
 };

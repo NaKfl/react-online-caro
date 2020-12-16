@@ -18,7 +18,7 @@ export const Game = memo(props => {
   useInjectReducer({ key: sliceKey, reducer });
   const { id: roomId } = useParams();
   const { selector, handlers } = useHooks(props);
-  const { boards, roomPanel } = selector;
+  const { boards, roomPanel, status } = selector;
   const { height, width } = useWindowSize();
   return (
     <StyledLayoutGame>
@@ -27,6 +27,7 @@ export const Game = memo(props => {
           <PlayerInfoSideBar {...roomPanel} />
         </StyledSideLeft>
         <Board
+          status={status}
           boardCurrent={boards[boards.length - 1]}
           size={{ height, width }}
           squarePerRow={16}
