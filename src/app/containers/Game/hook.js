@@ -15,13 +15,13 @@ export const useHooks = props => {
   const boardHistory = useSelector(makeBoardHistory);
 
   const handleClickSquare = position => {
-    socket.emit('play-chess', position);
+    socket.emit('play-chess', position, user);
     // const temp = [...boards];
     // temp[temp.length - 1][position] = [turn];
     // setBoards(temp);
   };
+  socket.emit('join-room', { room: room.id, user });
   useEffect(() => {
-    socket.emit('join-room', { room: room.id, user });
     let time;
     clearTimeout(time);
     time = setTimeout(() => {
