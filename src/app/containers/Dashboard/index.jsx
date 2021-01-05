@@ -5,11 +5,15 @@ import { StyledDashboard } from './styles';
 import { useHooks } from './hooks';
 import RoomList from './RoomList';
 import { Col, Row } from 'antd';
+import { sliceKey, reducer } from './slice';
+import { useInjectReducer } from 'utils/reduxInjectors';
+
 export const Dashboard = props => {
+  useInjectReducer({ key: sliceKey, reducer });
   const { states, selectors, handlers } = useHooks(props);
-  const { userListOnline, roomList } = selectors;
+  const { onlineUserList, roomList } = selectors;
   const { toggleUserList } = states;
-  const { handleOnClose, handleToggle } = handlers;
+  const { handleOnClose } = handlers;
 
   return (
     <StyledDashboard>
@@ -20,7 +24,7 @@ export const Dashboard = props => {
         <Col className="group-right-panel">
           <div className="list-user">
             <UserList
-              userList={userListOnline}
+              userList={onlineUserList}
               visible={toggleUserList}
               onClose={handleOnClose}
             ></UserList>

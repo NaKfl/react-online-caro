@@ -1,13 +1,27 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useActions from 'hooks/useActions';
 import { useSelector } from 'react-redux';
-import { actions } from './slice';
+import { actions as dashboardActions } from 'app/containers/Dashboard/slice';
 import { makeSquarePerRow, makeBoardHistory } from './selectors';
 import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 import socket from 'utils/socket';
 
 export const useHooks = props => {
+  const { updateOnlineUserList } = useActions(
+    { updateOnlineUserList: dashboardActions.updateOnlineUserList },
+    [dashboardActions],
+  );
+
+  useEffect(() => {
+    const user = getUserFromStorage();
+    if (user) socket.emit('client-connect', { user });
+    socket.on('server-send-user-list', ({ userList }) => {
+      const users = userList.filter(item => item.email !== user.email);
+      updateOnlineUserList(users);
+    });
+  }, [updateOnlineUserList]);
+
   const user = getUserFromStorage();
   const squarePerRow = useSelector(makeSquarePerRow);
   const [boards, setBoards] = useState([Array(16 * 16).fill(null)]);
@@ -26,6 +40,7 @@ export const useHooks = props => {
     // setBoards(temp);
   };
   socket.emit('join-room', { room: room.id, user });
+
   useEffect(() => {
     let something = (function () {
       var executed = false;
