@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 import socket from 'utils/socket';
+import moment from 'moment';
 
 export const useHooks = props => {
   const { roomId } = props;
@@ -15,7 +16,7 @@ export const useHooks = props => {
       if (e.target.value)
         socket.emit('client-send-message-room', {
           roomId,
-          message: e.target.value,
+          content: e.target.value,
         });
       inputRef.current.setValue('');
     },
@@ -23,11 +24,14 @@ export const useHooks = props => {
   );
 
   useEffect(() => {
-    socket.emit('client-join-room', { roomId, user });
     socket.on('server-send-messages-room', ({ messages }) => {
       const list = messages.map(message => {
-        message.direction = message.userId === user.id ? 'right' : 'left';
-        return message;
+        return {
+          ...message,
+          direction: message.userId === user.id ? 'right' : 'left',
+          name: message.User?.name ?? 'Anonymous',
+          createdAt: moment(message.createdAt).format('LT'),
+        };
       });
       setMessages(list);
     });
