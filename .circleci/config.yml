@@ -10,10 +10,9 @@ jobs:
       DOCKER_TAG: latest
     executor: docker/docker
     steps:
-      - setup_remote_docker
-      - checkout
       - setup_remote_docker:
-          version: 19.03.12
+          version: 19.03.13
+      - checkout
       - docker/check
       - docker/build:
           image: $DOCKER_IMAGE
