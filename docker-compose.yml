@@ -1,25 +1,7 @@
 version: '3.8'
 
 services:
-  server:
-    image: nakfl/back-end-live-tutor:latest
-    depends_on:
-      - database
-    environment:
-      NODE_ENV: development
-      DATABASE_URL: postgres://postgres:password@database:5432/live-tutor
-      DATABASE_DIALECT: postgres
-      PORT: 6969
-      JWT_SECRET: anhem1nha
-      JWT_EXPIRATION_MINUTES: 30
-      JWT_REFRESH_EXPIRATION_DAYS: 30
-    command: sh -c "./wait-for-it.sh database:5432 && npm run migrate && npm run migrate:seed && npm start"
+  app:
+    image: nakfl/online-caro-react:latest
     ports:
-      - 6969:6969
-
-  database:
-    image: postgres:13
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: live-tutor
+      - 80:80
