@@ -12,9 +12,9 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - docker/check
       - setup_remote_docker:
-          version: 19.03.13
+          version: 19.03.12
+      - docker/check
       - docker/build:
           image: $DOCKER_IMAGE
           tag: $DOCKER_TAG
