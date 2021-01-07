@@ -21,5 +21,26 @@
   },
   "jest.autoEnable": false,
   "jest.runAllTestsFirst": false,
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "workbench.colorCustomizations": {
+    "terminal.foreground": "#D6D6D6",
+    "terminalCursor.background": "#D6D6D6",
+    "terminalCursor.foreground": "#D6D6D6",
+    "terminal.ansiBlack": "#151718",
+    "terminal.ansiBlue": "#55B5DB",
+    "terminal.ansiBrightBlack": "#41535B",
+    "terminal.ansiBrightBlue": "#55B5DB",
+    "terminal.ansiBrightCyan": "#55DBBE",
+    "terminal.ansiBrightGreen": "#3142d8",
+    "terminal.ansiBrightMagenta": "#A074C4",
+    "terminal.ansiBrightRed": "#CD3F45",
+    "terminal.ansiBrightWhite": "#FFFFFF",
+    "terminal.ansiBrightYellow": "#E6CD69",
+    "terminal.ansiCyan": "#55DBBE",
+    "terminal.ansiGreen": "#56afca",
+    "terminal.ansiMagenta": "#ac2fb1",
+    "terminal.ansiRed": "#CD3F45",
+    "terminal.ansiWhite": "#D6D6D6",
+    "terminal.ansiYellow": "#6c41e2"
+  }
 }

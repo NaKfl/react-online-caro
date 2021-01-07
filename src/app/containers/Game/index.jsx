@@ -1,11 +1,5 @@
-import {
-  StyledLayoutGame,
-  StyledRow,
-  StyledSideRight,
-  StyledSideLeft,
-} from './styles';
-import { memo, useState } from 'react';
-import { useWindowSize } from 'hooks/useWindowSize';
+import { StyledSideRight, StyledSideLeft } from './styles';
+import { memo } from 'react';
 import { sliceKey, reducer } from './slice';
 import { useInjectReducer } from 'utils/reduxInjectors';
 import { useHooks } from './hook';
@@ -19,25 +13,21 @@ export const Game = memo(props => {
   const { id: roomId } = useParams();
   const { selector, handlers } = useHooks(props);
   const { boards, roomPanel, status } = selector;
-  const { height, width } = useWindowSize();
   return (
-    <StyledLayoutGame>
-      <StyledRow justify="space-between" align="middle">
-        <StyledSideLeft>
-          <PlayerInfoSideBar {...roomPanel} />
-        </StyledSideLeft>
-        <Board
-          status={status}
-          boardCurrent={boards[boards.length - 1]}
-          size={{ height, width }}
-          squarePerRow={16}
-          handleClick={handlers.handleClickSquare}
-        />
-        <StyledSideRight>
-          <ChatRoom roomId={roomId} height="100%" />
-        </StyledSideRight>
-      </StyledRow>
-    </StyledLayoutGame>
+    <>
+      <StyledSideLeft>
+        <PlayerInfoSideBar {...roomPanel} />
+      </StyledSideLeft>
+      <Board
+        status={status}
+        boardCurrent={boards[boards.length - 1]}
+        squarePerRow={16}
+        handleClick={handlers.handleClickSquare}
+      />
+      <StyledSideRight>
+        <ChatRoom roomId={roomId} height="100%" />
+      </StyledSideRight>
+    </>
   );
 });
 
