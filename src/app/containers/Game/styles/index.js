@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 import { COLOR } from 'styles/colorPalette';
-const SizeOfSquare = ({ size }) => {
-  if (typeof size === 'undefined') return `20px`;
-  if (size === 'null') return `20px`;
-  const height = size.height / 22;
-  const width = ((size.width / 22) * 2) / 3;
-  const result = height < width ? `${height}px` : `${width}px`;
-  return result;
-};
 
 export const StyledLayoutGame = styled.div`
   display: flex;
@@ -25,14 +17,14 @@ export const StyledSquare = styled.div`
   align-items: center;
   justify-content: center;
   background-color: white;
-  /* border: 1px solid rgba(0, 0, 0, 0.45); */
-  box-shadow: #0c0c0c 0 0 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  /* box-shadow: #0c0c0c 0 0 4px; */
   color: ${({ children }) => (children === 'x' ? 'red' : 'blue')};
-  height: ${props => SizeOfSquare(props)};
-  width: ${props => SizeOfSquare(props)};
   cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.15s ease;
+  border-radius: 2px;
+  transition: all 0.1s ease-out;
+  width: calc(100% / 20);
+  height: calc(100% / 20);
   &:hover {
     transform: scale(0.95);
     border: 1.5px solid rgba(0, 0, 0, 0.8);
@@ -80,11 +72,15 @@ export const StyledSideRight = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  height: 100%;
+  width: 23%;
   & > * {
     width: 80%;
   }
 `;
 export const StyledSideLeft = styled.div`
   display: flex;
+  width: 23%;
+  height: 100%;
   justify-content: flex-end;
 `;

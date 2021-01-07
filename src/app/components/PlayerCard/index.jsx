@@ -7,7 +7,7 @@ const PlayerCard = ({ user, isHost, ...rest }) => {
     <StyledPlayerCard {...rest}>
       <StyledName>{user?.name ?? 'Waiting for others . . .'}</StyledName>
       <AvatarSpin
-        isLoading={user?.turn}
+        isLoading={true}
         size={126}
         src={
           user?.avatar ??

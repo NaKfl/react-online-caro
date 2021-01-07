@@ -1,0 +1,8 @@
+import styled from 'styled-components';
+import { Menu } from 'antd';
+export const StyledMenu = styled(Menu)``;
+
+export const StyledItem = styled(Menu.Item)`
+  display: flex;
+  align-items: center;
+`;

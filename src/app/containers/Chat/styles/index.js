@@ -9,7 +9,7 @@ export const StyledChat = styled.div`
       : height
       ? `${height}px`
       : `350px`};
-
+  width: 100%;
   .chat-list {
     display: inline-block;
     height: 100%;
