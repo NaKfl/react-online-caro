@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
-  docker: circleci/docker@1.4.0
+  docker: circleci/docker@1.5.0
 
 jobs:
   build-and-push:
@@ -13,6 +13,8 @@ jobs:
       - setup_remote_docker
       - checkout
       - docker/check
+      - setup_remote_docker:
+          version: 19.03.13
       - docker/build:
           image: $DOCKER_IMAGE
           tag: $DOCKER_TAG
@@ -38,7 +40,7 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - deploy
       - deploy:
           requires:
             - build-and-push
