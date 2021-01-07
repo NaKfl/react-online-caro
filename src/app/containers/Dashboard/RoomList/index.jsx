@@ -1,4 +1,5 @@
 import { Button, Col, Input, Radio, Row, Typography } from 'antd';
+import { ModalCreateRoom } from 'app/components/ModalCreateRoom';
 import Room from 'app/components/Room';
 import React, { memo } from 'react';
 import { STATUS } from 'utils/constants';
@@ -60,6 +61,7 @@ export const RoomList = props => {
           );
         })}
       </Row>
+      {/* <ModalCreateRoom /> */}
     </div>
   );
 };

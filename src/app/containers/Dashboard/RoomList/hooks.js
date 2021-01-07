@@ -8,13 +8,10 @@ export const useHooks = props => {
   const [filter, setFilter] = useState(null);
   const [searchText, setSearchText] = useState(null);
   const [listRoom, setListRoom] = useState(props.listRoom);
+  const [inRoom, setInRoom] = useState('');
   const roomData = props.listRoom;
   const user = getUserFromStorage();
   useEffect(() => {
-    // socket.emit('get-list-room');
-    // socket.on('list-room', data => {
-    //   setListRoom(data);
-    // });
     if (searchText) {
       let list = roomData.filter(
         room =>
@@ -23,6 +20,14 @@ export const useHooks = props => {
       setListRoom(list);
     } else setListRoom(roomData);
   }, [searchText, filter, roomData]);
+
+  useEffect(() => {
+    socket.on('server-send-in-room', ({ inRoom }) => {
+      console.log('In Room :', inRoom);
+      // Event Block Join Room
+      setInRoom(inRoom);
+    });
+  }, []);
 
   const handleOnChangeRadio = useCallback(e => {
     console.log({ e });

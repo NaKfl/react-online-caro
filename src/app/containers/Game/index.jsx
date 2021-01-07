@@ -13,10 +13,14 @@ export const Game = memo(props => {
   const { id: roomId } = useParams();
   const { selector, handlers } = useHooks(props);
   const { boards, roomPanel, status } = selector;
+  const { handleLeaveRoom } = handlers;
   return (
     <>
       <StyledSideLeft>
-        <PlayerInfoSideBar {...roomPanel} />
+        <PlayerInfoSideBar
+          handleLeaveRoom={handleLeaveRoom}
+          roomPanel={roomPanel}
+        />
       </StyledSideLeft>
       <Board
         status={status}

@@ -12,21 +12,21 @@ import PlayerCard from 'app/components/PlayerCard';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-const PlayerInfoSideBar = ({ host, guest, room, ...rest }) => {
+const PlayerInfoSideBar = ({ roomPanel, handleLeaveRoom }) => {
   return (
-    <StyledPlayerInfoSideBar {...rest}>
+    <StyledPlayerInfoSideBar {...roomPanel}>
       <StyledRoomInfoGroup>
-        <Link to="/">
+        <Link to="/" onClick={handleLeaveRoom}>
           <StyledBackButton icon={<ArrowLeftOutlined />}></StyledBackButton>
         </Link>
-        <StyledRoomName>{`Room ${room?.name}`}</StyledRoomName>
+        <StyledRoomName>{`Room ${roomPanel?.name}`}</StyledRoomName>
       </StyledRoomInfoGroup>
       <StyledPanel>
-        <PlayerCard user={guest} />
-        <StyledScore>{guest?.score ?? 0}</StyledScore>
+        <PlayerCard user={roomPanel.firstPlayer} />
+        <StyledScore>{roomPanel.firstPlayer?.point ?? 0}</StyledScore>
         <StyledDivider />
-        <StyledScore>{guest?.score ?? 0}</StyledScore>
-        <PlayerCard user={host} isHost />
+        <StyledScore>{roomPanel.secondPlayer?.point ?? 0}</StyledScore>
+        <PlayerCard user={roomPanel.secondPlayer} isHost />
       </StyledPanel>
     </StyledPlayerInfoSideBar>
   );
