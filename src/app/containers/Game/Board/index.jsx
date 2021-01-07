@@ -34,7 +34,6 @@ const Board = memo(
         </Row>
       ));
     };
-    console.log(status);
     return (
       <StyledBoard status={status}>
         {status !== null && (

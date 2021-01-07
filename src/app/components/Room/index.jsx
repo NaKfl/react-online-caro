@@ -5,7 +5,7 @@ import { STATUS } from 'utils/constants';
 import { StyledRoom } from './styles';
 import { Link } from 'react-router-dom';
 export const Room = props => {
-  const { handleJoinRoom, id, status, name } = props;
+  const { handleJoinRoom, id, status, name, joinId } = props;
   return (
     <>
       <StyledRoom
@@ -22,7 +22,7 @@ export const Room = props => {
           <div style={{ fontWeight: 700 }}>{`View`}</div>,
         ]}
         onClick={() => {
-          if (status !== 'PLAYING') handleJoinRoom(id);
+          handleJoinRoom(id);
         }}
       >
         <Row justify="space-between" align="middle" className="status-line">
@@ -31,7 +31,7 @@ export const Room = props => {
             <span className="status">{STATUS[status].title}</span>
           </Row>
         </Row>
-        <div className="room-number">{name}</div>
+        <div className="room-number">{joinId}</div>
       </StyledRoom>
     </>
   );

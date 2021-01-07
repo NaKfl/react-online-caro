@@ -7,10 +7,10 @@ export const ACTION_STATUS = {
 };
 
 export const STATUS = {
-  AVAILABLE: {
+  WAITING: {
     value: 1,
     color: 'green',
-    title: 'Available',
+    title: 'Waiting',
   },
   PLAYING: {
     value: 2,

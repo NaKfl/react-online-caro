@@ -22,10 +22,12 @@ export const RoomList = props => {
             buttonStyle="solid"
           >
             <Radio.Button value={0}>All</Radio.Button>
-            <Radio.Button value={STATUS.AVAILABLE.value}>
-              Available
+            <Radio.Button value={STATUS.WAITING.value}>
+              {STATUS.WAITING.title}
             </Radio.Button>
-            <Radio.Button value={STATUS.PLAYING.value}>Playing</Radio.Button>
+            <Radio.Button value={STATUS.PLAYING.value}>
+              {STATUS.PLAYING.title}
+            </Radio.Button>
           </Radio.Group>
         </Col>
         <Col>
@@ -52,6 +54,7 @@ export const RoomList = props => {
                 handleJoinRoom={handleJoinRoom}
                 status={room.status}
                 name={room.name}
+                joinId={room.joinId}
               />
             </Col>
           );
