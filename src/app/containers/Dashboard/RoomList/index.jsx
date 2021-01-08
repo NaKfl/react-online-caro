@@ -6,11 +6,16 @@ import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
   const { selectors, handlers, states } = useHooks(props);
+  const { isShowModal } = states;
   const {
     handleOnChangeRadio,
     handleSearch,
     handleJoinRoom,
     handleCreateRoom,
+    handleCancel,
+    handleShowModal,
+    handleSubmitModal,
+    handleSelectChangeModal,
   } = handlers;
   const { listRoom } = selectors;
   return (
@@ -32,7 +37,7 @@ export const RoomList = props => {
           </Radio.Group>
         </Col>
         <Col>
-          <Button onClick={handleCreateRoom}>Create Room</Button>
+          <Button onClick={handleShowModal}>Create Room</Button>
         </Col>
         <Col style={{ padding: '0 20px' }}>
           <Input.Search
@@ -61,7 +66,11 @@ export const RoomList = props => {
           );
         })}
       </Row>
-      {/* <ModalCreateRoom /> */}
+      <ModalCreateRoom
+        isModalVisible={isShowModal}
+        handleCancel={handleCancel}
+        handleSubmit={handleCreateRoom}
+      />
     </div>
   );
 };

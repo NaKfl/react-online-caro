@@ -6,20 +6,16 @@ import Input from 'app/components/Input';
 const { Option } = Select;
 
 export const ModalCreateRoom = props => {
-  const { isModalVisible, handleChange, handleSubmit } = props;
+  const { isModalVisible, handleCancel, handleSubmit } = props;
   return (
     <Modal
       title="Create Room"
       visible={isModalVisible}
       footer={[
-        <Button key="back">Cancel</Button>,
-        <Button
-          key="submit"
-          form="form"
-          htmlType="submit"
-          type="primary"
-          //   loading={loading}
-        >
+        <Button key="back" onClick={handleCancel}>
+          Cancel
+        </Button>,
+        <Button key="submit" form="form" htmlType="submit" type="primary">
           Submit
         </Button>,
       ]}
@@ -38,11 +34,7 @@ export const ModalCreateRoom = props => {
         </Form.Item>
 
         <Form.Item name="password">
-          <Input.Password
-            // prefix={<LockOutlined />}
-            type="password"
-            placeholder={'Password'}
-          />
+          <Input.Password type="password" placeholder={'Password'} />
         </Form.Item>
 
         <Form.Item
@@ -54,12 +46,7 @@ export const ModalCreateRoom = props => {
             },
           ]}
         >
-          <Select
-            // defaultValue="30"
-            // style={{ width }}
-            // onChange={handleChange}
-            placeholder="Seconds per step"
-          >
+          <Select placeholder="Seconds per step">
             <Option value="20">20</Option>
             <Option value="30">30</Option>
             <Option value="40">40</Option>
