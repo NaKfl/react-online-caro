@@ -6,4 +6,6 @@ export const COLOR = {
   WHITE: '#ffff',
   SHADOW_GRAY: 'rgba(0, 0, 0, 0.08)',
   RED: '#ED553B',
+  FACEBOOK: '#4464B8',
+  GOOGLE: '#C75340',
 };

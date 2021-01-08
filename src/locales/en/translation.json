@@ -19,8 +19,8 @@
     "messageEmptyPassword": "Please input your Password!",
     "forgotPassword": "Forgot password ?",
     "btnLogin": "Login",
-    "btnLoginFacebook": "Google Login",
-    "btnLoginGoogle": "Facebook Login",
+    "btnLoginFacebook": "Facebook Login",
+    "btnLoginGoogle": "Google Login",
     "linkRegister": "Register"
   },
 
