@@ -4,6 +4,7 @@ import { reducer, sliceKey } from './slice';
 import useHooks from './hooks';
 
 import Confirm from 'app/components/Modal/Confirm';
+import InfoUser from 'app/components/Modal/InfoUser';
 
 import { POPUP_TYPE } from './constants';
 
@@ -20,6 +21,17 @@ export const Popup = memo(() => {
           case POPUP_TYPE.CONFIRM: {
             return (
               <Confirm
+                key={popup.key}
+                onCancel={handleClosePopup(popup)}
+                visible
+                {...popup}
+              />
+            );
+          }
+
+          case POPUP_TYPE.INFO_USER: {
+            return (
+              <InfoUser
                 key={popup.key}
                 onCancel={handleClosePopup(popup)}
                 visible

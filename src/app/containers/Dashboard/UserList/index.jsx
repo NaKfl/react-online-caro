@@ -1,15 +1,27 @@
 import React, { memo } from 'react';
-import { Drawer } from 'antd';
 import UserItem from 'app/components/UserItem';
-import { StyledUserList } from './styles';
+import { StyledUserList, StyledTitle, StyledScrollList } from './styles';
+import useHooks from './hooks';
+
 export const UserList = props => {
-  const { visible, onClose, userList } = props;
+  const { userList } = props;
+  const { handlers } = useHooks();
+  const { showInfoUser } = handlers;
   return (
     <StyledUserList>
-      <p> USERS ONLINE</p>
-      {userList.map(item => {
-        return <UserItem key={item.id} user={item}></UserItem>;
-      })}
+      <StyledTitle>Online Users</StyledTitle>
+      <StyledScrollList>
+        {userList &&
+          userList.map(item => {
+            return (
+              <UserItem
+                key={item.id}
+                user={item}
+                onClick={() => showInfoUser(item)}
+              />
+            );
+          })}
+      </StyledScrollList>
     </StyledUserList>
   );
 };
