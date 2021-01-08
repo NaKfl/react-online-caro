@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLOR } from 'styles/colorPalette';
 
 export const StyledLayout = styled.div`
   height: 100vh;
@@ -18,7 +19,7 @@ export const StyledContent = styled.div`
     position: relative;
     width: 45%;
     overflow: hidden;
-    border: 1px solid black;
+    box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
   }
   .square-box:before {
     content: '';

@@ -17,17 +17,14 @@ export const StyledSquare = styled.div`
   align-items: center;
   justify-content: center;
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  /* box-shadow: #0c0c0c 0 0 4px; */
+  border: 1px solid rgba(0, 0, 0, 0.2);
   color: ${({ children }) => (children === 'x' ? 'red' : 'blue')};
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0.1s ease-out;
   width: calc(100% / 20);
   height: calc(100% / 20);
   &:hover {
-    transform: scale(0.95);
-    border: 1.5px solid rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(0, 0, 0, 0.6);
   }
 `;
 export const StyledNotifiWinner = styled.div`
@@ -51,7 +48,6 @@ export const StyledNotifiWinner = styled.div`
 `;
 export const StyledBoard = styled.div`
   border-radius: 8px;
-  transition: all 0.15s ease;
   backdrop-filter: blur(10px);
   background-color: #f8f8f8;
   box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
@@ -73,6 +69,7 @@ export const StyledSideRight = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100%;
+  max-height: 840px;
   width: 23%;
   & > * {
     width: 80%;
@@ -82,5 +79,6 @@ export const StyledSideLeft = styled.div`
   display: flex;
   width: 23%;
   height: 100%;
+  max-height: 840px;
   justify-content: flex-end;
 `;

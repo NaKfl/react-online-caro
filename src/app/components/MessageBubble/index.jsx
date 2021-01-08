@@ -5,7 +5,7 @@ const MessageBubble = ({
   children,
   direction = 'right',
   name,
-  time,
+  createdAt,
   ...rest
 }) => {
   return (
@@ -13,7 +13,7 @@ const MessageBubble = ({
       <StyledInfo direction={direction}>{name}</StyledInfo>
       {children}
       <span className="time" direction={direction}>
-        {time}
+        {createdAt}
       </span>
     </StyledMessageBubble>
   );
