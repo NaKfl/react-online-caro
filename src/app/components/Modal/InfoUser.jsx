@@ -15,10 +15,11 @@ import Form from 'app/components/Form';
 import Input from 'app/components/Input';
 import { Row, Col, Avatar } from 'antd';
 import { USER_STATUS } from 'utils/constants';
+import classifyRank from 'utils/classifyRank';
 
 const Confirm = memo(props => {
   const { visible, onCancel, user, ...rest } = props;
-  const { status, name, avatar } = user;
+  const { status, name, avatar, point } = user;
   const { color, title } = USER_STATUS[status];
 
   return (
@@ -67,13 +68,23 @@ const Confirm = memo(props => {
                 <Input disabled />
               </Form.Item>
             </Col>
-            <Col span={12} className="final-input">
-              <Form.Item label="Rank" name="rank">
+            <Col span={12}>
+              <Form.Item label="Rank">
+                <Input value={classifyRank(point)} disabled />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Point" name="point">
                 <Input disabled />
               </Form.Item>
             </Col>
             <Col span={12} className="final-input">
-              <Form.Item label="Point" name="point">
+              <Form.Item label="Total matches" name="total-matches">
+                <Input disabled />
+              </Form.Item>
+            </Col>
+            <Col span={12} className="final-input">
+              <Form.Item label="Registration Date" name="createdAt">
                 <Input disabled />
               </Form.Item>
             </Col>
