@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { COLOR } from 'styles/colorPalette';
-import Title from 'app/components/Title';
+import PanelTitle from 'app/components/PanelTitle';
 
 export const StyledUserList = styled.div`
   background-color: transparent;
@@ -12,7 +12,7 @@ export const StyledUserList = styled.div`
   box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
 `;
 
-export const StyledTitle = styled(Title)`
+export const StyledTitle = styled(PanelTitle)`
   margin-left: 20px;
 `;
 
