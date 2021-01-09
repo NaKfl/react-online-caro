@@ -8,4 +8,5 @@ export const COLOR = {
   RED: '#ED553B',
   FACEBOOK: '#4464B8',
   GOOGLE: '#C75340',
+  GREEN: '#54e346',
 };

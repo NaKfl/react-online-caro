@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import Layout from 'app/components/Layout';
 import Menu from 'app/components/Menu';
 import { Link } from 'react-router-dom';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, CalculatorOutlined } from '@ant-design/icons';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 const MenuItemSider = [
@@ -11,12 +11,12 @@ const MenuItemSider = [
     title: 'User list',
     path: '/admin/user',
     icon: <UserOutlined />,
-    // subMenu: [
-    //     // {
-    //     //     key:'',
-    //     //     title:''
-    //     // }
-    // ],
+  },
+  {
+    key: '2',
+    title: 'Game list',
+    path: '/admin/game',
+    icon: <CalculatorOutlined />,
   },
 ];
 export const StyledSider = memo(() => {
@@ -26,10 +26,15 @@ export const StyledSider = memo(() => {
   };
   return (
     <>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={onCollapse}
+        trigger={null}
+      >
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          {MenuItemSider.map(item => {
+          {/* {MenuItemSider.map(item => {
             const check = Object.keys(item);
             if (!check.includes('subMenu')) {
               return (
@@ -46,7 +51,12 @@ export const StyledSider = memo(() => {
                 </SubMenu>
               );
             }
-          })}
+          })} */}
+          {MenuItemSider.map(item => (
+            <Menu.Item key={item.key} icon={item.icon}>
+              <Link to={item.path}>{item.title}</Link>
+            </Menu.Item>
+          ))}
         </Menu>
       </Sider>
     </>
