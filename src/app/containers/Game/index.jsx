@@ -21,14 +21,14 @@ export const Game = memo(props => {
   const { id: roomId } = useParams();
   const { selector, handlers } = useHooks(props);
   const { boards, roomPanel, status, onlineUserList } = selector;
-  console.log('roomPanel', roomPanel);
-  const { handleLeaveRoom } = handlers;
+  const { handleLeaveRoom, handleJoinOutBoard } = handlers;
   return (
     <StyledRow>
       <StyledRoomHeader>{`${roomPanel?.name} (ID: ${roomPanel.joinId})`}</StyledRoomHeader>
       <StyledLayoutGame>
         <StyledSideLeft>
           <PlayerInfoSideBar
+            handleJoinOutBoard={handleJoinOutBoard}
             handleLeaveRoom={handleLeaveRoom}
             roomPanel={roomPanel}
           />
