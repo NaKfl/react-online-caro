@@ -37,11 +37,6 @@ export const useHooks = () => {
     socket.on('server-send-room-list', ({ listRoom }) => {
       setRoomList(listRoom);
     });
-
-    return () => {
-      socket.off('server-send-room-list');
-      socket.off('server-send-user-list');
-    };
   }, [updateOnlineUserList]);
 
   useEffect(() => {
@@ -58,7 +53,6 @@ export const useHooks = () => {
     );
 
     socket.on('server-send-in-room', ({ inRoom, joinId, password }) => {
-      console.log({ password });
       const token = jwt.sign({ password }, JWT_SECRET);
       openNotification(
         () => history.push(`/game/${inRoom}?token=${token}`),
@@ -170,6 +164,23 @@ export const useHooks = () => {
     setShowModalPass(false);
   };
 
+  const findRoomById = (roomList, id) => {
+    return roomList.find(room => room.joinId === id);
+  };
+
+  const handleEnterInput = event => {
+    const roomId = event.target.value;
+    const roomJoin = findRoomById(roomList, roomId);
+    console.log('roomJoin', roomJoin, roomList, roomId == roomList[0].joinId);
+    if (roomJoin) {
+      socket.emit('client-check-room-have-pass', {
+        roomId: roomJoin.id,
+      });
+      setRoomIdJoin(roomJoin.id);
+    } else {
+      notifyError('Not have ROOM ID!');
+    }
+  };
   return {
     selectors: {
       onlineUserList,
@@ -182,6 +193,7 @@ export const useHooks = () => {
       handleCancelPass,
       handleCheckPassword,
       handleJoinRoom,
+      handleEnterInput,
     },
     states: {
       toggleUserList,

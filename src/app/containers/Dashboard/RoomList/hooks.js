@@ -38,7 +38,7 @@ export const useHooks = props => {
       const id = uuidv4();
       const room = {
         id,
-        joinId: joinId,
+        joinId: joinId + '',
         name: valueForm.name,
         password: valueForm.password ?? '',
         timePerStep: valueForm.timePerStep,

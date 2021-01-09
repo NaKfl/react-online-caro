@@ -73,7 +73,7 @@ export const StyledSideRight = styled.div`
   max-height: 840px;
   width: 23%;
   & > * {
-    width: 80%;
+    width: 100%;
   }
   .list-user {
     flex: 1;

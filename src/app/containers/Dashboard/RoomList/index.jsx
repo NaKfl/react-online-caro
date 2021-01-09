@@ -5,7 +5,7 @@ import React, { memo } from 'react';
 import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
-  const { handleJoinRoom } = props;
+  const { handleJoinRoom, handleEnterInput } = props;
   const { selectors, handlers, states } = useHooks(props);
   const { isShowModal } = states;
   const {
@@ -43,6 +43,13 @@ export const RoomList = props => {
             onSearch={handleSearch}
             onChange={handleSearch}
             allowClear
+          />
+        </Col>
+        <Col style={{ padding: '0 20px' }}>
+          <Input
+            placeholder="INPUT ID ROOM"
+            allowClear
+            onPressEnter={handleEnterInput}
           />
         </Col>
         <Col flex={1} style={{ minWidth: '60px' }}>

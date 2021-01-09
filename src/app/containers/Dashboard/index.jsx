@@ -14,12 +14,21 @@ export const Dashboard = props => {
   const { states, selectors, handlers } = useHooks(props);
   const { onlineUserList, roomList } = selectors;
   const { isShowModalPass } = states;
-  const { handleCancelPass, handleCheckPassword, handleJoinRoom } = handlers;
+  const {
+    handleCancelPass,
+    handleCheckPassword,
+    handleJoinRoom,
+    handleEnterInput,
+  } = handlers;
   return (
     <StyledDashboard>
       <Row justify="space-between">
         <Col flex={1}>
-          <RoomList handleJoinRoom={handleJoinRoom} listRoom={roomList} />
+          <RoomList
+            handleEnterInput={handleEnterInput}
+            handleJoinRoom={handleJoinRoom}
+            listRoom={roomList}
+          />
         </Col>
         <Col className="group-right-panel">
           <div className="list-user">
