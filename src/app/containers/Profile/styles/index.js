@@ -2,8 +2,11 @@ import styled from 'styled-components';
 import { Badge } from 'antd';
 
 export const StyledProfile = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 `;
 
 export const StyledInfo = styled.div`
@@ -75,4 +78,17 @@ export const StyledTextStatus = styled.p`
 export const StyledName = styled.p`
   margin: 0;
   font-size: 18px;
+`;
+
+export const StyledListGame = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 15px;
+  margin-top: 15px;
+  .ant-table-wrapper {
+    overflow: auto;
+  }
 `;

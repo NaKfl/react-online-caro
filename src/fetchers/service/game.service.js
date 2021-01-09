@@ -35,7 +35,7 @@ export const getList = () => {
 };
 
 export const getListGameByUser = () => {
-  request(WEB_API, {
+  return request(WEB_API, {
     url: 'game/user',
     method: 'GET',
   })
