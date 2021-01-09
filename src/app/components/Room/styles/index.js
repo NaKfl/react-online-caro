@@ -24,4 +24,14 @@ export const StyledRoom = styled(Card)`
       margin-left: auto;
     }
   }
+  .title-room {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .group-title {
+      display: flex;
+      align-items: center;
+    }
+  }
 `;

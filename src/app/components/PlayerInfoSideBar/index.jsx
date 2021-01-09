@@ -4,12 +4,17 @@ import {
   StyledDivider,
   StyledScore,
   StyledPanel,
-  StyledBackButton,
+  StyledButton,
   StyledRoomInfoGroup,
   StyledRoomName,
 } from './styles';
 import PlayerCard from 'app/components/PlayerCard';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import {
+  ArrowLeftOutlined,
+  UserSwitchOutlined,
+  SmileOutlined,
+  MehOutlined,
+} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 const PlayerInfoSideBar = ({ roomPanel, handleLeaveRoom }) => {
@@ -17,16 +22,28 @@ const PlayerInfoSideBar = ({ roomPanel, handleLeaveRoom }) => {
     <StyledPlayerInfoSideBar {...roomPanel}>
       <StyledRoomInfoGroup>
         <Link to="/" onClick={handleLeaveRoom}>
-          <StyledBackButton icon={<ArrowLeftOutlined />}></StyledBackButton>
+          <StyledButton icon={<ArrowLeftOutlined />}></StyledButton>
         </Link>
-        <StyledRoomName>{`Room ${roomPanel?.name}`}</StyledRoomName>
+        <StyledRoomName>Out room</StyledRoomName>
+      </StyledRoomInfoGroup>
+      <StyledRoomInfoGroup>
+        <StyledButton icon={<MehOutlined />}></StyledButton>
+        <StyledRoomName>Surrender</StyledRoomName>
+      </StyledRoomInfoGroup>
+      <StyledRoomInfoGroup>
+        <StyledButton icon={<SmileOutlined />}></StyledButton>
+        <StyledRoomName>Request Draw</StyledRoomName>
+      </StyledRoomInfoGroup>
+      <StyledRoomInfoGroup>
+        <StyledButton icon={<UserSwitchOutlined />}></StyledButton>
+        <StyledRoomName>Join Game</StyledRoomName>
       </StyledRoomInfoGroup>
       <StyledPanel>
-        <PlayerCard user={roomPanel.firstPlayer} />
-        <StyledScore>{roomPanel.firstPlayer?.point ?? 0}</StyledScore>
+        <PlayerCard user={roomPanel?.firstPlayer} />
+        <StyledScore>{roomPanel?.firstPlayer?.point ?? 0}</StyledScore>
         <StyledDivider />
-        <StyledScore>{roomPanel.secondPlayer?.point ?? 0}</StyledScore>
-        <PlayerCard user={roomPanel.secondPlayer} isHost />
+        <StyledScore>{roomPanel?.secondPlayer?.point ?? 0}</StyledScore>
+        <PlayerCard user={roomPanel?.secondPlayer} isHost />
       </StyledPanel>
     </StyledPlayerInfoSideBar>
   );

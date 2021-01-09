@@ -37,3 +37,25 @@ export const openNotification = (handleConfirm, roomId) => {
     key,
   });
 };
+
+export const openNotificationInvite = (handleConfirm, roomId, user) => {
+  const key = `open${Date.now()}`;
+  const btn = (
+    <Button
+      type="primary"
+      size="small"
+      onClick={() => {
+        handleConfirm();
+        notification.close(key);
+      }}
+    >
+      Join room
+    </Button>
+  );
+  notification.open({
+    message: `${user.name} invite you join room`,
+    description: `${user.name} invite you join room ${roomId}`,
+    btn,
+    key,
+  });
+};

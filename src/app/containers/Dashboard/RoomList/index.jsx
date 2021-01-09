@@ -1,22 +1,19 @@
 import { Button, Col, Input, Radio, Row, Typography } from 'antd';
 import { ModalCreateRoom } from 'app/components/ModalCreateRoom';
-import { ModalFillPass } from 'app/components/ModalFillPass';
 import Room from 'app/components/Room';
 import React, { memo } from 'react';
 import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
+  const { handleJoinRoom, handleEnterInput } = props;
   const { selectors, handlers, states } = useHooks(props);
-  const { isShowModal, isShowModalPass } = states;
+  const { isShowModal } = states;
   const {
     handleOnChangeRadio,
     handleSearch,
-    handleJoinRoom,
     handleCreateRoom,
     handleCancel,
     handleShowModal,
-    handleCancelPass,
-    handleCheckPassword,
   } = handlers;
   const { listRoom } = selectors;
   return (
@@ -48,6 +45,13 @@ export const RoomList = props => {
             allowClear
           />
         </Col>
+        <Col style={{ padding: '0 20px' }}>
+          <Input
+            placeholder="INPUT ID ROOM"
+            allowClear
+            onPressEnter={handleEnterInput}
+          />
+        </Col>
         <Col flex={1} style={{ minWidth: '60px' }}>
           <Typography.Text>Total: 50</Typography.Text>
         </Col>
@@ -57,6 +61,7 @@ export const RoomList = props => {
           return (
             <Col key={room.id} style={{ padding: '15px' }} span={4}>
               <Room
+                password={!!room.password}
                 id={room.id}
                 handleJoinRoom={handleJoinRoom}
                 status={room.status}
@@ -67,11 +72,6 @@ export const RoomList = props => {
           );
         })}
       </Row>
-      <ModalFillPass
-        isModalVisible={isShowModalPass}
-        handleCancel={handleCancelPass}
-        handleSubmit={handleCheckPassword}
-      />
       <ModalCreateRoom
         isModalVisible={isShowModal}
         handleCancel={handleCancel}

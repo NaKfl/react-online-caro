@@ -20,7 +20,6 @@ import classifyRank from 'utils/classifyRank';
 const Confirm = memo(props => {
   const { visible, onCancel, user, ...rest } = props;
   const { status, name, avatar, point } = user;
-  const { color, title } = USER_STATUS[status];
 
   return (
     <StyledModal
@@ -47,11 +46,16 @@ const Confirm = memo(props => {
               <StyledPart>
                 <StyledAvatar>
                   <Avatar size={80} src={avatar} />
-                  <StyledBadge color={color} />
+                  {status && <StyledBadge color={USER_STATUS[status].color} />}
+                  {/* <StyledBadge color={color} /> */}
                 </StyledAvatar>
                 <StyledUserStatus>
                   <StyledName>{name}</StyledName>
-                  <StyledTextStatus color={color}>{title}</StyledTextStatus>
+                  {status && (
+                    <StyledTextStatus color={USER_STATUS[status].color}>
+                      {USER_STATUS[status].title}
+                    </StyledTextStatus>
+                  )}
                 </StyledUserStatus>
               </StyledPart>
             </StyledUserItem>

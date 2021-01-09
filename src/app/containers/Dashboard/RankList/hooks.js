@@ -1,8 +1,7 @@
-import { useCallback } from 'react';
-import useActions from 'hooks/useActions';
-import { actions as popupActions } from 'app/containers/Popup/slice';
 import { POPUP_TYPE } from 'app/containers/Popup/constants';
-import socket from 'utils/socket';
+import { actions as popupActions } from 'app/containers/Popup/slice';
+import useActions from 'hooks/useActions';
+import { useCallback } from 'react';
 
 export const useHooks = props => {
   const { openPopup } = useActions({ openPopup: popupActions.openPopup }, [
@@ -20,14 +19,9 @@ export const useHooks = props => {
     [openPopup],
   );
 
-  const handleClickInvite = useCallback(userInvited => {
-    socket.emit('client-invite-join-room', {
-      userInvited,
-    });
-  }, []);
   return {
     selectors: {},
-    handlers: { showInfoUser, handleClickInvite },
+    handlers: { showInfoUser },
     states: {},
   };
 };

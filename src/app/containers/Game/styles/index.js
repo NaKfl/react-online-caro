@@ -58,27 +58,59 @@ export const StyledGameInfo = styled.div`
   width: 220px;
 `;
 
-export const StyledRow = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-column-gap: 30px;
-`;
-
 export const StyledSideRight = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   height: 100%;
   max-height: 840px;
-  width: 23%;
+  width: 18%;
   & > * {
-    width: 80%;
+    width: 100%;
   }
+  .list-user {
+    flex: 1;
+    padding-bottom: 10px;
+  }
+  margin: 0 20px;
 `;
-export const StyledSideLeft = styled.div`
+
+export const StyledSideOuterRight = styled.div`
   display: flex;
-  width: 23%;
+  width: 15%;
+  & > * {
+    width: 100%;
+  }
   height: 100%;
   max-height: 840px;
   justify-content: flex-end;
+`;
+
+export const StyledSideLeft = styled.div`
+  display: flex;
+  width: 18%;
+  height: 100%;
+  max-height: 840px;
+  justify-content: center;
+`;
+
+export const StyledRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+export const StyledRoomHeader = styled.div`
+  display: flex;
+  width: calc(100% + 50px);
+  height: 64px;
+  background-color: ${COLOR.SECONDARY};
+  margin: -25px;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
 `;

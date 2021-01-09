@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLOR } from 'styles/colorPalette';
 import PanelTitle from 'app/components/PanelTitle';
 
-export const StyledUserList = styled.div`
+export const StyledPanel = styled.div`
   background-color: transparent;
   padding: 15px 0 15px 0;
   height: 100%;

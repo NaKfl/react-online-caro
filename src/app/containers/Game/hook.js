@@ -10,21 +10,14 @@ import socket from 'utils/socket';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from 'configs';
 import { openNotification, notifyError } from 'utils/notify';
+import { selectOnlineUserList } from 'app/containers/Dashboard/selectors';
 
 export const useHooks = props => {
+  const onlineUserList = useSelector(selectOnlineUserList);
   const { updateOnlineUserList } = useActions(
     { updateOnlineUserList: dashboardActions.updateOnlineUserList },
     [dashboardActions],
   );
-
-  useEffect(() => {
-    const user = getUserFromStorage();
-    if (user) socket.emit('client-connect', { user });
-    socket.on('server-send-user-list', ({ userList }) => {
-      const users = userList.filter(item => item.email !== user.email);
-      updateOnlineUserList(users);
-    });
-  }, [updateOnlineUserList]);
 
   const user = getUserFromStorage();
   const squarePerRow = useSelector(makeSquarePerRow);
@@ -37,6 +30,16 @@ export const useHooks = props => {
   const handleClickSquare = position => {
     socket.emit('play-chess', position, room);
   };
+
+  useEffect(() => {
+    const user = getUserFromStorage();
+    if (user) socket.emit('client-connect', { user });
+    socket.on('server-send-user-list', ({ userList }) => {
+      const users = userList.filter(item => item.email !== user.email);
+      updateOnlineUserList(users);
+    });
+  }, [updateOnlineUserList]);
+
   useEffect(() => {
     socket.on('get-boards', data => {
       setBoards([data]);
@@ -83,8 +86,7 @@ export const useHooks = props => {
           history.push(`/`);
         } else {
           if (isCorrect) {
-            const token = jwt.sign({ password }, JWT_SECRET);
-            history.push(`/game/${roomId}?token=${token}`);
+            socket.emit('client-update-users-status');
           } else {
             notifyError('Incorrect password !');
             history.push(`/`);
@@ -94,12 +96,10 @@ export const useHooks = props => {
     );
 
     socket.on('server-send-join-user', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
     socket.on('server-send-leave-room', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
@@ -117,10 +117,11 @@ export const useHooks = props => {
     const user = getUserFromStorage();
     if (user) {
       socket.emit('client-leave-room', { user, room: roomPanel });
+      socket.emit('client-update-users-status');
     }
   };
   return {
-    selector: { squarePerRow, boards, status, roomPanel, user },
+    selector: { squarePerRow, boards, status, roomPanel, user, onlineUserList },
     handlers: { handleClickSquare, handleLeaveRoom },
   };
 };

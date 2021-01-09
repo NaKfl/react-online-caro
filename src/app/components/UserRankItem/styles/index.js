@@ -27,6 +27,13 @@ export const StyledPart = styled.div`
 
 export const StyledAvatar = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
+  span {
+    display: inline-block;
+    font-weight: bold;
+    width: 23px;
+  }
 `;
 
 export const StyledBadge = styled(Badge)`
