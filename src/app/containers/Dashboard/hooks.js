@@ -4,12 +4,16 @@ import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 import useActions from 'hooks/useActions';
 import { useSelector } from 'react-redux';
 import { actions } from './slice';
-import { selectOnlineUserList } from './selectors';
+import { selectOnlineUserList, selectRankList } from './selectors';
 
 export const useHooks = () => {
   const onlineUserList = useSelector(selectOnlineUserList);
-  const { updateOnlineUserList } = useActions(
-    { updateOnlineUserList: actions.updateOnlineUserList },
+  const rankList = useSelector(selectRankList);
+  const { updateOnlineUserList, updateRankList } = useActions(
+    {
+      updateOnlineUserList: actions.updateOnlineUserList,
+      updateRankList: actions.updateRankList,
+    },
     [actions],
   );
   const [toggleUserList, setToggleUserList] = useState(false);
@@ -23,10 +27,13 @@ export const useHooks = () => {
       const users = userList.filter(item => item.email !== user.email);
       updateOnlineUserList(users);
     });
+    socket.on('server-send-rank-list', ({ rankList }) => {
+      updateRankList(rankList);
+    });
     socket.on('server-send-room-list', ({ listRoom }) => {
       setRoomList(listRoom);
     });
-  }, [updateOnlineUserList]);
+  }, [updateOnlineUserList, updateRankList]);
 
   const handleToggle = useCallback(() => {
     setToggleUserList(true);
@@ -40,6 +47,7 @@ export const useHooks = () => {
     selectors: {
       onlineUserList,
       roomList,
+      rankList,
     },
     handlers: {
       handleToggle,

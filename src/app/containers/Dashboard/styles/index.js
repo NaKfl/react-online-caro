@@ -18,7 +18,10 @@ export const StyledDashboard = styled.div`
     margin: -25px;
     margin-left: 0;
     padding: 10px;
-    .list-user {
+    .list-rank {
+      flex: 1;
+    }
+    .list-online {
       flex: 1;
       padding-bottom: 10px;
     }

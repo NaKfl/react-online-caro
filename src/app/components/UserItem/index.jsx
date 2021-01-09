@@ -18,7 +18,7 @@ const UserItem = props => {
 
   return (
     <StyledUserItem {...rest}>
-      <StyledPart onClick={handleShowInfor}>
+      <StyledPart className="name-and-status" onClick={handleShowInfor}>
         <StyledAvatar>
           <Avatar size={40} src={avatar} />
           <StyledBadge color={color} />
@@ -28,18 +28,20 @@ const UserItem = props => {
           <StyledTextStatus color={color}>{title}</StyledTextStatus>
         </StyledUserStatus>
       </StyledPart>
-      {status === USER_STATUS.ONLINE.value && isInRoom && (
-        <Tooltip placement="left" title="Invite">
-          <Button
-            shape="circle"
-            onClick={() => {
-              handleClickInvite(user);
-            }}
-          >
-            +
-          </Button>
-        </Tooltip>
-      )}
+      <StyledPart className="invite-button">
+        {status === USER_STATUS.ONLINE.value && isInRoom && (
+          <Tooltip placement="left" title="Invite">
+            <Button
+              shape="circle"
+              onClick={() => {
+                handleClickInvite(user);
+              }}
+            >
+              +
+            </Button>
+          </Tooltip>
+        )}
+      </StyledPart>
     </StyledUserItem>
   );
 };

@@ -3,6 +3,7 @@ import set from 'lodash/fp/set';
 
 export const initialState = {
   onlineUserList: [],
+  rankList: [],
 };
 
 const dashboardSlice = createSlice({
@@ -11,6 +12,10 @@ const dashboardSlice = createSlice({
   reducers: {
     updateOnlineUserList(state, action) {
       return set('onlineUserList', action.payload)(state);
+    },
+
+    updateRankList(state, action) {
+      return set('rankList', action.payload)(state);
     },
   },
 });
