@@ -17,6 +17,9 @@ export const STATUS = {
     color: 'red',
     title: 'Playing',
   },
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
 };
 export const COMMON_PROPERTIES = {
   status: '',
