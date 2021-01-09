@@ -4,11 +4,18 @@ import { Register } from 'app/containers/Register/Loadable';
 import { Game } from 'app/containers/Game/Loadable';
 import { UserList } from 'app/containers/Admin/UserList/Loadable';
 import { GameList } from 'app/containers/Admin/GameList/Loadable';
+import { Profile } from 'app/containers/Profile/Loadable';
+
 export const privateRoutes = [
   {
     path: '/',
     component: Dashboard,
     key: 'home',
+  },
+  {
+    path: '/profile',
+    component: Profile,
+    key: 'profile',
   },
 ];
 
@@ -36,4 +43,5 @@ export const adminRoutes = [
     key: 'gameList',
   },
 ];
+
 export const gameRoutes = [{ path: '/game/:id', component: Game, key: 'game' }];
