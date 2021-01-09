@@ -8,6 +8,7 @@ import { STATUS } from 'utils/constants';
 import Popconfirm from 'app/components/Popconfirm';
 import { actions } from './slice';
 import useActions from 'hooks/useActions';
+import moment from 'moment';
 
 export const MainTable = ({ dataSource, handleBlock }) => {
   const [form] = Form.useForm();
@@ -18,8 +19,16 @@ export const MainTable = ({ dataSource, handleBlock }) => {
   });
   const colms = [
     { title: 'Name', dataIndex: 'name', width: '25%', ...search('name') },
-    { title: 'Email', dataIndex: 'email', width: '30%', ...search('email') },
+    { title: 'Email', dataIndex: 'email', width: '25%', ...search('email') },
     { title: 'Point', dataIndex: 'point', width: '15%' },
+    {
+      title: 'Create At',
+      dataIndex: 'createdAt',
+      width: '15%',
+      render: (_, record) => {
+        return moment(record?.createdAt).format('DD/MM/YYYY hh:mm:ss');
+      },
+    },
     {
       title: 'Activated',
       dataIndex: 'isActivated',

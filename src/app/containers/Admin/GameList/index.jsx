@@ -12,7 +12,6 @@ export const GameList = memo(() => {
   useInjectReducer({ key: sliceKey, reducer });
   const { selectors, handles } = useHooks();
   const { gameList } = selectors;
-  const { handleBlock } = handles;
   return (
     <StyledLayout>
       <Title level={4}>List of Game</Title>

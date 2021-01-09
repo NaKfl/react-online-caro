@@ -8,28 +8,36 @@ export const storeAuthInfo = authInfo => {
 };
 
 export const isValidAuthInfo = authInfo => {
-  const expiresIn = get('token.expiresIn', authInfo);
-  return moment(expiresIn) >= moment();
+  const expires = get('tokens.access.expires', authInfo);
+  return moment(expires) >= moment().utc();
 };
 
 export const getAuthInfo = () => {
-  const authInfo = JSON.parse(localStorage.getItem(AUTH_INFO_KEY));
-  if (!isNil(authInfo) /*&& isValidAuthInfo(authInfo)*/) {
-    return authInfo;
+  try {
+    const authInfo = JSON.parse(localStorage.getItem(AUTH_INFO_KEY));
+    if (!isNil(authInfo) && isValidAuthInfo(authInfo)) {
+      return authInfo;
+    }
+    return null;
+  } catch (error) {
+    console.log('Error: ', error);
+    return null;
   }
-  return null;
 };
 
 export const getAccessToken = () => {
-  return getAuthInfo()?.token?.accessToken;
+  const authInfo = getAuthInfo();
+  return get('tokens.access.token', authInfo);
 };
 
 export const getRefreshToken = () => {
-  return getAuthInfo()?.token?.refreshToken;
+  const authInfo = getAuthInfo();
+  return get('tokens.refresh.token', authInfo);
 };
 
 export const getUser = () => {
-  return getAuthInfo()?.user;
+  const authInfo = getAuthInfo();
+  return get('user', authInfo);
 };
 
 export const isAuthenticated = () => {

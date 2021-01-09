@@ -5,5 +5,6 @@ export const StyledLayout = styled.div`
   width: 100%;
   position: relative;
   display: flex;
+  overflow-y: scroll;
   flex-direction: column;
 `;

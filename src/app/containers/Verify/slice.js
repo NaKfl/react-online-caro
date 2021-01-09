@@ -4,27 +4,24 @@ import flow from 'lodash/fp/flow';
 import { ACTION_STATUS } from 'utils/constants';
 
 export const initialState = {
-  list: [],
-  status: '',
+  status: ACTION_STATUS.PENDING,
   error: null,
 };
-const gameListSlice = createSlice({
-  name: 'gameList',
+
+const verifySlice = createSlice({
+  name: 'verify',
   initialState: initialState,
   reducers: {
-    getList(state) {
+    goVerify(state) {
       return flow(
-        set('error', null),
         set('status', ACTION_STATUS.PENDING),
+        set('error', null),
       )(state);
     },
-    getListSuccess(state, action) {
-      return flow(
-        set('list', action.payload),
-        set('status', ACTION_STATUS.SUCCESS),
-      )(state);
+    verifySuccess(state) {
+      return flow(set('status', ACTION_STATUS.SUCCESS))(state);
     },
-    getListFailed(state, action) {
+    verifyFailed(state, action) {
       return flow(
         set('error', action.payload),
         set('status', ACTION_STATUS.FAILED),
@@ -32,4 +29,5 @@ const gameListSlice = createSlice({
     },
   },
 });
-export const { actions, reducer, name: sliceKey } = gameListSlice;
+
+export const { actions, reducer, name: sliceKey } = verifySlice;
