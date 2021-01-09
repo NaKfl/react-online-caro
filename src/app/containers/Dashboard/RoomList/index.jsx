@@ -1,22 +1,19 @@
 import { Button, Col, Input, Radio, Row, Typography } from 'antd';
 import { ModalCreateRoom } from 'app/components/ModalCreateRoom';
-import { ModalFillPass } from 'app/components/ModalFillPass';
 import Room from 'app/components/Room';
 import React, { memo } from 'react';
 import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
+  const { handleJoinRoom } = props;
   const { selectors, handlers, states } = useHooks(props);
-  const { isShowModal, isShowModalPass } = states;
+  const { isShowModal } = states;
   const {
     handleOnChangeRadio,
     handleSearch,
-    handleJoinRoom,
     handleCreateRoom,
     handleCancel,
     handleShowModal,
-    handleCancelPass,
-    handleCheckPassword,
   } = handlers;
   const { listRoom } = selectors;
   return (
@@ -68,11 +65,6 @@ export const RoomList = props => {
           );
         })}
       </Row>
-      <ModalFillPass
-        isModalVisible={isShowModalPass}
-        handleCancel={handleCancelPass}
-        handleSubmit={handleCheckPassword}
-      />
       <ModalCreateRoom
         isModalVisible={isShowModal}
         handleCancel={handleCancel}

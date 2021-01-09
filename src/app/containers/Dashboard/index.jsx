@@ -7,17 +7,19 @@ import RoomList from './RoomList';
 import { Col, Row } from 'antd';
 import { sliceKey, reducer } from './slice';
 import { useInjectReducer } from 'utils/reduxInjectors';
+import { ModalFillPass } from 'app/components/ModalFillPass';
 
 export const Dashboard = props => {
   useInjectReducer({ key: sliceKey, reducer });
   const { states, selectors, handlers } = useHooks(props);
   const { onlineUserList, roomList } = selectors;
-
+  const { isShowModalPass } = states;
+  const { handleCancelPass, handleCheckPassword, handleJoinRoom } = handlers;
   return (
     <StyledDashboard>
       <Row justify="space-between">
         <Col flex={1}>
-          <RoomList listRoom={roomList} />
+          <RoomList handleJoinRoom={handleJoinRoom} listRoom={roomList} />
         </Col>
         <Col className="group-right-panel">
           <div className="list-user">
@@ -26,6 +28,11 @@ export const Dashboard = props => {
           <ChatWorld height="50%" />
         </Col>
       </Row>
+      <ModalFillPass
+        isModalVisible={isShowModalPass}
+        handleCancel={handleCancelPass}
+        handleSubmit={handleCheckPassword}
+      />
     </StyledDashboard>
   );
 };
