@@ -5,5 +5,5 @@ export const selectGameListState = state => state.gameList;
 
 export const makeSelectGameList = createSelector(
   selectGameListState,
-  gameList => get('gameList', gameList),
+  gameList => get('list', gameList),
 );
