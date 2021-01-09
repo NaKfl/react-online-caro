@@ -36,3 +36,30 @@ export const getRate = payload => {
     .then(data => ({ response: data }))
     .catch(handleGeneralError);
 };
+
+export const sendMailVerify = payload => {
+  console.log('🚀 ~ file: user.service.js ~ line 41 ~ payload', payload);
+  const { id, email } = payload;
+  return request(WEB_API, {
+    url: 'user/verify',
+    method: 'POST',
+    data: {
+      id,
+      email,
+    },
+  })
+    .then(res => res.data)
+    .then(data => ({ response: data }))
+    .catch(handleGeneralError);
+};
+
+export const verify = payload => {
+  const { url } = payload;
+  return request(WEB_API, {
+    url: `user/verify/${url}`,
+    method: 'GET',
+  })
+    .then(res => res.data)
+    .then(data => ({ response: data }))
+    .catch(handleGeneralError);
+};

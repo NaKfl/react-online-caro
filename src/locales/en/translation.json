@@ -38,6 +38,7 @@
     "messageInvalidConfirmPassword": "Passwords do not match!",
     "messageMinPassword": "Must be minimum 6 characters!",
     "btnRegister": "Register",
-    "linkLogin": "Login"
+    "linkLogin": "Login",
+    "checkEmail": "Register success please check your email to active account!"
   }
 }

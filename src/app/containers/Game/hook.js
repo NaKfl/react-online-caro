@@ -96,12 +96,10 @@ export const useHooks = props => {
     );
 
     socket.on('server-send-join-user', ({ roomPanel }) => {
-      console.log({ roomPanel });
       setRoomPanel(roomPanel);
     });
 
     socket.on('server-send-leave-room', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 

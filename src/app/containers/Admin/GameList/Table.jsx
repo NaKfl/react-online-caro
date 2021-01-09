@@ -15,7 +15,21 @@ export const MainTable = ({ dataSource }) => {
     form,
     dataSource,
   });
-  const colms = [];
+  const colms = [
+    { title: 'First Player', dataIndex: 'firstUserName', width: '20%' },
+    { title: 'Second Player', dataIndex: 'secondUserName', width: '20%' },
+    { title: 'Winner', dataIndex: 'winner', width: '20%' },
+    { title: 'Time', dataIndex: 'updatedAt', width: '20%' },
+    { title: 'Room name', dataIndex: 'roomName', width: '10%' },
+    {
+      title: 'Action',
+      render: () => (
+        <Button size="small" type="primary">
+          View
+        </Button>
+      ),
+    },
+  ];
   return (
     <Form form={form} component={false}>
       <Table

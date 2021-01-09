@@ -19,7 +19,7 @@ const MenuItemSider = [
     icon: <CalculatorOutlined />,
   },
 ];
-export const StyledSider = memo(() => {
+export const StyledSider = memo(props => {
   const [collapsed, setCollapsed] = useState(true);
   const onCollapse = collapse => {
     setCollapsed(collapse);
@@ -33,28 +33,23 @@ export const StyledSider = memo(() => {
         trigger={null}
       >
         <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          {/* {MenuItemSider.map(item => {
-            const check = Object.keys(item);
-            if (!check.includes('subMenu')) {
-              return (
-                <Menu.Item key={item.key} icon={item.icon}>
-                  <Link to={item.path}>{item.title}</Link>
-                </Menu.Item>
-              );
-            } else {
-              return (
-                <SubMenu key={item.key} title="title">
-                  {item.subMenu.map(sub => (
-                    <Menu.Item key={sub.key}>{sub.title}</Menu.Item>
-                  ))}
-                </SubMenu>
-              );
-            }
-          })} */}
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={[`${props.location.state?.key || 1}`]}
+          mode="inline"
+        >
           {MenuItemSider.map(item => (
             <Menu.Item key={item.key} icon={item.icon}>
-              <Link to={item.path}>{item.title}</Link>
+              <Link
+                to={{
+                  pathname: item.path,
+                  state: {
+                    key: item.key,
+                  },
+                }}
+              >
+                {item.title}
+              </Link>
             </Menu.Item>
           ))}
         </Menu>
