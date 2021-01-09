@@ -13,15 +13,14 @@ export const StyledPanel = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: fit-content;
 `;
 
 export const StyledScore = styled.p`
   margin: 0;
-  margin: 8px 0;
-  font-size: 4em;
+  margin: 6px 0;
+  font-size: 3.5em;
   font-weight: bold;
   opacity: 0.8;
 `;
@@ -36,9 +35,9 @@ export const StyledDivider = styled.div`
   );
 `;
 
-export const StyledBackButton = styled(Button)`
+export const StyledButton = styled(Button)`
   &.ant-btn {
-    background-color: ${COLOR.RED};
+    background-color: ${({ color }) => color ?? '#1b1b1b'};
     color: ${COLOR.WHITE};
     display: flex;
     justify-content: center;
@@ -65,6 +64,7 @@ export const StyledRoomInfoGroup = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 export const StyledRoomName = styled.div`
@@ -76,9 +76,10 @@ export const StyledRoomName = styled.div`
   border-bottom-right-radius: 0.4em;
   display: flex;
   align-items: center;
-  justify-content: center;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 1px;
   box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
+  max-width: 180px;
+  padding-left: 15px;
 `;

@@ -4,11 +4,11 @@ import Panel from 'app/components/Panel';
 import useHooks from './hooks';
 
 export const UserList = props => {
-  const { userList, isInRoom } = props;
+  const { userList, isInRoom, title } = props;
   const { handlers } = useHooks(props);
   const { showInfoUser, handleClickInvite } = handlers;
   return (
-    <Panel title="Online Users">
+    <Panel title={title}>
       {userList &&
         userList.map(item => {
           return (

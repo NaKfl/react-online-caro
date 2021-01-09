@@ -32,7 +32,11 @@ export const Dashboard = props => {
         </Col>
         <Col className="group-right-panel">
           <div className="list-online">
-            <UserList isInRoom={false} userList={onlineUserList}></UserList>
+            <UserList
+              title="Online Users"
+              isInRoom={false}
+              userList={onlineUserList}
+            ></UserList>
           </div>
           <div className="list-rank">
             <RankList rankList={rankList} />

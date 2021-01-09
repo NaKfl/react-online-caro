@@ -5,7 +5,6 @@ import useHooks from './hooks';
 
 export const RankList = props => {
   const { rankList } = props;
-  console.log('rankList', rankList);
   const { handlers } = useHooks(props);
   const { showInfoUser } = handlers;
   return (

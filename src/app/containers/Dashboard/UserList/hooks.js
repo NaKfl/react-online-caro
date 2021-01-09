@@ -21,7 +21,6 @@ export const useHooks = props => {
   );
 
   const handleClickInvite = useCallback(userInvited => {
-    console.log(userInvited);
     socket.emit('client-invite-join-room', {
       userInvited,
     });
