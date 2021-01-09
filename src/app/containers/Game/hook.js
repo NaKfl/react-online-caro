@@ -19,15 +19,6 @@ export const useHooks = props => {
     [dashboardActions],
   );
 
-  useEffect(() => {
-    const user = getUserFromStorage();
-    if (user) socket.emit('client-connect', { user });
-    socket.on('server-send-user-list', ({ userList }) => {
-      const users = userList.filter(item => item.email !== user.email);
-      updateOnlineUserList(users);
-    });
-  }, [updateOnlineUserList]);
-
   const user = getUserFromStorage();
   const squarePerRow = useSelector(makeSquarePerRow);
   const [boards, setBoards] = useState([Array(20 * 20).fill(null)]);
@@ -39,6 +30,16 @@ export const useHooks = props => {
   const handleClickSquare = position => {
     socket.emit('play-chess', position, room);
   };
+
+  useEffect(() => {
+    const user = getUserFromStorage();
+    if (user) socket.emit('client-connect', { user });
+    socket.on('server-send-user-list', ({ userList }) => {
+      const users = userList.filter(item => item.email !== user.email);
+      updateOnlineUserList(users);
+    });
+  }, [updateOnlineUserList]);
+
   useEffect(() => {
     socket.on('get-boards', data => {
       setBoards([data]);
@@ -95,6 +96,7 @@ export const useHooks = props => {
     );
 
     socket.on('server-send-join-user', ({ roomPanel }) => {
+      console.log({ roomPanel });
       setRoomPanel(roomPanel);
     });
 
