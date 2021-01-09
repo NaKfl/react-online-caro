@@ -1,25 +1,23 @@
+import { StyledLayout } from 'app/components/Layout/LayoutColumn';
 import { memo } from 'react';
-import Table from './Table';
-import saga from './saga';
 import { useInjectSaga, useInjectReducer } from 'utils/reduxInjectors';
 import { sliceKey, reducer } from './slice';
-import useHooks from './hooks';
 import Title from 'app/components/Title';
-import { StyledLayout } from './styles';
-import { UserDetail } from './Userdeltail';
+import saga from './saga';
+import Table from './Table';
+import useHooks from './hooks';
 
-export const UserList = () => {
+export const GameList = memo(() => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
   const { selectors, handles } = useHooks();
-  const { userList } = selectors;
+  const { gameList } = selectors;
   const { handleBlock } = handles;
   return (
     <StyledLayout>
-      <Title level={4}>List of User</Title>
-      <Table dataSource={userList} handleBlock={handleBlock} />
-      <UserDetail />
+      <Title level={4}>List of Game</Title>
+      <Table dataSource={gameList} />
     </StyledLayout>
   );
-};
-export default memo(UserList);
+});
+export default GameList;

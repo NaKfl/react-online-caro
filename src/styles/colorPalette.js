@@ -6,4 +6,5 @@ export const COLOR = {
   WHITE: '#ffff',
   SHADOW_GRAY: 'rgba(0, 0, 0, 0.08)',
   RED: '#ED553B',
+  GREEN: '#54e346',
 };
