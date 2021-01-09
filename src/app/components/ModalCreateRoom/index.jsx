@@ -11,6 +11,7 @@ export const ModalCreateRoom = props => {
     <Modal
       title="Create Room"
       visible={isModalVisible}
+      closable={false}
       footer={[
         <Button key="back" onClick={handleCancel}>
           Cancel

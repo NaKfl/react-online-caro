@@ -17,8 +17,16 @@ export function notifySuccess(message) {
 }
 
 export const openNotification = (handleConfirm, roomId) => {
+  const key = `open${Date.now()}`;
   const btn = (
-    <Button type="primary" size="small" onClick={handleConfirm}>
+    <Button
+      type="primary"
+      size="small"
+      onClick={() => {
+        handleConfirm();
+        notification.close(key);
+      }}
+    >
       Join room
     </Button>
   );
@@ -26,5 +34,6 @@ export const openNotification = (handleConfirm, roomId) => {
     message: 'You are joining another room',
     description: `You are in room : ${roomId}`,
     btn,
+    key,
   });
 };

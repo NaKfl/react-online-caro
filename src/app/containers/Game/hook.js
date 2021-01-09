@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'app/containers/Dashboard/slice';
 import { makeSquarePerRow } from './selectors';
 import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 import useActions from 'hooks/useActions';
+import queryString from 'query-string';
 import socket from 'utils/socket';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from 'configs';
+import { openNotification, notifyError } from 'utils/notify';
 
 export const useHooks = props => {
   const { updateOnlineUserList } = useActions(
@@ -26,7 +30,8 @@ export const useHooks = props => {
   const squarePerRow = useSelector(makeSquarePerRow);
   const [boards, setBoards] = useState([Array(20 * 20).fill(null)]);
   const room = useParams();
-  console.log('render');
+  const history = useHistory();
+  const { token } = queryString.parse(props.location.search);
   const [roomPanel, setRoomPanel] = useState({});
   const [status, setStatus] = useState(null);
   const handleClickSquare = position => {
@@ -55,19 +60,58 @@ export const useHooks = props => {
   }, [room.id]);
 
   useEffect(() => {
+    const { password } = jwt.verify(token, JWT_SECRET);
+    socket.emit('client-check-pass-room', { password, roomId: room.id });
+    socket.emit('client-check-is-in-room', { roomId: room.id });
+    socket.on(
+      'server-check-pass-room',
+      ({
+        isInAnotherRoom,
+        isCorrect,
+        roomId,
+        password,
+        inRoom,
+        joinId,
+        passRoomUserIn,
+      }) => {
+        if (isInAnotherRoom) {
+          const token = jwt.sign({ password: passRoomUserIn }, JWT_SECRET);
+          openNotification(
+            () => history.push(`/game/${inRoom}?token=${token}`),
+            joinId,
+          );
+          history.push(`/`);
+        } else {
+          if (isCorrect) {
+            const token = jwt.sign({ password }, JWT_SECRET);
+            history.push(`/game/${roomId}?token=${token}`);
+          } else {
+            notifyError('Incorrect password !');
+            history.push(`/`);
+          }
+        }
+      },
+    );
+
     socket.on('server-send-join-user', ({ roomPanel }) => {
+      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
     socket.on('server-send-leave-room', ({ roomPanel }) => {
+      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
+    });
+
+    socket.on('server-send-leaved-room', () => {
+      history.push(`/`);
     });
 
     return () => {
       socket.off('server-send-join-user');
       socket.off('server-send-leave-room');
     };
-  }, []);
+  }, [history, room.id, token]);
 
   const handleLeaveRoom = () => {
     const user = getUserFromStorage();
