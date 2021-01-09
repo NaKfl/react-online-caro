@@ -57,6 +57,7 @@ export const RoomList = props => {
           return (
             <Col key={room.id} style={{ padding: '15px' }} span={4}>
               <Room
+                password={!!room.password}
                 id={room.id}
                 handleJoinRoom={handleJoinRoom}
                 status={room.status}

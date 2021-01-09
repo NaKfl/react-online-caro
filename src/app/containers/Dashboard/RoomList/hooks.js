@@ -39,6 +39,7 @@ export const useHooks = props => {
     });
 
     socket.on('server-send-create-room', ({ roomId, password }) => {
+      socket.emit('client-update-users-status');
       const token = jwt.sign({ password }, JWT_SECRET);
       history.push(`/game/${roomId}?token=${token}`);
     });

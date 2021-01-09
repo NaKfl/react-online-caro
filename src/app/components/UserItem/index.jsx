@@ -12,13 +12,13 @@ import {
 import { USER_STATUS } from 'utils/constants';
 
 const UserItem = props => {
-  const { user, ...rest } = props;
+  const { user, handleClickInvite, handleShowInfor, isInRoom, ...rest } = props;
   const { status, name, avatar } = user;
   const { color, title } = USER_STATUS[status];
 
   return (
     <StyledUserItem {...rest}>
-      <StyledPart>
+      <StyledPart onClick={handleShowInfor}>
         <StyledAvatar>
           <Avatar size={40} src={avatar} />
           <StyledBadge color={color} />
@@ -28,9 +28,16 @@ const UserItem = props => {
           <StyledTextStatus color={color}>{title}</StyledTextStatus>
         </StyledUserStatus>
       </StyledPart>
-      {status === USER_STATUS.ONLINE.value && (
+      {status === USER_STATUS.ONLINE.value && isInRoom && (
         <Tooltip placement="left" title="Invite">
-          <Button shape="circle">+</Button>
+          <Button
+            shape="circle"
+            onClick={() => {
+              handleClickInvite(user);
+            }}
+          >
+            +
+          </Button>
         </Tooltip>
       )}
     </StyledUserItem>

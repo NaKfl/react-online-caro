@@ -22,11 +22,11 @@ const PlayerInfoSideBar = ({ roomPanel, handleLeaveRoom }) => {
         <StyledRoomName>{`Room ${roomPanel?.name}`}</StyledRoomName>
       </StyledRoomInfoGroup>
       <StyledPanel>
-        <PlayerCard user={roomPanel.firstPlayer} />
-        <StyledScore>{roomPanel.firstPlayer?.point ?? 0}</StyledScore>
+        <PlayerCard user={roomPanel?.firstPlayer} />
+        <StyledScore>{roomPanel?.firstPlayer?.point ?? 0}</StyledScore>
         <StyledDivider />
-        <StyledScore>{roomPanel.secondPlayer?.point ?? 0}</StyledScore>
-        <PlayerCard user={roomPanel.secondPlayer} isHost />
+        <StyledScore>{roomPanel?.secondPlayer?.point ?? 0}</StyledScore>
+        <PlayerCard user={roomPanel?.secondPlayer} isHost />
       </StyledPanel>
     </StyledPlayerInfoSideBar>
   );

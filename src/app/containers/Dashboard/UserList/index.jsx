@@ -4,9 +4,9 @@ import { StyledUserList, StyledTitle, StyledScrollList } from './styles';
 import useHooks from './hooks';
 
 export const UserList = props => {
-  const { userList } = props;
-  const { handlers } = useHooks();
-  const { showInfoUser } = handlers;
+  const { userList, isInRoom } = props;
+  const { handlers } = useHooks(props);
+  const { showInfoUser, handleClickInvite } = handlers;
   return (
     <StyledUserList>
       <StyledTitle>Online Users</StyledTitle>
@@ -15,9 +15,11 @@ export const UserList = props => {
           userList.map(item => {
             return (
               <UserItem
+                isInRoom={isInRoom}
+                handleClickInvite={handleClickInvite}
                 key={item.id}
                 user={item}
-                onClick={() => showInfoUser(item)}
+                handleShowInfor={() => showInfoUser(item)}
               />
             );
           })}

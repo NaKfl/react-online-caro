@@ -12,8 +12,6 @@ export const Dashboard = props => {
   useInjectReducer({ key: sliceKey, reducer });
   const { states, selectors, handlers } = useHooks(props);
   const { onlineUserList, roomList } = selectors;
-  const { toggleUserList } = states;
-  const { handleOnClose } = handlers;
 
   return (
     <StyledDashboard>
@@ -23,11 +21,7 @@ export const Dashboard = props => {
         </Col>
         <Col className="group-right-panel">
           <div className="list-user">
-            <UserList
-              userList={onlineUserList}
-              visible={toggleUserList}
-              onClose={handleOnClose}
-            ></UserList>
+            <UserList isInRoom={false} userList={onlineUserList}></UserList>
           </div>
           <ChatWorld height="50%" />
         </Col>

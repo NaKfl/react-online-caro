@@ -66,6 +66,7 @@ export const StyledRow = styled.div`
 
 export const StyledSideRight = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   height: 100%;
@@ -73,6 +74,10 @@ export const StyledSideRight = styled.div`
   width: 23%;
   & > * {
     width: 80%;
+  }
+  .list-user {
+    flex: 1;
+    padding-bottom: 10px;
   }
 `;
 export const StyledSideLeft = styled.div`

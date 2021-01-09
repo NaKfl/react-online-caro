@@ -10,8 +10,10 @@ import socket from 'utils/socket';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from 'configs';
 import { openNotification, notifyError } from 'utils/notify';
+import { selectOnlineUserList } from 'app/containers/Dashboard/selectors';
 
 export const useHooks = props => {
+  const onlineUserList = useSelector(selectOnlineUserList);
   const { updateOnlineUserList } = useActions(
     { updateOnlineUserList: dashboardActions.updateOnlineUserList },
     [dashboardActions],
@@ -83,8 +85,7 @@ export const useHooks = props => {
           history.push(`/`);
         } else {
           if (isCorrect) {
-            const token = jwt.sign({ password }, JWT_SECRET);
-            history.push(`/game/${roomId}?token=${token}`);
+            socket.emit('client-update-users-status');
           } else {
             notifyError('Incorrect password !');
             history.push(`/`);
@@ -94,7 +95,6 @@ export const useHooks = props => {
     );
 
     socket.on('server-send-join-user', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
@@ -117,10 +117,11 @@ export const useHooks = props => {
     const user = getUserFromStorage();
     if (user) {
       socket.emit('client-leave-room', { user, room: roomPanel });
+      socket.emit('client-update-users-status');
     }
   };
   return {
-    selector: { squarePerRow, boards, status, roomPanel, user },
+    selector: { squarePerRow, boards, status, roomPanel, user, onlineUserList },
     handlers: { handleClickSquare, handleLeaveRoom },
   };
 };

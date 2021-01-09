@@ -7,12 +7,13 @@ import Board from './Board';
 import { ChatRoom } from 'app/containers/Chat';
 import { useParams } from 'react-router-dom';
 import PlayerInfoSideBar from 'app/components/PlayerInfoSideBar';
+import { UserList } from '../Dashboard/UserList';
 
 export const Game = memo(props => {
   useInjectReducer({ key: sliceKey, reducer });
   const { id: roomId } = useParams();
   const { selector, handlers } = useHooks(props);
-  const { boards, roomPanel, status } = selector;
+  const { boards, roomPanel, status, onlineUserList } = selector;
   const { handleLeaveRoom } = handlers;
   return (
     <>
@@ -29,7 +30,10 @@ export const Game = memo(props => {
         handleClick={handlers.handleClickSquare}
       />
       <StyledSideRight>
-        <ChatRoom roomId={roomId} height="100%" />
+        <div className="list-user">
+          <UserList isInRoom={true} userList={onlineUserList}></UserList>
+        </div>
+        <ChatRoom roomId={roomId} height="50%" />
       </StyledSideRight>
     </>
   );
