@@ -27,6 +27,11 @@ export const useHooks = props => {
   const { token } = queryString.parse(props.location.search);
   const [roomPanel, setRoomPanel] = useState({});
   const [status, setStatus] = useState(null);
+  const [toggleReady, setToggleReady] = useState(false);
+  const isUserInViewingList = roomPanel?.viewingList?.some(
+    item => item.id === user.id,
+  );
+
   const handleClickSquare = position => {
     socket.emit('play-chess', position, room);
   };
@@ -115,6 +120,7 @@ export const useHooks = props => {
 
   useEffect(() => {
     socket.on('server-panel-room-info', ({ roomPanel }) => {
+      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
   }, []);
@@ -131,8 +137,27 @@ export const useHooks = props => {
     socket.emit('client-user-join-out-board', { roomId: room.id });
   };
 
+  const handleToggleReady = () => {
+    setToggleReady(prev => !prev);
+    socket.emit('client-user-toggle-ready', { roomId: room.id });
+  };
+
   return {
-    selector: { squarePerRow, boards, status, roomPanel, user, onlineUserList },
-    handlers: { handleClickSquare, handleLeaveRoom, handleJoinOutBoard },
+    selector: {
+      squarePerRow,
+      boards,
+      status,
+      roomPanel,
+      user,
+      onlineUserList,
+      toggleReady,
+      isUserInViewingList,
+    },
+    handlers: {
+      handleClickSquare,
+      handleLeaveRoom,
+      handleJoinOutBoard,
+      handleToggleReady,
+    },
   };
 };

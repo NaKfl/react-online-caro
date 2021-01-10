@@ -17,7 +17,7 @@ export const StyledContent = styled.div`
   padding: 25px;
   .square-box {
     position: relative;
-    width: 45%;
+    max-height: 840px;
     overflow: hidden;
     box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
   }

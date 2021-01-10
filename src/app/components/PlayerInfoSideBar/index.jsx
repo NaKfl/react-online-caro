@@ -4,11 +4,9 @@ import {
   StyledDivider,
   StyledScore,
   StyledPanel,
-  StyledButton,
-  StyledRoomInfoGroup,
-  StyledRoomName,
 } from './styles';
 import PlayerCard from 'app/components/PlayerCard';
+import GameButton from 'app/components/GameButton';
 import {
   ArrowLeftOutlined,
   UserSwitchOutlined,
@@ -21,27 +19,32 @@ const PlayerInfoSideBar = ({
   roomPanel,
   handleLeaveRoom,
   handleJoinOutBoard,
+  disabledRules,
 }) => {
   return (
     <StyledPlayerInfoSideBar {...roomPanel}>
       <Link to="/" onClick={handleLeaveRoom}>
-        <StyledRoomInfoGroup>
-          <StyledButton icon={<ArrowLeftOutlined />} />
-          <StyledRoomName>Out room</StyledRoomName>
-        </StyledRoomInfoGroup>
+        <GameButton title="Out Room" icon={<ArrowLeftOutlined />} />
       </Link>
-      <StyledRoomInfoGroup>
-        <StyledButton icon={<MehOutlined />} />
-        <StyledRoomName>Surrender</StyledRoomName>
-      </StyledRoomInfoGroup>
-      <StyledRoomInfoGroup>
-        <StyledButton icon={<SmileOutlined />} />
-        <StyledRoomName>Request Draw</StyledRoomName>
-      </StyledRoomInfoGroup>
-      <StyledRoomInfoGroup onClick={handleJoinOutBoard}>
-        <StyledButton icon={<UserSwitchOutlined />} />
-        <StyledRoomName>Join/Out Board</StyledRoomName>
-      </StyledRoomInfoGroup>
+
+      <GameButton
+        disabled={disabledRules.joinOut}
+        onClick={handleJoinOutBoard}
+        title="Join/Out Board"
+        icon={<UserSwitchOutlined />}
+      />
+
+      <GameButton
+        disabled={disabledRules.sur}
+        title="Surrender"
+        icon={<MehOutlined />}
+      />
+      <GameButton
+        disabled={disabledRules.draw}
+        title="Request Draw"
+        icon={<SmileOutlined />}
+      />
+
       <StyledPanel>
         <PlayerCard user={roomPanel?.firstPlayer} />
         <StyledScore>{roomPanel?.firstPlayer?.point ?? 0}</StyledScore>

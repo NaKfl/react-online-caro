@@ -36,5 +36,4 @@ export const StyledName = styled.div`
 
 export const StyledLevel = styled.p`
   margin: 0;
-  opacity: 0.7;
 `;
