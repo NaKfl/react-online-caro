@@ -5,12 +5,11 @@ import Title from 'app/components/Title';
 import Input from 'app/components/Input';
 import saga from './saga';
 import Table from './Table';
-import { Row, Col, Avatar, Button } from 'antd';
+import { Row, Col, Avatar } from 'antd';
 import Form from 'app/components/Form';
 import useHooks from './hooks';
 import { USER_STATUS } from 'utils/constants';
 import classifyRank from 'utils/classifyRank';
-import moment from 'moment';
 import {
   StyledProfile,
   StyledInfo,
@@ -21,17 +20,13 @@ import {
   StyledBadge,
   StyledName,
   StyledPart,
+  StyledListGame,
 } from './styles';
-import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
-export const Profile = memo(props => {
+export const Profile = memo(() => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
-  const { selectors, handles } = useHooks();
-  const { gameList } = selectors;
-  const { handleBlock } = handles;
-  const { ...rest } = props;
-  const user = getUserFromStorage();
-  user.createdAt = moment(user.createdAt).format('YYYY-MM-DD');
+  const { selectors, handles, states } = useHooks();
+  const { listGame, user } = states;
   const { status, name, avatar, point } = user;
   return (
     <StyledProfile>
@@ -44,7 +39,7 @@ export const Profile = memo(props => {
             layout="vertical"
           >
             <Row className="mb-4">
-              <StyledUserItem {...rest}>
+              <StyledUserItem>
                 <StyledPart>
                   <StyledAvatar>
                     <Avatar size={80} src={avatar} />
@@ -100,8 +95,10 @@ export const Profile = memo(props => {
           </Form>
         </Row>
       </StyledInfo>
-      <Title level={4}>List of Game</Title>
-      {/* <Table dataSource={gameList} /> */}
+      <StyledListGame>
+        <Title level={4}>List of Game</Title>
+        <Table dataSource={listGame} />
+      </StyledListGame>
     </StyledProfile>
   );
 });
