@@ -17,26 +17,30 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-const PlayerInfoSideBar = ({ roomPanel, handleLeaveRoom }) => {
+const PlayerInfoSideBar = ({
+  roomPanel,
+  handleLeaveRoom,
+  handleJoinOutBoard,
+}) => {
   return (
     <StyledPlayerInfoSideBar {...roomPanel}>
+      <Link to="/" onClick={handleLeaveRoom}>
+        <StyledRoomInfoGroup>
+          <StyledButton icon={<ArrowLeftOutlined />} />
+          <StyledRoomName>Out room</StyledRoomName>
+        </StyledRoomInfoGroup>
+      </Link>
       <StyledRoomInfoGroup>
-        <Link to="/" onClick={handleLeaveRoom}>
-          <StyledButton icon={<ArrowLeftOutlined />}></StyledButton>
-        </Link>
-        <StyledRoomName>Out room</StyledRoomName>
-      </StyledRoomInfoGroup>
-      <StyledRoomInfoGroup>
-        <StyledButton icon={<MehOutlined />}></StyledButton>
+        <StyledButton icon={<MehOutlined />} />
         <StyledRoomName>Surrender</StyledRoomName>
       </StyledRoomInfoGroup>
       <StyledRoomInfoGroup>
-        <StyledButton icon={<SmileOutlined />}></StyledButton>
+        <StyledButton icon={<SmileOutlined />} />
         <StyledRoomName>Request Draw</StyledRoomName>
       </StyledRoomInfoGroup>
-      <StyledRoomInfoGroup>
-        <StyledButton icon={<UserSwitchOutlined />}></StyledButton>
-        <StyledRoomName>Join Game</StyledRoomName>
+      <StyledRoomInfoGroup onClick={handleJoinOutBoard}>
+        <StyledButton icon={<UserSwitchOutlined />} />
+        <StyledRoomName>Join/Out Board</StyledRoomName>
       </StyledRoomInfoGroup>
       <StyledPanel>
         <PlayerCard user={roomPanel?.firstPlayer} />

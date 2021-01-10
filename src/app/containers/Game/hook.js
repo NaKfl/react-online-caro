@@ -113,6 +113,12 @@ export const useHooks = props => {
     };
   }, [history, room.id, token]);
 
+  useEffect(() => {
+    socket.on('server-panel-room-info', ({ roomPanel }) => {
+      setRoomPanel(roomPanel);
+    });
+  }, []);
+
   const handleLeaveRoom = () => {
     const user = getUserFromStorage();
     if (user) {
@@ -120,8 +126,13 @@ export const useHooks = props => {
       socket.emit('client-update-users-status');
     }
   };
+
+  const handleJoinOutBoard = () => {
+    socket.emit('client-user-join-out-board', { roomId: room.id });
+  };
+
   return {
     selector: { squarePerRow, boards, status, roomPanel, user, onlineUserList },
-    handlers: { handleClickSquare, handleLeaveRoom },
+    handlers: { handleClickSquare, handleLeaveRoom, handleJoinOutBoard },
   };
 };

@@ -65,6 +65,7 @@ export const StyledRoomInfoGroup = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 export const StyledRoomName = styled.div`
