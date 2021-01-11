@@ -2,6 +2,7 @@ import { WEB_API } from 'configs';
 import request, { handleGeneralError } from './index';
 
 export const login = payload => {
+  console.log('🚀 ~ file: authFetcher.js ~ line 5 ~ payload', payload);
   return request(WEB_API, {
     url: 'auth/login',
     method: 'POST',
