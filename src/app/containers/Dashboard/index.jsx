@@ -8,17 +8,21 @@ import { Col, Row } from 'antd';
 import { sliceKey, reducer } from './slice';
 import { useInjectReducer } from 'utils/reduxInjectors';
 import { ModalFillPass } from 'app/components/ModalFillPass';
+import Loading from 'app/components/Modal/Loading';
 
 export const Dashboard = props => {
   useInjectReducer({ key: sliceKey, reducer });
   const { states, selectors, handlers } = useHooks(props);
   const { onlineUserList, roomList, rankList } = selectors;
-  const { isShowModalPass } = states;
+  const { isShowModalPass, isMatching, matchingGame } = states;
   const {
     handleCancelPass,
     handleCheckPassword,
     handleJoinRoom,
     handleEnterInput,
+    showModalMatching,
+    handleCancelMatching,
+    handlePushToGame,
   } = handlers;
   return (
     <StyledDashboard>
@@ -28,6 +32,7 @@ export const Dashboard = props => {
             handleEnterInput={handleEnterInput}
             handleJoinRoom={handleJoinRoom}
             listRoom={roomList}
+            showModalMatching={showModalMatching}
           />
         </Col>
         <Col className="group-right-panel">
@@ -47,6 +52,12 @@ export const Dashboard = props => {
         isModalVisible={isShowModalPass}
         handleCancel={handleCancelPass}
         handleSubmit={handleCheckPassword}
+      />
+      <Loading
+        visible={isMatching}
+        matchingGame={matchingGame}
+        handlePushToGame={handlePushToGame}
+        onCancel={handleCancelMatching}
       />
     </StyledDashboard>
   );

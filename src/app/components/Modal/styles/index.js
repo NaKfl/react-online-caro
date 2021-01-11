@@ -2,6 +2,34 @@ import styled from 'styled-components';
 import { Badge, Modal } from 'antd';
 
 export const StyledModal = styled(Modal)``;
+export const StyledModalLoading = styled(Modal)`
+  .ant-modal-content {
+    background-color: transparent;
+    box-shadow: none;
+    .ant-modal-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  circle:nth-of-type(1) {
+    fill: #ffffff;
+  }
+  circle:nth-of-type(2) {
+    fill: #fcd837;
+  }
+  circle:nth-of-type(3) {
+    fill: #f9a11f;
+  }
+  circle:nth-of-type(4) {
+    fill: #f27c21;
+  }
+
+  #clackers {
+    /*   border: 1px solid white; */
+  }
+`;
 
 export const StyledProfile = styled.div`
   display: flex;
@@ -73,4 +101,32 @@ export const StyledTextStatus = styled.p`
 export const StyledName = styled.p`
   margin: 0;
   font-size: 18px;
+`;
+
+export const StyledSpinner = styled.div`
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background: url('http://i.imgur.com/oSHLAzp.png') center center;
+  background-size: contain;
+  animation: spinner 5s infinite alternate ease-in-out;
+`;
+
+export const StyledSpinnerCenter = styled.div`
+  display: inline-block;
+  position: absolute;
+  margin-left: -100px;
+  width: 100px;
+  height: 100px;
+  background: url('http://i.imgur.com/u0BC2ZR.png') center center;
+  background-size: contain;
+  content: '';
+`;
+
+export const StyledLoadingText = styled.div`
+  position: relative;
+  z-index: 1;
+  font-size: 1.5rem;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  margin-left: 0.5em;
 `;

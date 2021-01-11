@@ -28,6 +28,12 @@ export const useHooks = () => {
   const [roomList, setRoomList] = useState([]);
   const [roomIdJoin, setRoomIdJoin] = useState('');
   const [isShowModalPass, setShowModalPass] = useState(false);
+  const [isMatching, setMatching] = useState(false);
+  const [matchingGame, setMatchingGame] = useState({
+    status: false,
+    roomId: '',
+    password: '',
+  });
   const history = useHistory();
 
   useEffect(() => {
@@ -35,6 +41,7 @@ export const useHooks = () => {
     if (user) socket.emit('client-connect', { user });
     socket.emit('client-get-rooms');
     socket.on('server-send-user-list', ({ userList }) => {
+      console.log('aaa', userList);
       updateOnlineUserList(userList);
     });
     socket.on('server-send-rank-list', ({ rankList }) => {
@@ -128,6 +135,15 @@ export const useHooks = () => {
       },
     );
 
+    socket.on('server-send-matching-success', ({ roomId, password }) => {
+      setMatchingGame(preState => ({
+        ...preState,
+        status: true,
+        roomId,
+        password,
+      }));
+    });
+
     return () => {
       socket.off('server-send-invite-join-room');
       socket.off('server-send-in-room');
@@ -185,6 +201,23 @@ export const useHooks = () => {
       notifyError('Not have ROOM ID!');
     }
   };
+
+  const showModalMatching = () => {
+    socket.emit('client-send-matching-game');
+    socket.emit('client-send-check-matching-game', { rank: '' });
+    setMatching(true);
+  };
+
+  const handleCancelMatching = () => {
+    socket.emit('client-send-cancel-matching-game', {});
+    setMatching(false);
+  };
+
+  const handlePushToGame = ({ roomId, password }) => {
+    const token = jwt.sign({ password }, JWT_SECRET);
+    history.push(`/game/${roomId}?token=${token}`);
+  };
+
   return {
     selectors: {
       onlineUserList,
@@ -199,10 +232,15 @@ export const useHooks = () => {
       handleCheckPassword,
       handleJoinRoom,
       handleEnterInput,
+      showModalMatching,
+      handleCancelMatching,
+      handlePushToGame,
     },
     states: {
       toggleUserList,
       isShowModalPass,
+      isMatching,
+      matchingGame,
     },
   };
 };

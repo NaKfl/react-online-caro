@@ -1,11 +1,12 @@
 import { Button, Col, Input, Radio, Row, Typography } from 'antd';
+import { ChromeOutlined } from '@ant-design/icons';
 import { ModalCreateRoom } from 'app/components/ModalCreateRoom';
 import Room from 'app/components/Room';
 import React, { memo } from 'react';
 import { STATUS } from 'utils/constants';
 import useHooks from './hooks';
 export const RoomList = props => {
-  const { handleJoinRoom, handleEnterInput } = props;
+  const { handleJoinRoom, handleEnterInput, showModalMatching } = props;
   const { selectors, handlers, states } = useHooks(props);
   const { isShowModal } = states;
   const {
@@ -44,6 +45,15 @@ export const RoomList = props => {
             onChange={handleSearch}
             allowClear
           />
+        </Col>
+        <Col style={{ padding: '0 20px' }}>
+          <Button
+            style={{ display: 'flex', alignItems: 'center' }}
+            icon={<ChromeOutlined />}
+            onClick={showModalMatching}
+          >
+            Find Game
+          </Button>
         </Col>
         <Col style={{ padding: '0 20px' }}>
           <Input
