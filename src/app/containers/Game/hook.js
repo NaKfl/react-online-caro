@@ -157,6 +157,11 @@ export const useHooks = props => {
       });
   };
 
+  const handleStartGame = roomPanel => {
+    if (roomPanel.firstPlayer?.id === user.id)
+      socket.emit('client-create-game', { roomPanel });
+  };
+
   return {
     selector: {
       squarePerRow,
@@ -174,6 +179,7 @@ export const useHooks = props => {
       handleJoinOutBoard,
       handleToggleReady,
       handleShowInfo,
+      handleStartGame,
     },
   };
 };

@@ -20,6 +20,7 @@ import GameButton from 'app/components/GameButton';
 import { UserList } from '../Dashboard/UserList';
 import { FireFilled, LoadingOutlined } from '@ant-design/icons';
 import Countdown from 'react-countdown';
+import getMeFromRoom from 'utils/getMeFromRoom';
 
 export const Game = memo(props => {
   useInjectReducer({ key: sliceKey, reducer });
@@ -30,7 +31,6 @@ export const Game = memo(props => {
     roomPanel,
     status,
     onlineUserList,
-    toggleReady,
     isUserInViewingList,
   } = selector;
   const {
@@ -38,8 +38,12 @@ export const Game = memo(props => {
     handleJoinOutBoard,
     handleToggleReady,
     handleShowInfo,
+    handleStartGame,
   } = handlers;
   const isPlaying = roomPanel?.status === 'PLAYING';
+  const me = getMeFromRoom(roomPanel);
+  const imReady = me?.status === 'READY';
+
   return (
     <StyledRow>
       <StyledRoomHeader>{`${roomPanel?.name} (ID: ${roomPanel?.joinId})`}</StyledRoomHeader>
@@ -51,7 +55,7 @@ export const Game = memo(props => {
             handleLeaveRoom={handleLeaveRoom}
             roomPanel={roomPanel}
             disabledRules={{
-              joinOut: toggleReady,
+              joinOut: imReady,
               sur: !isPlaying,
               draw: !isPlaying,
             }}
@@ -62,19 +66,20 @@ export const Game = memo(props => {
             <div className="overlay">
               <GameButton
                 disabled={isUserInViewingList}
-                icon={toggleReady ? <LoadingOutlined /> : <FireFilled />}
-                title={toggleReady ? 'Waiting for ready' : 'Ready'}
-                buttonColor={toggleReady ? '#808080' : '#ED553B'}
-                titleColor={toggleReady ? '#ED553B' : '#808080'}
+                icon={imReady ? <LoadingOutlined /> : <FireFilled />}
+                title={imReady ? 'Waiting for ready' : 'Ready'}
+                buttonColor={imReady ? '#808080' : '#ED553B'}
+                titleColor={imReady ? '#ED553B' : '#808080'}
                 onClick={handleToggleReady}
               />
             </div>
           )}
           {isPlaying && (
             <Countdown
-              date={Date.now() + 5000}
-              renderer={({ hours, minutes, seconds, completed }) => {
+              date={Date.now() + 3000}
+              renderer={({ seconds, completed }) => {
                 if (completed) {
+                  handleStartGame(roomPanel);
                   return (
                     <Board
                       status={status}
