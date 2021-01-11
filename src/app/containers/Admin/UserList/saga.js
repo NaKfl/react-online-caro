@@ -1,6 +1,5 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import { actions } from './slice';
-// import { notifyError, notifySuccess } from 'utils/notify';
 import { getList, update, getRate } from 'fetchers/service/user.service.js';
 
 function* getListWatcher() {

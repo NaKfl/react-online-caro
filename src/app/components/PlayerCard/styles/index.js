@@ -15,6 +15,7 @@ export const StyledPlayerCard = styled.div`
   box-shadow: 0px 0px 16px 4px rgb(0 0 0 / 25%);
 
   color: ${COLOR.WHITE};
+  cursor: pointer;
 `;
 
 export const StyledName = styled.div`

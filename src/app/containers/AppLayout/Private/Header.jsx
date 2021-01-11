@@ -6,8 +6,10 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { StyledHeader } from '../styles';
+import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 
 export const Header = () => {
+  const user = getUserFromStorage();
   const { t } = useTranslation();
   const { handlers } = useLogout();
   const { onLogout } = handlers;
@@ -34,7 +36,7 @@ export const Header = () => {
             </Menu>
           }
         >
-          <Avatar />
+          <Avatar src={user?.avatar} />
         </Dropdown>
       </div>
     </StyledHeader>

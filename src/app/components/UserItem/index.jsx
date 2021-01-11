@@ -13,19 +13,22 @@ import { USER_STATUS } from 'utils/constants';
 
 const UserItem = props => {
   const { user, handleClickInvite, handleShowInfor, isInRoom, ...rest } = props;
-  const { status, name, avatar } = user;
-  const { color, title } = USER_STATUS[status];
+  const { status, name, avatar, isMe } = user;
 
   return (
     <StyledUserItem {...rest}>
       <StyledPart className="name-and-status" onClick={handleShowInfor}>
         <StyledAvatar>
           <Avatar size={40} src={avatar} />
-          <StyledBadge color={color} />
+          <StyledBadge color={USER_STATUS[status]?.color} />
         </StyledAvatar>
         <StyledUserStatus>
-          <StyledName>{name}</StyledName>
-          <StyledTextStatus color={color}>{title}</StyledTextStatus>
+          <StyledName isMe={isMe}>{`${name} ${
+            isMe ? '(You)' : ''
+          }`}</StyledName>
+          <StyledTextStatus color={USER_STATUS[status]?.color}>
+            {USER_STATUS[status]?.title}
+          </StyledTextStatus>
         </StyledUserStatus>
       </StyledPart>
       <StyledPart className="invite-button">

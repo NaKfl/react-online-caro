@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { COLOR } from 'styles/colorPalette';
 
 export const StyledPlayerInfoSideBar = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -18,10 +19,19 @@ export const StyledPanel = styled.div`
 
 export const StyledScore = styled.p`
   margin: 0;
-  margin: 6px 0;
   font-size: 3.5em;
   font-weight: bold;
   opacity: 0.8;
+  img {
+    margin: 12px 0;
+    display: block;
+    width: 50px;
+    height: 50px;
+  }
+  .circle {
+    width: 52px;
+    height: 52px;
+  }
 `;
 
 export const StyledDivider = styled.div`
@@ -29,7 +39,7 @@ export const StyledDivider = styled.div`
   width: 150px;
   background: radial-gradient(
     ellipse at center,
-    ${COLOR.SECONDARY} 0%,
+    #c7c7c7 0%,
     rgba(255, 255, 255, 0) 70%
   );
 `;

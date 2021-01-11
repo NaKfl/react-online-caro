@@ -14,11 +14,14 @@ import {
   MehOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import circle from 'assets/circle.svg';
+import cross from 'assets/cross.svg';
 
 const PlayerInfoSideBar = ({
   roomPanel,
   handleLeaveRoom,
   handleJoinOutBoard,
+  handleShowInfo,
   disabledRules,
 }) => {
   return (
@@ -46,11 +49,22 @@ const PlayerInfoSideBar = ({
       />
 
       <StyledPanel>
-        <PlayerCard user={roomPanel?.firstPlayer} />
-        <StyledScore>{roomPanel?.firstPlayer?.point ?? 0}</StyledScore>
+        <PlayerCard
+          onClick={() => handleShowInfo(roomPanel?.firstPlayer)}
+          user={roomPanel?.firstPlayer}
+        />
+        <StyledScore>
+          <img className="cross" src={cross} alt="x-icon" />
+        </StyledScore>
         <StyledDivider />
-        <StyledScore>{roomPanel?.secondPlayer?.point ?? 0}</StyledScore>
-        <PlayerCard user={roomPanel?.secondPlayer} isHost />
+        <StyledScore>
+          <img className="circle" src={circle} alt="o-icon" />
+        </StyledScore>
+        <PlayerCard
+          onClick={() => handleShowInfo(roomPanel?.secondPlayer)}
+          user={roomPanel?.secondPlayer}
+          isHost
+        />
       </StyledPanel>
     </StyledPlayerInfoSideBar>
   );

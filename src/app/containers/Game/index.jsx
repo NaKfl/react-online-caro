@@ -33,7 +33,12 @@ export const Game = memo(props => {
     toggleReady,
     isUserInViewingList,
   } = selector;
-  const { handleLeaveRoom, handleJoinOutBoard, handleToggleReady } = handlers;
+  const {
+    handleLeaveRoom,
+    handleJoinOutBoard,
+    handleToggleReady,
+    handleShowInfo,
+  } = handlers;
   const isPlaying = roomPanel?.status === 'PLAYING';
   return (
     <StyledRow>
@@ -41,6 +46,7 @@ export const Game = memo(props => {
       <StyledLayoutGame>
         <StyledSideLeft>
           <PlayerInfoSideBar
+            handleShowInfo={handleShowInfo}
             handleJoinOutBoard={handleJoinOutBoard}
             handleLeaveRoom={handleLeaveRoom}
             roomPanel={roomPanel}

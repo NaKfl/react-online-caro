@@ -29,15 +29,28 @@ export const StyledButton = styled(Button)`
 `;
 
 export const StyledGameButton = styled.div`
+  box-shadow: 0 5px #999;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   cursor: pointer;
+  opacity: 0.9;
+  border-radius: 0.4em;
+
   &,
   & > * {
     pointer-events: ${({ disabled }) => (disabled ? 'none' : 'unset')};
     opacity: ${({ disabled }) => (disabled ? 0.8 : 1)};
+  }
+  &:hover {
+    opacity: 0.95;
+  }
+
+  &:active {
+    opacity: 1;
+    box-shadow: 0 3px #666;
+    transform: translateY(2px);
   }
 `;
 
