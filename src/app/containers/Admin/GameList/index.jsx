@@ -10,13 +10,15 @@ import useHooks from './hooks';
 export const GameList = memo(() => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
-  const { selectors, handles } = useHooks();
+  const { selectors } = useHooks();
   const { gameList } = selectors;
   return (
-    <StyledLayout>
-      <Title level={4}>List of Game</Title>
-      <Table dataSource={gameList} />
-    </StyledLayout>
+    <>
+      <StyledLayout>
+        <Title level={4}>List of Game</Title>
+        <Table dataSource={gameList} />
+      </StyledLayout>
+    </>
   );
 });
 export default GameList;

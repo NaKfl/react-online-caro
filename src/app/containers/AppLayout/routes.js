@@ -2,6 +2,7 @@ import { Dashboard } from 'app/containers/Dashboard/Loadable';
 import { Login } from 'app/containers/Login/Loadable';
 import { Register } from 'app/containers/Register/Loadable';
 import { Verify } from 'app/containers/Verify/Loadable';
+import { ForgotPassword } from 'app/containers/ForgotPassword/Loadable';
 import { Game } from 'app/containers/Game/Loadable';
 import { UserList } from 'app/containers/Admin/UserList/Loadable';
 import { GameList } from 'app/containers/Admin/GameList/Loadable';
@@ -35,6 +36,11 @@ export const publicRoutes = [
     path: '/verify',
     component: Verify,
     key: 'verify',
+  },
+  {
+    path: '/forgotpassword',
+    component: ForgotPassword,
+    key: 'forgotpassword',
   },
 ];
 export const adminRoutes = [

@@ -1,7 +1,6 @@
 import { memo } from 'react';
-import { StyledNotifiWinner } from '../styles';
+// import { StyledNotifiWinner } from '../styles';
 import Square from '../Square';
-import Button from 'app/components/Button';
 const Board = memo(({ size, boardCurrent, status, handleClick, ...rest }) => {
   return (
     <div className="square-box" {...rest}>

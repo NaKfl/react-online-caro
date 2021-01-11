@@ -38,13 +38,11 @@ export const getRate = payload => {
 };
 
 export const sendMailVerify = payload => {
-  const { id, email } = payload;
   return request(WEB_API, {
     url: 'user/verify',
     method: 'POST',
     data: {
-      id,
-      email,
+      ...payload,
     },
   })
     .then(res => res.data)

@@ -58,7 +58,7 @@ export const Login = memo(() => {
           />
         </Form.Item>
         <Form.Item className="login-form-forgot">
-          <Link to="/forgot-password"> {t('Login.forgotPassword')} </Link>
+          <Link to="/forgotpassword"> {t('Login.forgotPassword')} </Link>
         </Form.Item>
         <Form.Item className="login-form-button login-form-button-local">
           <Button

@@ -10,3 +10,7 @@ export const makeStatus = createSelector(selectVerifyState, status =>
 export const makeError = createSelector(selectVerifyState, error =>
   get('error', error),
 );
+
+export const makeExpired = createSelector(selectVerifyState, expired =>
+  get('expired', expired),
+);
