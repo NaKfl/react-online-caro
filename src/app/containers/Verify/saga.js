@@ -1,8 +1,6 @@
-import { register } from 'fetchers/authFetcher';
 import { verify } from 'fetchers/service/user.service';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import { actions } from './slice';
-import { notifySuccess } from 'utils/notify';
 import { storeAuthInfo } from 'utils/localStorageUtils';
 import { actions as actionsLogin } from 'app/containers/Login/slice';
 function* verifyWatcher() {

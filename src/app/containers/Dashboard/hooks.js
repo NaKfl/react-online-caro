@@ -178,7 +178,6 @@ export const useHooks = () => {
   const handleEnterInput = event => {
     const roomId = event.target.value;
     const roomJoin = findRoomById(roomList, roomId);
-    console.log('roomJoin', roomJoin, roomList, roomId == roomList[0].joinId);
     if (roomJoin) {
       socket.emit('client-check-room-have-pass', {
         roomId: roomJoin.id,

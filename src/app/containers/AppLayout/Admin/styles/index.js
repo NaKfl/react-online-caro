@@ -1,6 +1,6 @@
 import Layout from 'app/components/Layout';
 import styled from 'styled-components';
-const { Content, Header, Footer } = Layout;
+const { Content, Header } = Layout;
 export const StyledLayout = styled(Layout)`
   height: 100vh;
   width: 100%;

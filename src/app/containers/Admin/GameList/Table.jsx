@@ -3,11 +3,6 @@ import Button from 'app/components/Button';
 import Form from 'app/components/Form';
 import { memo } from 'react';
 import useTable from 'hooks/useTable';
-import Status from 'app/components/Status';
-import { STATUS } from 'utils/constants';
-import Popconfirm from 'app/components/Popconfirm';
-import { actions } from './slice';
-import useActions from 'hooks/useActions';
 
 export const MainTable = ({ dataSource }) => {
   const [form] = Form.useForm();

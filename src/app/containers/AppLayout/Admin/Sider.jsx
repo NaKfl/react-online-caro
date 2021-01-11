@@ -4,7 +4,6 @@ import Menu from 'app/components/Menu';
 import { Link } from 'react-router-dom';
 import { UserOutlined, CalculatorOutlined } from '@ant-design/icons';
 const { Sider } = Layout;
-const { SubMenu } = Menu;
 const MenuItemSider = [
   {
     key: '1',
