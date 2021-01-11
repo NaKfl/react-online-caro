@@ -28,12 +28,12 @@ export const Room = props => {
         <Row justify="space-between" align="middle" className="status-line">
           <Row
             align="middle"
-            style={{ color: STATUS[status].color, width: '100%' }}
+            style={{ color: STATUS[status]?.color, width: '100%' }}
           >
             <div className="title-room">
               <div className="group-title">
                 <CheckCircleFilled />
-                <span className="status">{STATUS[status].title}</span>
+                <span className="status">{STATUS[status]?.title}</span>
               </div>
               {password && <LockFilled />}
             </div>

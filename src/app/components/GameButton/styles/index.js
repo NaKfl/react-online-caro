@@ -41,7 +41,7 @@ export const StyledGameButton = styled.div`
   &,
   & > * {
     pointer-events: ${({ disabled }) => (disabled ? 'none' : 'unset')};
-    opacity: ${({ disabled }) => (disabled ? 0.8 : 1)};
+    opacity: ${({ disabled }) => (disabled ? 0.55 : 1)};
   }
   &:hover {
     opacity: 0.95;

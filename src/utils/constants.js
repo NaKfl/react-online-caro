@@ -53,4 +53,9 @@ export const USER_STATUS = {
     color: 'blue',
     title: 'In a room',
   },
+  START: {
+    value: 'START',
+    color: 'orange',
+    title: 'Playing',
+  },
 };

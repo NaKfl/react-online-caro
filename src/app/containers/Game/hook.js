@@ -66,7 +66,6 @@ export const useHooks = props => {
   useEffect(() => {
     const user = getUserFromStorage();
     if (user) {
-      socket.emit('client-join-wait-room', { roomId: room.id, user });
       socket.emit('join-room', { roomId: room.id, user });
     }
   }, [room.id]);
@@ -74,9 +73,12 @@ export const useHooks = props => {
   useEffect(() => {
     const { password } = jwt.verify(token, JWT_SECRET);
     socket.emit('client-update-users-status');
-    socket.emit('client-check-pass-room', { password, roomId: room.id });
+    socket.emit('client-check-pass-room-and-join', {
+      password,
+      roomId: room.id,
+    });
     socket.on(
-      'server-check-pass-room',
+      'server-check-pass-room-and-join',
       ({
         isInAnotherRoom,
         isCorrect,
@@ -137,6 +139,7 @@ export const useHooks = props => {
       socket.emit('client-leave-room', { user, room: roomPanel });
       socket.emit('client-update-users-status');
     }
+    history.push(`/`);
   };
 
   const handleJoinOutBoard = () => {
@@ -157,6 +160,20 @@ export const useHooks = props => {
       });
   };
 
+  const handleStartGame = roomPanel => {
+    if (roomPanel.firstPlayer?.id === user.id)
+      socket.emit('client-create-game', { roomPanel });
+  };
+
+  const handleConfirmOutRoom = () => {
+    openPopup({
+      key: 'confirmOutRoom',
+      type: POPUP_TYPE.CONFIRM,
+      handleConfirm: handleLeaveRoom,
+      message: 'Are you sure you leave the room ?',
+    });
+  };
+
   return {
     selector: {
       squarePerRow,
@@ -174,6 +191,8 @@ export const useHooks = props => {
       handleJoinOutBoard,
       handleToggleReady,
       handleShowInfo,
+      handleStartGame,
+      handleConfirmOutRoom,
     },
   };
 };
