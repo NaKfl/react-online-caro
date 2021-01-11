@@ -17,7 +17,7 @@ export const useHooks = () => {
   const user = getUser();
   useEffect(() => {
     if (user || !search) {
-      history.goBack();
+      history.push('/');
     } else {
       goVerify(search);
     }

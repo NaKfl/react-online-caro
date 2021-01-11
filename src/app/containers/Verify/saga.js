@@ -8,6 +8,7 @@ function* verifyWatcher() {
 }
 function* verifyTask(action) {
   const { response, error } = yield call(verifyAPI, { url: action.payload });
+
   if (response) {
     yield put(actions.verifySuccess());
     yield put(actionsLogin.loginSuccess(response));

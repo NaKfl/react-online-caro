@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { COLOR } from 'styles/colorPalette';
 
 export const StyledPlayerInfoSideBar = styled.div`
   height: 100%;
@@ -23,7 +22,7 @@ export const StyledScore = styled.p`
   font-weight: bold;
   opacity: 0.8;
   img {
-    margin: 12px 0;
+    margin: 14px 0;
     display: block;
     width: 50px;
     height: 50px;

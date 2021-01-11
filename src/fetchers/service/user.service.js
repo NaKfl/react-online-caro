@@ -60,3 +60,29 @@ export const verify = payload => {
     .then(data => ({ response: data }))
     .catch(handleGeneralError);
 };
+
+export const requestForgotPassword = ({ email }) => {
+  return request(WEB_API, {
+    url: `user/forgotpassword`,
+    method: 'POST',
+    data: {
+      email,
+    },
+  })
+    .then(res => res.data)
+    .then(data => ({ response: data }))
+    .catch(handleGeneralError);
+};
+
+export const requestRecoveryPassword = payload => {
+  return request(WEB_API, {
+    url: `user/recoverypassword`,
+    method: 'POST',
+    data: {
+      ...payload,
+    },
+  })
+    .then(res => res.data)
+    .then(data => ({ response: data }))
+    .catch(handleGeneralError);
+};

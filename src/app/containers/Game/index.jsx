@@ -20,6 +20,7 @@ import GameButton from 'app/components/GameButton';
 import { UserList } from '../Dashboard/UserList';
 import { FireFilled, LoadingOutlined } from '@ant-design/icons';
 import Countdown from 'react-countdown';
+import getMeFromRoom from 'utils/getMeFromRoom';
 
 export const Game = memo(props => {
   useInjectReducer({ key: sliceKey, reducer });
@@ -30,7 +31,6 @@ export const Game = memo(props => {
     roomPanel,
     status,
     onlineUserList,
-    toggleReady,
     isUserInViewingList,
   } = selector;
   const {
@@ -38,62 +38,80 @@ export const Game = memo(props => {
     handleJoinOutBoard,
     handleToggleReady,
     handleShowInfo,
+    handleStartGame,
+    handleConfirmOutRoom,
   } = handlers;
   const isPlaying = roomPanel?.status === 'PLAYING';
+  const isStarting = roomPanel?.status === 'START';
+  const me = getMeFromRoom(roomPanel);
+  const imReady = me?.status === 'READY';
+  const imPlaying = me?.status === 'PLAYING';
+
   return (
     <StyledRow>
       <StyledRoomHeader>{`${roomPanel?.name} (ID: ${roomPanel?.joinId})`}</StyledRoomHeader>
       <StyledLayoutGame>
         <StyledSideLeft>
           <PlayerInfoSideBar
+            me={me}
             handleShowInfo={handleShowInfo}
             handleJoinOutBoard={handleJoinOutBoard}
             handleLeaveRoom={handleLeaveRoom}
+            handleConfirmOutRoom={handleConfirmOutRoom}
             roomPanel={roomPanel}
             disabledRules={{
-              joinOut: toggleReady,
-              sur: !isPlaying,
-              draw: !isPlaying,
+              joinOut: imReady || isStarting || isPlaying,
+              sur: !isPlaying || !imPlaying,
+              draw: !isPlaying || !imPlaying,
             }}
           />
         </StyledSideLeft>
         <StyledBoardOverlay>
-          {!isPlaying && (
+          {(!isPlaying && !isStarting && (
             <div className="overlay">
               <GameButton
                 disabled={isUserInViewingList}
-                icon={toggleReady ? <LoadingOutlined /> : <FireFilled />}
-                title={toggleReady ? 'Waiting for ready' : 'Ready'}
-                buttonColor={toggleReady ? '#808080' : '#ED553B'}
-                titleColor={toggleReady ? '#ED553B' : '#808080'}
+                icon={imReady ? <LoadingOutlined /> : <FireFilled />}
+                title={imReady ? 'Waiting for ready' : 'Ready'}
+                buttonColor={imReady ? '#808080' : '#ED553B'}
+                titleColor={imReady ? '#ED553B' : '#808080'}
                 onClick={handleToggleReady}
               />
             </div>
-          )}
-          {isPlaying && (
-            <Countdown
-              date={Date.now() + 5000}
-              renderer={({ hours, minutes, seconds, completed }) => {
-                if (completed) {
-                  return (
-                    <Board
-                      status={status}
-                      boardCurrent={boards[boards.length - 1]}
-                      squarePerRow={16}
-                      handleClick={handlers.handleClickSquare}
-                    />
-                  );
-                } else {
-                  return (
-                    <StyledCountdown>
-                      <h3 className="text">The game will start in</h3>
-                      <h2 className="number">{`${seconds}s`}</h2>
-                    </StyledCountdown>
-                  );
-                }
-              }}
-            ></Countdown>
-          )}
+          )) ||
+            (isStarting && (
+              <Countdown
+                date={Date.now() + 3000}
+                renderer={({ seconds, completed }) => {
+                  if (completed) {
+                    handleStartGame(roomPanel);
+                    return (
+                      <Board
+                        status={status}
+                        boardCurrent={boards[boards.length - 1]}
+                        squarePerRow={16}
+                        handleClick={handlers.handleClickSquare}
+                      />
+                    );
+                  } else {
+                    return (
+                      <StyledCountdown>
+                        <h3 className="text">The game will start in</h3>
+                        <h2 className="number">{`${seconds}s`}</h2>
+                      </StyledCountdown>
+                    );
+                  }
+                }}
+              />
+            )) ||
+            (isPlaying && (
+              <Board
+                status={status}
+                boardCurrent={boards[boards.length - 1]}
+                squarePerRow={16}
+                handleClick={handlers.handleClickSquare}
+              />
+            ))}
         </StyledBoardOverlay>
 
         <StyledSideRight>

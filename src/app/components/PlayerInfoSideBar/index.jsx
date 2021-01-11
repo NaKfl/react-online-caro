@@ -13,7 +13,6 @@ import {
   SmileOutlined,
   MehOutlined,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 import circle from 'assets/circle.svg';
 import cross from 'assets/cross.svg';
 
@@ -23,12 +22,18 @@ const PlayerInfoSideBar = ({
   handleJoinOutBoard,
   handleShowInfo,
   disabledRules,
+  handleConfirmOutRoom,
+  me,
 }) => {
   return (
     <StyledPlayerInfoSideBar {...roomPanel}>
-      <Link to="/" onClick={handleLeaveRoom}>
-        <GameButton title="Out Room" icon={<ArrowLeftOutlined />} />
-      </Link>
+      <GameButton
+        onClick={
+          me?.status === 'PLAYING' ? handleConfirmOutRoom : handleLeaveRoom
+        }
+        title="Out Room"
+        icon={<ArrowLeftOutlined />}
+      />
 
       <GameButton
         disabled={disabledRules.joinOut}
