@@ -66,7 +66,6 @@ export const useHooks = props => {
   useEffect(() => {
     const user = getUserFromStorage();
     if (user) {
-      socket.emit('client-join-wait-room', { roomId: room.id, user });
       socket.emit('join-room', { roomId: room.id, user });
     }
   }, [room.id]);
@@ -74,9 +73,12 @@ export const useHooks = props => {
   useEffect(() => {
     const { password } = jwt.verify(token, JWT_SECRET);
     socket.emit('client-update-users-status');
-    socket.emit('client-check-pass-room', { password, roomId: room.id });
+    socket.emit('client-check-pass-room-and-join', {
+      password,
+      roomId: room.id,
+    });
     socket.on(
-      'server-check-pass-room',
+      'server-check-pass-room-and-join',
       ({
         isInAnotherRoom,
         isCorrect,
