@@ -33,3 +33,13 @@ export const getList = () => {
     })
     .catch(handleGeneralError);
 };
+
+export const getListGameByUser = () => {
+  return request(WEB_API, {
+    url: 'game/user',
+    method: 'GET',
+  })
+    .then(({ data }) => data.data)
+    .then(data => ({ response: data }))
+    .catch(handleGeneralError);
+};

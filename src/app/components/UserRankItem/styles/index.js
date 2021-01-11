@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Badge } from 'antd';
 
 export const StyledUserItem = styled.div`
@@ -7,9 +7,19 @@ export const StyledUserItem = styled.div`
   align-items: center;
   padding: 10px 15px 10px 25px;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: ${({ no }) => {
+      if (no === 1) return 'rgba(255, 85, 0,1)';
+      if (no === 2) return 'rgba(45, 182, 245,1)';
+      if (no === 3) return 'rgba(135, 208, 104,1)';
+      return 'rgba(0, 0, 0, 0.05)';
+    }};
   }
   cursor: pointer;
+  background-color: ${({ no }) => {
+    if (no === 1) return 'rgba(255, 85, 0,.8)';
+    if (no === 2) return 'rgba(45, 182, 245,.8)';
+    if (no === 3) return 'rgba(135, 208, 104,.8)';
+  }};
 `;
 
 export const StyledPart = styled.div`
@@ -61,4 +71,9 @@ export const StyledTextStatus = styled.p`
 
 export const StyledName = styled.p`
   margin: 0;
+  ${({ isMe }) =>
+    isMe &&
+    css`
+      font-weight: bold;
+    `}
 `;

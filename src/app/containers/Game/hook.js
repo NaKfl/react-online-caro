@@ -10,13 +10,18 @@ import socket from 'utils/socket';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from 'configs';
 import { openNotification, notifyError } from 'utils/notify';
+import { actions as popupActions } from 'app/containers/Popup/slice';
 import { selectOnlineUserList } from 'app/containers/Dashboard/selectors';
+import { POPUP_TYPE } from 'app/containers/Popup/constants';
 
 export const useHooks = props => {
   const onlineUserList = useSelector(selectOnlineUserList);
-  const { updateOnlineUserList } = useActions(
-    { updateOnlineUserList: dashboardActions.updateOnlineUserList },
-    [dashboardActions],
+  const { updateOnlineUserList, openPopup } = useActions(
+    {
+      updateOnlineUserList: dashboardActions.updateOnlineUserList,
+      openPopup: popupActions.openPopup,
+    },
+    [dashboardActions, popupActions],
   );
 
   const user = getUserFromStorage();
@@ -27,6 +32,11 @@ export const useHooks = props => {
   const { token } = queryString.parse(props.location.search);
   const [roomPanel, setRoomPanel] = useState({});
   const [status, setStatus] = useState(null);
+  const [toggleReady, setToggleReady] = useState(false);
+  const isUserInViewingList = roomPanel?.viewingList?.some(
+    item => item.id === user.id,
+  );
+
   const handleClickSquare = position => {
     socket.emit('play-chess', position, room);
   };
@@ -35,8 +45,7 @@ export const useHooks = props => {
     const user = getUserFromStorage();
     if (user) socket.emit('client-connect', { user });
     socket.on('server-send-user-list', ({ userList }) => {
-      const users = userList.filter(item => item.email !== user.email);
-      updateOnlineUserList(users);
+      updateOnlineUserList(userList);
     });
   }, [updateOnlineUserList]);
 
@@ -64,8 +73,8 @@ export const useHooks = props => {
 
   useEffect(() => {
     const { password } = jwt.verify(token, JWT_SECRET);
+    socket.emit('client-update-users-status');
     socket.emit('client-check-pass-room', { password, roomId: room.id });
-    socket.emit('client-check-is-in-room', { roomId: room.id });
     socket.on(
       'server-check-pass-room',
       ({
@@ -96,10 +105,12 @@ export const useHooks = props => {
     );
 
     socket.on('server-send-join-user', ({ roomPanel }) => {
+      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
     socket.on('server-send-leave-room', ({ roomPanel }) => {
+      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
@@ -113,6 +124,13 @@ export const useHooks = props => {
     };
   }, [history, room.id, token]);
 
+  useEffect(() => {
+    socket.on('server-panel-room-info', ({ roomPanel }) => {
+      console.log('roomPanel', roomPanel);
+      setRoomPanel(roomPanel);
+    });
+  }, []);
+
   const handleLeaveRoom = () => {
     const user = getUserFromStorage();
     if (user) {
@@ -120,8 +138,42 @@ export const useHooks = props => {
       socket.emit('client-update-users-status');
     }
   };
+
+  const handleJoinOutBoard = () => {
+    socket.emit('client-user-join-out-board', { roomId: room.id });
+  };
+
+  const handleToggleReady = () => {
+    setToggleReady(prev => !prev);
+    socket.emit('client-user-toggle-ready', { roomId: room.id });
+  };
+
+  const handleShowInfo = user => {
+    if (user)
+      openPopup({
+        key: 'showInfoUser',
+        type: POPUP_TYPE.INFO_USER,
+        user,
+      });
+  };
+
   return {
-    selector: { squarePerRow, boards, status, roomPanel, user, onlineUserList },
-    handlers: { handleClickSquare, handleLeaveRoom },
+    selector: {
+      squarePerRow,
+      boards,
+      status,
+      roomPanel,
+      user,
+      onlineUserList,
+      toggleReady,
+      isUserInViewingList,
+    },
+    handlers: {
+      handleClickSquare,
+      handleLeaveRoom,
+      handleJoinOutBoard,
+      handleToggleReady,
+      handleShowInfo,
+    },
   };
 };

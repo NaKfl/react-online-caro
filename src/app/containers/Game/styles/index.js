@@ -17,7 +17,7 @@ export const StyledSquare = styled.div`
   align-items: center;
   justify-content: center;
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px dashed rgba(0, 0, 0, 0.2);
   color: ${({ children }) => (children === 'x' ? 'red' : 'blue')};
   cursor: pointer;
   border-radius: 2px;
@@ -113,4 +113,65 @@ export const StyledRoomHeader = styled.div`
   font-weight: bold;
   font-size: 18px;
   color: white;
+`;
+
+export const StyledBoardOverlay = styled.div`
+  flex: 1;
+  position: relative;
+  height: 100%;
+  max-height: 840px;
+
+  .overlay {
+    box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
+    border-radius: 0.4em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 15px,
+      #ddd 10px,
+      #ddd 20px
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const StyledCountdown = styled.div`
+  box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
+  border-radius: 0.4em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 15px,
+    #ddd 10px,
+    #ddd 20px
+  );
+
+  .text {
+    margin: 0;
+    margin: 6px 0;
+    font-size: 3.5em;
+    font-weight: bold;
+    opacity: 0.8;
+  }
+
+  .number {
+    margin: 0;
+    margin: 6px 0;
+    font-size: 3.5em;
+    font-weight: bold;
+    opacity: 0.8;
+  }
 `;

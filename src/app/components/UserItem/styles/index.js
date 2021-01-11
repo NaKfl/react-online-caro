@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Badge } from 'antd';
 
 export const StyledUserItem = styled.div`
@@ -54,4 +54,9 @@ export const StyledTextStatus = styled.p`
 
 export const StyledName = styled.p`
   margin: 0;
+  ${({ isMe }) =>
+    isMe &&
+    css`
+      font-weight: bold;
+    `}
 `;

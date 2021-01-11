@@ -47,7 +47,6 @@ const Confirm = memo(props => {
                 <StyledAvatar>
                   <Avatar size={80} src={avatar} />
                   {status && <StyledBadge color={USER_STATUS[status].color} />}
-                  {/* <StyledBadge color={color} /> */}
                 </StyledAvatar>
                 <StyledUserStatus>
                   <StyledName>{name}</StyledName>

@@ -1,9 +1,9 @@
 import { memo } from 'react';
 // import { StyledNotifiWinner } from '../styles';
 import Square from '../Square';
-const Board = memo(({ size, boardCurrent, status, handleClick }) => {
+const Board = memo(({ size, boardCurrent, status, handleClick, ...rest }) => {
   return (
-    <div className="square-box">
+    <div className="square-box" {...rest}>
       <div className="square-content">
         {boardCurrent.map((square, i) => (
           <Square key={i} onClick={() => handleClick(i)}>

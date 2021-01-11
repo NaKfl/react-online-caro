@@ -10,17 +10,17 @@ import {
 
 const UserItem = props => {
   const { user, handleClickInvite, handleShowInfor, no, ...rest } = props;
-  const { name, avatar, point } = user;
+  const { name, avatar, point, isMe } = user;
 
   return (
-    <StyledUserItem {...rest}>
+    <StyledUserItem no={no} {...rest}>
       <StyledPart className="name-and-status" onClick={handleShowInfor}>
         <StyledAvatar>
           <span>{no}</span>
           <Avatar size={40} src={avatar} />
         </StyledAvatar>
         <StyledUserStatus>
-          <StyledName>{name}</StyledName>
+          <StyledName>{`${name} ${isMe ? '(You)' : ''}`}</StyledName>
         </StyledUserStatus>
       </StyledPart>
       <StyledPart className="invite-button">{`${point} points`}</StyledPart>

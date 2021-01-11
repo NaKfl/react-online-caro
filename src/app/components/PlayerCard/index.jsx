@@ -7,14 +7,17 @@ const PlayerCard = ({ user, isHost, ...rest }) => {
     <StyledPlayerCard {...rest}>
       <StyledName>{user?.name ?? 'Waiting for others . . .'}</StyledName>
       <AvatarSpin
-        isLoading={!!user?.name}
+        isLoading={false}
         size={126}
         src={
-          user?.avatar ??
-          'https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif'
+          user
+            ? user.avatar
+            : 'https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif'
         }
       />
-      <StyledLevel>{isHost ? 'Host' : 'Guest'}</StyledLevel>
+      <StyledLevel>
+        {user?.status === 'READY' ? 'Ready' : 'Not ready'}
+      </StyledLevel>
     </StyledPlayerCard>
   );
 };

@@ -35,8 +35,7 @@ export const useHooks = () => {
     if (user) socket.emit('client-connect', { user });
     socket.emit('client-get-rooms');
     socket.on('server-send-user-list', ({ userList }) => {
-      const users = userList.filter(item => item.email !== user.email);
-      updateOnlineUserList(users);
+      updateOnlineUserList(userList);
     });
     socket.on('server-send-rank-list', ({ rankList }) => {
       updateRankList(rankList);
@@ -114,7 +113,6 @@ export const useHooks = () => {
       }) => {
         if (isInAnotherRoom) {
           const token = jwt.sign({ password: passRoomUserIn }, JWT_SECRET);
-          console.log(`/game/${inRoom}?token=${token}`);
           openNotification(
             () => history.push(`/game/${inRoom}?token=${token}`),
             joinId,

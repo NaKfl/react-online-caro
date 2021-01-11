@@ -5,10 +5,10 @@ import useHooks from '../hooks';
 const PrivateRoute = ({ component, layout: Layout, ...rest }) => {
   const { selectors } = useHooks();
   const { isAuthenticated } = selectors;
-  const renderFn = Component => ({ location, ...props }) => {
+  const renderFn = Component => props => {
     if (!!Component && isAuthenticated) {
       return (
-        <Layout location={location}>
+        <Layout location={props.location}>
           <Component {...props} />
         </Layout>
       );
