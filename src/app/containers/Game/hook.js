@@ -139,6 +139,7 @@ export const useHooks = props => {
       socket.emit('client-leave-room', { user, room: roomPanel });
       socket.emit('client-update-users-status');
     }
+    history.push(`/`);
   };
 
   const handleJoinOutBoard = () => {
@@ -164,6 +165,15 @@ export const useHooks = props => {
       socket.emit('client-create-game', { roomPanel });
   };
 
+  const handleConfirmOutRoom = () => {
+    openPopup({
+      key: 'confirmOutRoom',
+      type: POPUP_TYPE.CONFIRM,
+      handleConfirm: handleLeaveRoom,
+      message: 'Are you sure you leave the room ?',
+    });
+  };
+
   return {
     selector: {
       squarePerRow,
@@ -182,6 +192,7 @@ export const useHooks = props => {
       handleToggleReady,
       handleShowInfo,
       handleStartGame,
+      handleConfirmOutRoom,
     },
   };
 };

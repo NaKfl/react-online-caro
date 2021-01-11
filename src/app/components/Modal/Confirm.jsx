@@ -28,7 +28,14 @@ const Confirm = memo(props => {
         <Button key="cancel" onClick={onCancel}>
           {cancelText}
         </Button>,
-        <Button type="primary" key="ok" onClick={handleConfirm}>
+        <Button
+          type="primary"
+          key="ok"
+          onClick={() => {
+            handleConfirm();
+            onCancel();
+          }}
+        >
           {okText}
         </Button>,
       ]}

@@ -16,7 +16,9 @@ const PlayerCard = ({ user, isHost, ...rest }) => {
         }
       />
       <StyledLevel>
-        {user?.status === 'READY' ? 'Ready' : 'Not ready'}
+        {user?.status === 'READY' || user?.status === 'PLAYING'
+          ? 'Ready'
+          : 'Not ready'}
       </StyledLevel>
     </StyledPlayerCard>
   );
