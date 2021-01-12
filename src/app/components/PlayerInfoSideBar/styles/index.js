@@ -4,8 +4,6 @@ export const StyledPlayerInfoSideBar = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: fit-content;
 `;
 
 export const StyledPanel = styled.div`
@@ -13,6 +11,7 @@ export const StyledPanel = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
   width: fit-content;
 `;
 
@@ -41,4 +40,9 @@ export const StyledDivider = styled.div`
     #c7c7c7 0%,
     rgba(255, 255, 255, 0) 70%
   );
+`;
+
+export const StyledRow = styled.div`
+  display: flex;
+  justify-content: center;
 `;

@@ -21,14 +21,15 @@ export const useHooks = () => {
     return gameList.map(item => {
       const isFirstWin = item.userWin === item.infoPlayerFirst.id;
       return {
-        roomId: item.roomId,
-        roomName: item.room.name,
-        playerFirst: item.infoPlayerFirst.name,
-        playerSecond: item.infoPlayerSecond.name,
-        winner: isFirstWin
+        _roomId: item.roomId,
+        _roomName: item.room.name,
+        _playerFirst: item.infoPlayerFirst.name,
+        _playerSecond: item.infoPlayerSecond.name,
+        _winner: isFirstWin
           ? item.infoPlayerFirst.name
           : item.infoPlayerSecond.name,
-        completeAt: moment(item.createdAt).format('YYYY-MM-DD'),
+        _completeAt: moment(item.createdAt).format('YYYY-MM-DD'),
+        ...item,
       };
     });
   };
