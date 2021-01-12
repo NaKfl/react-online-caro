@@ -32,10 +32,13 @@ export const StyledNotifiWinner = styled.div`
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: black;
+  font-weight: 600;
+  font-size: 1.4em;
   z-index: 100;
   height: 200px;
   width: 400px;
-  background-color: #f8f8f8;
+  background-color: rgba(255, 255, 255, 0.3);
   box-shadow: #727272 0 0 15px;
   resize: both;
   border: 10px solid black;
@@ -133,7 +136,9 @@ export const StyledBoardOverlay = styled.div`
   position: relative;
   height: 100%;
   max-height: 840px;
-
+  .bold {
+    background-color: yellow;
+  }
   .overlay {
     box-shadow: 0px 4px 16px ${COLOR.SHADOW_GRAY};
     border-radius: 0.4em;

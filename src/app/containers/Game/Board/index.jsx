@@ -1,27 +1,34 @@
 import { memo } from 'react';
-// import { StyledNotifiWinner } from '../styles';
+import { NotifyWinner } from './NotifyWinner';
 import Square from '../Square';
-const Board = memo(({ size, boardCurrent, status, handleClick, ...rest }) => {
-  return (
-    <div className="square-box" {...rest}>
-      <div className="square-content">
-        {boardCurrent.map((square, i) => (
-          <Square key={i} onClick={() => handleClick(i)}>
-            {square}
-          </Square>
-        ))}
+
+const Board = memo(
+  ({
+    size,
+    boardCurrent,
+    status,
+    resetGame,
+    handleClick,
+    winArray,
+    ...rest
+  }) => {
+    console.log('render board');
+    return (
+      <div className="square-box" {...rest}>
+        <div className="square-content">
+          {boardCurrent.map((square, i) => (
+            <Square
+              key={i}
+              onClick={() => handleClick(i)}
+              className={`${winArray.indexOf(i) !== -1 ? 'bold' : ''}`}
+            >
+              {square}
+            </Square>
+          ))}
+          {status && <NotifyWinner status={status} resetGame={resetGame} />}
+        </div>
       </div>
-    </div>
-  );
-});
-// const NotifyWinner = ({ status }) => {
-//   return (
-//     <StyledNotifiWinner>
-//       {status}
-//       <Button size="large" type="primary" style={{ margin: '0px 10px' }}>
-//         Play again
-//       </Button>
-//     </StyledNotifiWinner>
-//   );
-// };
+    );
+  },
+);
 export default Board;
