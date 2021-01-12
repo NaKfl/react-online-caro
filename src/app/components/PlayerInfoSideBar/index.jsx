@@ -23,7 +23,10 @@ const PlayerInfoSideBar = ({
   handleShowInfo,
   disabledRules,
   handleConfirmOutRoom,
+  handleConfirmRequestDraw,
+  handleConfirmSurrender,
   me,
+  gameInfo,
 }) => {
   return (
     <StyledPlayerInfoSideBar {...roomPanel}>
@@ -43,11 +46,13 @@ const PlayerInfoSideBar = ({
       />
 
       <GameButton
+        onClick={handleConfirmSurrender}
         disabled={disabledRules.sur}
         title="Surrender"
         icon={<MehOutlined />}
       />
       <GameButton
+        onClick={handleConfirmRequestDraw}
         disabled={disabledRules.draw}
         title="Request Draw"
         icon={<SmileOutlined />}
@@ -57,6 +62,7 @@ const PlayerInfoSideBar = ({
         <PlayerCard
           onClick={() => handleShowInfo(roomPanel?.firstPlayer)}
           user={roomPanel?.firstPlayer}
+          myTurn={gameInfo?.turn === 0}
         />
         <StyledScore>
           <img className="cross" src={cross} alt="x-icon" />
@@ -68,6 +74,7 @@ const PlayerInfoSideBar = ({
         <PlayerCard
           onClick={() => handleShowInfo(roomPanel?.secondPlayer)}
           user={roomPanel?.secondPlayer}
+          myTurn={gameInfo?.turn === 1}
           isHost
         />
       </StyledPanel>

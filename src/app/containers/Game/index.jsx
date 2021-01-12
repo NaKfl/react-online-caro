@@ -7,6 +7,7 @@ import {
   StyledRoomHeader,
   StyledBoardOverlay,
   StyledCountdown,
+  StyledRoomFooter,
 } from './styles';
 import { memo } from 'react';
 import { sliceKey, reducer } from './slice';
@@ -32,6 +33,7 @@ export const Game = memo(props => {
     status,
     onlineUserList,
     isUserInViewingList,
+    gameInfo,
   } = selector;
   const {
     handleLeaveRoom,
@@ -40,6 +42,9 @@ export const Game = memo(props => {
     handleShowInfo,
     handleStartGame,
     handleConfirmOutRoom,
+    handleUpdateGameInfo,
+    handleConfirmRequestDraw,
+    handleConfirmSurrender,
   } = handlers;
   const isPlaying = roomPanel?.status === 'PLAYING';
   const isStarting = roomPanel?.status === 'START';
@@ -53,11 +58,14 @@ export const Game = memo(props => {
       <StyledLayoutGame>
         <StyledSideLeft>
           <PlayerInfoSideBar
+            gameInfo={gameInfo}
             me={me}
             handleShowInfo={handleShowInfo}
             handleJoinOutBoard={handleJoinOutBoard}
             handleLeaveRoom={handleLeaveRoom}
             handleConfirmOutRoom={handleConfirmOutRoom}
+            handleConfirmRequestDraw={handleConfirmRequestDraw}
+            handleConfirmSurrender={handleConfirmSurrender}
             roomPanel={roomPanel}
             disabledRules={{
               joinOut: imReady || isStarting || isPlaying,
@@ -133,6 +141,23 @@ export const Game = memo(props => {
           </div>
         </StyledSideOuterRight>
       </StyledLayoutGame>
+      <StyledRoomFooter>
+        {(gameInfo?.timeLeft && (
+          <Countdown
+            date={Date.now() + gameInfo.timeLeft * 1000}
+            renderer={({ seconds, completed }) => {
+              if (completed) {
+                return <span>Time Out</span>;
+              } else {
+                return (
+                  <span className="time-left">{`Time Left: ${seconds}s`}</span>
+                );
+              }
+            }}
+          />
+        )) ||
+          `Time Per Step: ${roomPanel.timePerStep}s`}
+      </StyledRoomFooter>
     </StyledRow>
   );
 });

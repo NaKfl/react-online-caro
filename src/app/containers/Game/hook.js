@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'app/containers/Dashboard/slice';
@@ -9,17 +9,18 @@ import queryString from 'query-string';
 import socket from 'utils/socket';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from 'configs';
-import { openNotification, notifyError } from 'utils/notify';
+import { openNotification, notifyError, notifyInfo } from 'utils/notify';
 import { actions as popupActions } from 'app/containers/Popup/slice';
 import { selectOnlineUserList } from 'app/containers/Dashboard/selectors';
 import { POPUP_TYPE } from 'app/containers/Popup/constants';
 
 export const useHooks = props => {
   const onlineUserList = useSelector(selectOnlineUserList);
-  const { updateOnlineUserList, openPopup } = useActions(
+  const { updateOnlineUserList, openPopup, closePopup } = useActions(
     {
       updateOnlineUserList: dashboardActions.updateOnlineUserList,
       openPopup: popupActions.openPopup,
+      closePopup: popupActions.closePopup,
     },
     [dashboardActions, popupActions],
   );
@@ -31,6 +32,7 @@ export const useHooks = props => {
   const history = useHistory();
   const { token } = queryString.parse(props.location.search);
   const [roomPanel, setRoomPanel] = useState({});
+  const [gameInfo, setGameInfo] = useState({});
   const [status, setStatus] = useState(null);
   const [toggleReady, setToggleReady] = useState(false);
   const isUserInViewingList = roomPanel?.viewingList?.some(
@@ -107,12 +109,10 @@ export const useHooks = props => {
     );
 
     socket.on('server-send-join-user', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
     socket.on('server-send-leave-room', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
@@ -126,10 +126,50 @@ export const useHooks = props => {
     };
   }, [history, room.id, token]);
 
+  const handleAcceptRequestDraw = useCallback(() => {
+    socket.emit('client-accept-request-draw', { gameId: gameInfo.id });
+  }, [gameInfo]);
+
+  const handleCancelRequestDraw = useCallback(() => {
+    socket.emit('client-refuse-request-draw', { gameId: gameInfo.id });
+  }, [gameInfo]);
+
+  useEffect(() => {
+    socket.on('server-confirm-request-draw', ({ requestedUser }) => {
+      openPopup({
+        key: 'acceptRequestDraw',
+        type: POPUP_TYPE.CONFIRM,
+        okText: 'Accept',
+        cancelText: 'Refuse',
+        handleConfirm: handleAcceptRequestDraw,
+        handleCancel: handleCancelRequestDraw,
+        message: `${requestedUser.name} request draw. Do you accept ?`,
+      });
+    });
+    return () => {
+      socket.off('server-confirm-request-draw');
+    };
+  }, [gameInfo, handleAcceptRequestDraw, handleCancelRequestDraw, openPopup]);
+
+  useEffect(() => {
+    socket.on('server-confirm-refuse-request-draw', ({ answerUser }) => {
+      closePopup({
+        key: 'requestDraw',
+      });
+      notifyInfo(`${answerUser.name} refused your request`);
+    });
+    return () => {
+      socket.off('server-confirm-refuse-request-draw');
+    };
+  }, [closePopup]);
+
   useEffect(() => {
     socket.on('server-panel-room-info', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
+    });
+
+    socket.on('server-game-info', ({ gameInfo }) => {
+      setGameInfo(gameInfo);
     });
   }, []);
 
@@ -161,8 +201,7 @@ export const useHooks = props => {
   };
 
   const handleStartGame = roomPanel => {
-    if (roomPanel.firstPlayer?.id === user.id)
-      socket.emit('client-create-game', { roomPanel });
+    socket.emit('client-create-game', { roomPanel });
   };
 
   const handleConfirmOutRoom = () => {
@@ -170,8 +209,51 @@ export const useHooks = props => {
       key: 'confirmOutRoom',
       type: POPUP_TYPE.CONFIRM,
       handleConfirm: handleLeaveRoom,
-      message: 'Are you sure you leave the room ?',
+      message: 'Are you sure to leave the room ?',
     });
+  };
+
+  const handleConfirmRequestDraw = () => {
+    openPopup({
+      key: 'confirmRequestDraw',
+      type: POPUP_TYPE.CONFIRM,
+      handleConfirm: handleRequestDraw,
+      message: 'Are you sure to request draw ?',
+    });
+  };
+
+  const handleRequestDraw = () => {
+    socket.emit('client-request-draw', { gameId: gameInfo.id });
+    openPopup({
+      key: 'requestDraw',
+      type: POPUP_TYPE.CONFIRM,
+      message: 'Waiting for rival accept your request',
+      loading: true,
+    });
+  };
+
+  const handleConfirmSurrender = () => {
+    openPopup({
+      key: 'confirmConfirmSurrender',
+      type: POPUP_TYPE.CONFIRM,
+      handleConfirm: handleSurrender,
+      message: 'Are you sure to surrender ?',
+    });
+  };
+
+  const handleSurrender = () => {
+    // TODO: Xử lý đầu hàng
+    socket.emit('client-surrender', { gameId: gameInfo.id });
+  };
+
+  const handleUpdateGameInfo = type => {
+    const { id } = gameInfo;
+    switch (type) {
+      case 'switch-turn':
+        return socket.emit('client-update-game-info', { gameId: id, type });
+      default:
+        return;
+    }
   };
 
   return {
@@ -184,6 +266,7 @@ export const useHooks = props => {
       onlineUserList,
       toggleReady,
       isUserInViewingList,
+      gameInfo,
     },
     handlers: {
       handleClickSquare,
@@ -193,6 +276,9 @@ export const useHooks = props => {
       handleShowInfo,
       handleStartGame,
       handleConfirmOutRoom,
+      handleUpdateGameInfo,
+      handleConfirmRequestDraw,
+      handleConfirmSurrender,
     },
   };
 };
