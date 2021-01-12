@@ -17,6 +17,7 @@ import {
 } from '@ant-design/icons';
 import circle from 'assets/circle.svg';
 import cross from 'assets/cross.svg';
+import { useHistory } from 'react-router-dom';
 
 const PlayerInfoSideBar = ({
   adminMode,
@@ -33,12 +34,17 @@ const PlayerInfoSideBar = ({
   me,
   gameInfo,
 }) => {
+  const history = useHistory();
   return (
     <StyledPlayerInfoSideBar {...roomPanel}>
       <div>
         <GameButton
           onClick={
-            me?.status === 'PLAYING' ? handleConfirmOutRoom : handleLeaveRoom
+            adminMode
+              ? () => history.goBack()
+              : me?.status === 'PLAYING'
+              ? handleConfirmOutRoom
+              : handleLeaveRoom
           }
           title={adminMode ? 'Go Back' : 'Out Room'}
           icon={<SelectOutlined />}

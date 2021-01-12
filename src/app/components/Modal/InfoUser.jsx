@@ -16,10 +16,11 @@ import Input from 'app/components/Input';
 import { Row, Col, Avatar } from 'antd';
 import { USER_STATUS } from 'utils/constants';
 import classifyRank from 'utils/classifyRank';
+import moment from 'moment';
 
 const Confirm = memo(props => {
   const { visible, onCancel, user, ...rest } = props;
-  const { status, name, avatar, point } = user;
+  const { status, name, avatar, point, createdAt, totalMatches } = user;
 
   return (
     <StyledModal
@@ -82,13 +83,16 @@ const Confirm = memo(props => {
               </Form.Item>
             </Col>
             <Col span={12} className="final-input">
-              <Form.Item label="Total matches" name="total-matches">
-                <Input disabled />
+              <Form.Item label="Total matches">
+                <Input value={totalMatches ?? 0} disabled />
               </Form.Item>
             </Col>
             <Col span={12} className="final-input">
-              <Form.Item label="Registration Date" name="createdAt">
-                <Input disabled />
+              <Form.Item label="Registration Date">
+                <Input
+                  disabled
+                  value={moment(createdAt).format('YYYY-MM-DD')}
+                />
               </Form.Item>
             </Col>
           </Row>
