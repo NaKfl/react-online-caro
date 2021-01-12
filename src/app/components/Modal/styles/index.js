@@ -29,6 +29,55 @@ export const StyledModalLoading = styled(Modal)`
   #clackers {
     /*   border: 1px solid white; */
   }
+  .canvas {
+    align-items: center;
+    background: #eeeeee;
+    border-radius: 50%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    height: 10em;
+    justify-content: center;
+    margin: 1em 1em 2em 1em;
+    width: 10em;
+  }
+
+  /* Spinner 6 starts here */
+  .spinner6 {
+    background: #4db6ac;
+    border-radius: 50%;
+    height: 1em;
+    margin: 0.1em;
+    width: 1em;
+  }
+
+  .p1 {
+    animation: fall 1s linear 0.3s infinite;
+  }
+
+  .p2 {
+    animation: fall 1s linear 0.2s infinite;
+  }
+
+  .p3 {
+    animation: fall 1s linear 0.1s infinite;
+  }
+
+  .p4 {
+    animation: fall 1s linear infinite;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateY(-15px);
+    }
+    25%,
+    75% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-15px);
+    }
+  }
 `;
 
 export const StyledProfile = styled.div`
@@ -129,4 +178,15 @@ export const StyledLoadingText = styled.div`
   font-size: 1.5rem;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   margin-left: 0.5em;
+`;
+
+export const StyledRow = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const StyledMessage = styled.p`
+  font-size: 15px;
+  margin-bottom: 0;
+  margin-right: 5px;
 `;

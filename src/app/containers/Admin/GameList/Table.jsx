@@ -3,6 +3,7 @@ import Button from 'app/components/Button';
 import Form from 'app/components/Form';
 import { memo } from 'react';
 import useTable from 'hooks/useTable';
+import { Link } from 'react-router-dom';
 
 export const MainTable = ({ dataSource }) => {
   const [form] = Form.useForm();
@@ -18,11 +19,13 @@ export const MainTable = ({ dataSource }) => {
     { title: 'Room name', dataIndex: 'roomName', width: '10%' },
     {
       title: 'Action',
-      render: () => (
-        <Button size="small" type="primary">
-          View
-        </Button>
-      ),
+      render: (_, item) => {
+        return (
+          <Button size="small" type="primary">
+            <Link to={`/history/${item.id.game}`}>View History</Link>
+          </Button>
+        );
+      },
     },
   ];
   return (

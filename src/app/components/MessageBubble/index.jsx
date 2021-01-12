@@ -3,7 +3,7 @@ import { StyledMessageBubble, StyledInfo } from './styles';
 
 const MessageBubble = ({
   children,
-  direction = 'right',
+  direction = 'left',
   name,
   createdAt,
   ...rest

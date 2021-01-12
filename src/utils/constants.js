@@ -59,3 +59,21 @@ export const USER_STATUS = {
     title: 'Playing',
   },
 };
+
+export const USER_RANK = {
+  BRONZE: 'BRONZE',
+  SILVER: 'SILVER',
+  GOLD: 'GOLD',
+  PLATINUM: 'PLATINUM',
+  DIAMOND: 'DIAMOND',
+  MASTER: 'MASTER',
+};
+
+export const RANKS = [
+  'BRONZE',
+  'SILVER',
+  'GOLD',
+  'PLATINUM',
+  'DIAMOND',
+  'MASTER',
+];

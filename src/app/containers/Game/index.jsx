@@ -39,6 +39,8 @@ export const Game = memo(props => {
     handleUpdateGameInfo,
     decreaseTime,
     resetGame,
+    handleConfirmRequestDraw,
+    handleConfirmSurrender,
   } = handlers;
   const isPlaying = roomPanel?.status === 'PLAYING';
   const isStarting = roomPanel?.status === 'START';
@@ -58,6 +60,8 @@ export const Game = memo(props => {
             handleJoinOutBoard={handleJoinOutBoard}
             handleLeaveRoom={handleLeaveRoom}
             handleConfirmOutRoom={handleConfirmOutRoom}
+            handleConfirmRequestDraw={handleConfirmRequestDraw}
+            handleConfirmSurrender={handleConfirmSurrender}
             roomPanel={roomPanel}
             disabledRules={{
               joinOut: imReady || isStarting || isPlaying,
@@ -138,7 +142,7 @@ export const Game = memo(props => {
       <StyledRoomFooter>
         {(gameInfo?.timeLeft && (
           <Countdown
-            date={Date.now() + gameInfo.timeLeft * gameInfo.timeLeft}
+            date={Date.now() + gameInfo.timeLeft * 1000}
             renderer={({ seconds, completed }) => {
               if (completed) {
                 return <span>Time Out</span>;

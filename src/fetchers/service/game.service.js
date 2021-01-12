@@ -18,13 +18,14 @@ export const getList = () => {
                 ? e?.infoPlayerFirst?.name
                 : e?.infoPlayerSecond?.name,
             id: {
+              game: e.id,
               first: e?.playerFirst,
               second: e?.playerSecond,
               winner: e?.userWin,
-              room: e?.Room?.id,
+              room: e?.room?.id,
             },
             updatedAt: e?.updatedAt,
-            roomName: e?.Room?.name,
+            roomName: e?.room?.name,
           };
         });
         return { response: r };

@@ -14,7 +14,7 @@ export const Dashboard = props => {
   useInjectReducer({ key: sliceKey, reducer });
   const { states, selectors, handlers } = useHooks(props);
   const { onlineUserList, roomList, rankList } = selectors;
-  const { isShowModalPass, isMatching, matchingGame } = states;
+  const { isShowModalPass, isMatching, matchingGame, refCountDown } = states;
   const {
     handleCancelPass,
     handleCheckPassword,
@@ -23,6 +23,7 @@ export const Dashboard = props => {
     showModalMatching,
     handleCancelMatching,
     handlePushToGame,
+    handleMatchingOtherRank,
   } = handlers;
   return (
     <StyledDashboard>
@@ -56,7 +57,9 @@ export const Dashboard = props => {
       <Loading
         visible={isMatching}
         matchingGame={matchingGame}
+        refCountDown={refCountDown}
         handlePushToGame={handlePushToGame}
+        handleMatchingOtherRank={handleMatchingOtherRank}
         onCancel={handleCancelMatching}
       />
     </StyledDashboard>
