@@ -20,11 +20,7 @@ const Confirm = memo(props => {
       closable={false}
       onCancel={onCancel}
       visible={visible}
-      footer={[
-        <Button key="cancel" onClick={onCancel}>
-          Cancle
-        </Button>,
-      ]}
+      footer={null}
       {...rest}
     >
       <h2
@@ -96,29 +92,25 @@ const Confirm = memo(props => {
       )}
 
       {!matchingGame.status && (
-        <div class="canvas canvas6">
-          <Countdown
-            ref={refCountDown}
-            date={Date.now() + 3599000}
-            renderer={({ hours, minutes, seconds }) => {
-              if (seconds % 10 === 0) {
-                const isMatchingHigher = seconds === 30;
-                handleMatchingOtherRank({ isMatchingHigher });
-              }
-              return (
-                <h2>{''}</h2>
-                // <h2 className="number" style={{ color: 'white' }}>
-                //   {`${minutes > 59 ? 0 : 59 - minutes} : `}
-                //   {`${minutes > 59 ? 0 : 60 - seconds}`}
-                // </h2>
-              );
-            }}
-          ></Countdown>
-          <div class="spinner6 p1"></div>
-          <div class="spinner6 p2"></div>
-          <div class="spinner6 p3"></div>
-          <div class="spinner6 p4"></div>
-        </div>
+        <Countdown
+          ref={refCountDown}
+          date={Date.now() + 3599000}
+          renderer={({ hours, minutes, seconds }) => {
+            if (seconds % 10 === 0) {
+              const isMatchingHigher = seconds === 30;
+              handleMatchingOtherRank({ isMatchingHigher });
+            }
+            return (
+              <Button key="cancel" onClick={onCancel}>
+                Cancel
+              </Button>
+              // <h2 className="number" style={{ color: 'white' }}>
+              //   {`${minutes > 59 ? 0 : 59 - minutes} : `}
+              //   {`${minutes > 59 ? 0 : 60 - seconds}`}
+              // </h2>
+            );
+          }}
+        ></Countdown>
       )}
     </StyledModalLoading>
   );
