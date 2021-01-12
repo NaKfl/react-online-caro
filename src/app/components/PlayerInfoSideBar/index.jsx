@@ -23,6 +23,8 @@ const PlayerInfoSideBar = ({
   handleShowInfo,
   disabledRules,
   handleConfirmOutRoom,
+  handleConfirmRequestDraw,
+  handleConfirmSurrender,
   me,
   gameInfo,
 }) => {
@@ -44,11 +46,13 @@ const PlayerInfoSideBar = ({
       />
 
       <GameButton
+        onClick={handleConfirmSurrender}
         disabled={disabledRules.sur}
         title="Surrender"
         icon={<MehOutlined />}
       />
       <GameButton
+        onClick={handleConfirmRequestDraw}
         disabled={disabledRules.draw}
         title="Request Draw"
         icon={<SmileOutlined />}

@@ -130,3 +130,14 @@ export const StyledLoadingText = styled.div`
   font-family: 'Comic Sans MS', cursive, sans-serif;
   margin-left: 0.5em;
 `;
+
+export const StyledRow = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const StyledMessage = styled.p`
+  font-size: 15px;
+  margin-bottom: 0;
+  margin-right: 5px;
+`;

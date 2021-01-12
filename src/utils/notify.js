@@ -16,6 +16,14 @@ export function notifySuccess(message) {
   });
 }
 
+export const notifyInfo = message => {
+  notification.info({
+    message,
+    placement: 'topRight',
+    top: 90,
+  });
+};
+
 export const openNotification = (handleConfirm, roomId) => {
   const key = `open${Date.now()}`;
   const btn = (
@@ -31,6 +39,8 @@ export const openNotification = (handleConfirm, roomId) => {
     </Button>
   );
   notification.open({
+    placement: 'topRight',
+    top: 90,
     message: 'You are joining another room',
     description: `You are in room : ${roomId}`,
     btn,
@@ -53,6 +63,8 @@ export const openNotificationInvite = (handleConfirm, roomId, user) => {
     </Button>
   );
   notification.open({
+    placement: 'topRight',
+    top: 90,
     message: `${user.name} invite you join room`,
     description: `${user.name} invite you join room ${roomId}`,
     btn,

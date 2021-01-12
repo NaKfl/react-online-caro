@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import { StyledModal } from './styles';
+import { StyledModal, StyledRow, StyledMessage } from './styles';
 import Button from 'app/components/Button';
+import { SyncOutlined } from '@ant-design/icons';
 
 import { useTranslation } from 'react-i18next';
 
@@ -14,6 +15,8 @@ const Confirm = memo(props => {
     cancelText = t('Common.cancel'),
     onCancel,
     handleConfirm,
+    handleCancel,
+    loading,
     ...rest
   } = props;
 
@@ -24,24 +27,39 @@ const Confirm = memo(props => {
       visible={visible}
       closable={false}
       onCancel={onCancel}
-      footer={[
-        <Button key="cancel" onClick={onCancel}>
-          {cancelText}
-        </Button>,
-        <Button
-          type="primary"
-          key="ok"
-          onClick={() => {
-            handleConfirm();
-            onCancel();
-          }}
-        >
-          {okText}
-        </Button>,
-      ]}
+      maskClosable={false}
+      footer={
+        loading
+          ? null
+          : [
+              <Button
+                key="cancel"
+                onClick={() => {
+                  if (handleCancel) handleCancel();
+                  onCancel();
+                }}
+              >
+                {cancelText}
+              </Button>,
+
+              <Button
+                type="primary"
+                key="ok"
+                onClick={() => {
+                  handleConfirm();
+                  onCancel();
+                }}
+              >
+                {okText}
+              </Button>,
+            ]
+      }
       {...rest}
     >
-      {message}
+      <StyledRow>
+        <StyledMessage>{message}</StyledMessage>
+        {loading && <SyncOutlined spin />}
+      </StyledRow>
     </StyledModal>
   );
 });
