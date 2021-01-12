@@ -28,7 +28,6 @@ export const Game = memo(props => {
   const { id: roomId } = useParams();
   const { selector, handlers } = useHooks(props);
   const { roomPanel, onlineUserList, isUserInViewingList, gameInfo } = selector;
-  console.log('🚀 ~ file: index.jsx ~ line 31 ~ gameInfo', gameInfo);
   const {
     handleLeaveRoom,
     handleJoinOutBoard,

@@ -28,10 +28,6 @@ function* recoverPasswordWatcher() {
 }
 function* recoverPasswordTask(action) {
   const { response, error } = yield call(recoverAPI, action.payload);
-  console.log(
-    '🚀 ~ file: saga.js ~ line 31 ~ function*recoverPasswordTask ~ response',
-    response,
-  );
 
   if (response) {
     yield put(actions.requestRecoverySuccess(response));

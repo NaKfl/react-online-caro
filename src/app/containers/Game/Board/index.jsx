@@ -12,7 +12,6 @@ const Board = memo(
     winArray,
     ...rest
   }) => {
-    console.log('render board');
     return (
       <div className="square-box" {...rest}>
         <div className="square-content">

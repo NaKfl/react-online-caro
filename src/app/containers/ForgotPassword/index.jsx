@@ -15,10 +15,6 @@ export const ForgotPassword = memo(() => {
   useInjectReducer({ key: sliceKey, reducer });
   const { selectors, handles } = useHooks();
   const { step, stepError, status, recoverStatus } = selectors;
-  console.log(
-    '🚀 ~ file: index.jsx ~ line 18 ~ ForgotPassword ~ recoverStatus',
-    recoverStatus === STATUS.SUCCESS,
-  );
   const { submitEmail, submitRecovery, goHome } = handles;
 
   const swithStep = step => {

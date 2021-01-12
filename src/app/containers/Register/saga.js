@@ -11,10 +11,6 @@ function* registerWatcher() {
 
 function* registerTask(action) {
   const { response, error } = yield call(registerAPI, action.payload);
-  console.log(
-    '🚀 ~ file: saga.js ~ line 14 ~ function*registerTask ~ response',
-    response,
-  );
   if (response) {
     const res = yield call(sendMailAPI, {
       ...response,

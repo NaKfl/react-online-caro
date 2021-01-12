@@ -10,7 +10,6 @@ export const MainTable = ({ dataSource }) => {
     form,
     dataSource,
   });
-  console.log('dataSource', dataSource);
   const colms = [
     {
       title: 'Room Name',

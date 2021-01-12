@@ -24,7 +24,6 @@ export const useHooks = props => {
     },
     [dashboardActions, popupActions],
   );
-  console.log('render');
   const user = getUserFromStorage();
   const squarePerRow = useSelector(makeSquarePerRow);
   const room = useParams();
@@ -285,7 +284,6 @@ export const useHooks = props => {
   };
   useEffect(() => {
     socket.on('decrease-time', time => {
-      console.log('🚀 ~ file: hook.js ~ line 222 ~ useEffect ~ time', time);
       setGameInfo(pre => ({ ...pre, timeLeft: time }));
     });
     return () => {
