@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import socket from 'utils/socket';
 import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 import useActions from 'hooks/useActions';
@@ -13,10 +13,12 @@ import {
 } from 'utils/notify';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from 'configs';
+import validRank from 'utils/validRank';
 
 export const useHooks = () => {
   const onlineUserList = useSelector(selectOnlineUserList);
   const rankList = useSelector(selectRankList);
+  const history = useHistory();
   const { updateOnlineUserList, updateRankList } = useActions(
     {
       updateOnlineUserList: actions.updateOnlineUserList,
@@ -34,8 +36,7 @@ export const useHooks = () => {
     roomId: '',
     password: '',
   });
-  const history = useHistory();
-
+  const refCountDown = useRef();
   useEffect(() => {
     const user = getUserFromStorage();
     if (user) socket.emit('client-connect', { user });
@@ -135,12 +136,7 @@ export const useHooks = () => {
     );
 
     socket.on('server-send-matching-success', ({ roomId, password }) => {
-      setMatchingGame(preState => ({
-        ...preState,
-        status: true,
-        roomId,
-        password,
-      }));
+      setMatchingGame({ status: true, roomId, password });
     });
 
     return () => {
@@ -201,22 +197,38 @@ export const useHooks = () => {
     }
   };
 
-  const showModalMatching = () => {
+  const showModalMatching = useCallback(() => {
     socket.emit('client-send-matching-game');
     socket.emit('client-send-check-matching-game', { rank: '' });
     setMatching(true);
-  };
-
-  const handleCancelMatching = () => {
+  }, []);
+  const handleCancelMatching = useCallback(() => {
+    refCountDown.current.api.stop();
     socket.emit('client-send-cancel-matching-game', {});
     setMatching(false);
-  };
+  }, []);
 
-  const handlePushToGame = ({ roomId, password }) => {
-    const token = jwt.sign({ password }, JWT_SECRET);
-    history.push(`/game/${roomId}?token=${token}`);
-  };
+  const handlePushToGame = useCallback(
+    ({ roomId, password }) => {
+      const token = jwt.sign({ password }, JWT_SECRET);
+      history.push(`/game/${roomId}?token=${token}`);
+    },
+    [history],
+  );
 
+  const handleMatchingOtherRank = ({ isMatchingHigher }) => {
+    const user = getUserFromStorage();
+    const validRankUser = validRank(user.point);
+    if (isMatchingHigher) {
+      socket.emit('client-send-check-matching-game', {
+        rank: validRankUser[1],
+      });
+    } else {
+      socket.emit('client-send-check-matching-game', {
+        rank: validRankUser[0],
+      });
+    }
+  };
   return {
     selectors: {
       onlineUserList,
@@ -234,12 +246,14 @@ export const useHooks = () => {
       showModalMatching,
       handleCancelMatching,
       handlePushToGame,
+      handleMatchingOtherRank,
     },
     states: {
       toggleUserList,
       isShowModalPass,
       isMatching,
       matchingGame,
+      refCountDown,
     },
   };
 };

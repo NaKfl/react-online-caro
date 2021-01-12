@@ -1,22 +1,23 @@
+import { USER_RANK } from './constants';
 const classifyRank = point => {
   switch (true) {
     case point < 100: {
-      return 'Bronze';
+      return USER_RANK.BRONZE;
     }
     case point < 200: {
-      return 'Silver';
+      return USER_RANK.SILVER;
     }
     case point < 300: {
-      return 'Gold';
+      return USER_RANK.GOLD;
     }
     case point < 400: {
-      return 'Platinum';
+      return USER_RANK.PLATINUM;
     }
     case point < 500: {
-      return 'Diamond';
+      return USER_RANK.DIAMOND;
     }
     default: {
-      return 'Master';
+      return USER_RANK.MASTER;
     }
   }
 };
