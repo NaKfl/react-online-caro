@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledPlayerCard, StyledName, StyledLevel } from './styles';
 import AvatarSpin from 'app/components/AvatarSpin';
 
-const PlayerCard = ({ user, isHost, myTurn, ...rest }) => {
+const PlayerCard = ({ user, isHost, myTurn, adminMode, ...rest }) => {
   return (
     <StyledPlayerCard {...rest}>
       <StyledName>{user?.name ?? 'Waiting for others . . .'}</StyledName>
@@ -16,9 +16,10 @@ const PlayerCard = ({ user, isHost, myTurn, ...rest }) => {
         }
       />
       <StyledLevel>
-        {user?.status === 'READY' || user?.status === 'PLAYING'
-          ? 'Ready'
-          : 'Not ready'}
+        {!adminMode &&
+          (user?.status === 'READY' || user?.status === 'PLAYING'
+            ? 'Ready'
+            : 'Not ready')}
       </StyledLevel>
     </StyledPlayerCard>
   );

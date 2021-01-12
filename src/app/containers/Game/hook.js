@@ -179,7 +179,6 @@ export const useHooks = props => {
       socket.emit('client-leave-room', { user, room: roomPanel });
       socket.emit('client-update-users-status');
     }
-    history.push(`/`);
   };
 
   const handleJoinOutBoard = () => {

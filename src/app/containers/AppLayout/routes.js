@@ -7,6 +7,7 @@ import { Game } from 'app/containers/Game/Loadable';
 import { UserList } from 'app/containers/Admin/UserList/Loadable';
 import { GameList } from 'app/containers/Admin/GameList/Loadable';
 import { Profile } from 'app/containers/Profile/Loadable';
+import { History } from 'app/containers/History/Loadable';
 
 export const privateRoutes = [
   {
@@ -43,6 +44,7 @@ export const publicRoutes = [
     key: 'forgotpassword',
   },
 ];
+
 export const adminRoutes = [
   {
     path: '/admin/user',
@@ -56,4 +58,11 @@ export const adminRoutes = [
   },
 ];
 
-export const gameRoutes = [{ path: '/game/:id', component: Game, key: 'game' }];
+export const gameRoutes = [
+  { path: '/game/:id', component: Game, key: 'game' },
+  {
+    path: '/history/:id',
+    component: History,
+    key: 'history',
+  },
+];

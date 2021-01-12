@@ -2,6 +2,7 @@ import Table from 'app/components/Table';
 import Form from 'app/components/Form';
 import { memo } from 'react';
 import useTable from 'hooks/useTable';
+import { Link } from 'react-router-dom';
 
 export const MainTable = ({ dataSource }) => {
   const [form] = Form.useForm();
@@ -9,27 +10,33 @@ export const MainTable = ({ dataSource }) => {
     form,
     dataSource,
   });
+  console.log('dataSource', dataSource);
   const colms = [
     {
       title: 'Room Name',
-      dataIndex: 'roomName',
-      width: '20%',
+      dataIndex: '_roomName',
+      width: '16.6%',
       ...search('roomName'),
     },
     {
       title: 'First Player',
-      dataIndex: 'playerFirst',
-      width: '20%',
+      dataIndex: '_playerFirst',
+      width: '16.6%',
       ...search('playerFirst'),
     },
     {
       title: 'Second Player',
-      dataIndex: 'playerSecond',
-      width: '20%',
+      dataIndex: '_playerSecond',
+      width: '16.6%',
       ...search('playerSecond'),
     },
-    { title: 'Winner', dataIndex: 'winner', width: '20%' },
-    { title: 'Completed Time', dataIndex: 'completeAt', width: '20%' },
+    { title: 'Winner', dataIndex: '_winner', width: '16.6%' },
+    { title: 'Completed Time', dataIndex: '_completeAt', width: '16.6%' },
+    {
+      title: 'Actions',
+      width: '16.6%',
+      render: (_, item) => <Link to={`/history/${item.id}`}>View History</Link>,
+    },
   ];
   return (
     <Table

@@ -4,7 +4,7 @@ import socket from 'utils/socket';
 import moment from 'moment';
 
 export const useHooks = props => {
-  const { roomId } = props;
+  const { roomId, initMessages } = props;
   const user = getUserFromStorage();
   const [messages, setMessages] = useState([]);
 
@@ -45,6 +45,10 @@ export const useHooks = props => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    setMessages(initMessages);
+  }, [initMessages]);
 
   return {
     selectors: { inputRef, listRef },

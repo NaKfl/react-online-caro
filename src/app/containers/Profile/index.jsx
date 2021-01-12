@@ -46,7 +46,6 @@ export const Profile = memo(() => {
                     {status && (
                       <StyledBadge color={USER_STATUS[status].color} />
                     )}
-                    {/* <StyledBadge color={color} /> */}
                   </StyledAvatar>
                   <StyledUserStatus>
                     <StyledName>{name}</StyledName>
