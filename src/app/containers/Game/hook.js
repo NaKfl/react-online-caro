@@ -31,6 +31,7 @@ export const useHooks = props => {
   const history = useHistory();
   const { token } = queryString.parse(props.location.search);
   const [roomPanel, setRoomPanel] = useState({});
+  const [gameInfo, setGameInfo] = useState({});
   const [status, setStatus] = useState(null);
   const [toggleReady, setToggleReady] = useState(false);
   const isUserInViewingList = roomPanel?.viewingList?.some(
@@ -107,12 +108,10 @@ export const useHooks = props => {
     );
 
     socket.on('server-send-join-user', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
     socket.on('server-send-leave-room', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
     });
 
@@ -128,8 +127,11 @@ export const useHooks = props => {
 
   useEffect(() => {
     socket.on('server-panel-room-info', ({ roomPanel }) => {
-      console.log('roomPanel', roomPanel);
       setRoomPanel(roomPanel);
+    });
+
+    socket.on('server-game-info', ({ gameInfo }) => {
+      setGameInfo(gameInfo);
     });
   }, []);
 
@@ -161,8 +163,7 @@ export const useHooks = props => {
   };
 
   const handleStartGame = roomPanel => {
-    if (roomPanel.firstPlayer?.id === user.id)
-      socket.emit('client-create-game', { roomPanel });
+    socket.emit('client-create-game', { roomPanel });
   };
 
   const handleConfirmOutRoom = () => {
@@ -172,6 +173,16 @@ export const useHooks = props => {
       handleConfirm: handleLeaveRoom,
       message: 'Are you sure you leave the room ?',
     });
+  };
+
+  const handleUpdateGameInfo = type => {
+    const { id } = gameInfo;
+    switch (type) {
+      case 'switch-turn':
+        return socket.emit('client-update-game-info', { gameId: id, type });
+      default:
+        return;
+    }
   };
 
   return {
@@ -184,6 +195,7 @@ export const useHooks = props => {
       onlineUserList,
       toggleReady,
       isUserInViewingList,
+      gameInfo,
     },
     handlers: {
       handleClickSquare,
@@ -193,6 +205,7 @@ export const useHooks = props => {
       handleShowInfo,
       handleStartGame,
       handleConfirmOutRoom,
+      handleUpdateGameInfo,
     },
   };
 };

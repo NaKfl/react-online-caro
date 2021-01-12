@@ -41,7 +41,6 @@ export const useHooks = () => {
     if (user) socket.emit('client-connect', { user });
     socket.emit('client-get-rooms');
     socket.on('server-send-user-list', ({ userList }) => {
-      console.log('aaa', userList);
       updateOnlineUserList(userList);
     });
     socket.on('server-send-rank-list', ({ rankList }) => {
