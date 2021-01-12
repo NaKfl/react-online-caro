@@ -106,7 +106,20 @@ export const StyledRoomHeader = styled.div`
   display: flex;
   width: calc(100% + 50px);
   height: 64px;
-  background-color: ${COLOR.SECONDARY};
+  background-color: #222;
+  margin: -25px;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+`;
+
+export const StyledRoomFooter = styled.div`
+  display: flex;
+  width: calc(100% + 50px);
+  height: 64px;
+  background-color: #222;
   margin: -25px;
   align-items: center;
   justify-content: center;
