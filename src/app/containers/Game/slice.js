@@ -17,7 +17,6 @@ const gameSlice = createSlice({
     setTurn(state, action) {
       return flow(set('turn', action.payload))(state);
     },
-    checkWinner(state, action) {},
     setWinner(state, action) {
       return flow(set('winner', action.payload))(state);
     },

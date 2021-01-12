@@ -27,14 +27,8 @@ export const Game = memo(props => {
   useInjectReducer({ key: sliceKey, reducer });
   const { id: roomId } = useParams();
   const { selector, handlers } = useHooks(props);
-  const {
-    boards,
-    roomPanel,
-    status,
-    onlineUserList,
-    isUserInViewingList,
-    gameInfo,
-  } = selector;
+  const { roomPanel, onlineUserList, isUserInViewingList, gameInfo } = selector;
+  console.log('🚀 ~ file: index.jsx ~ line 31 ~ gameInfo', gameInfo);
   const {
     handleLeaveRoom,
     handleJoinOutBoard,
@@ -43,6 +37,8 @@ export const Game = memo(props => {
     handleStartGame,
     handleConfirmOutRoom,
     handleUpdateGameInfo,
+    decreaseTime,
+    resetGame,
   } = handlers;
   const isPlaying = roomPanel?.status === 'PLAYING';
   const isStarting = roomPanel?.status === 'START';
@@ -91,10 +87,11 @@ export const Game = memo(props => {
                     handleStartGame(roomPanel);
                     return (
                       <Board
-                        status={status}
-                        boardCurrent={boards[boards.length - 1]}
-                        squarePerRow={16}
+                        status={gameInfo.status}
+                        boardCurrent={gameInfo?.board}
                         handleClick={handlers.handleClickSquare}
+                        resetGame={resetGame}
+                        winArray={gameInfo.winArray}
                       />
                     );
                   } else {
@@ -110,10 +107,11 @@ export const Game = memo(props => {
             )) ||
             (isPlaying && (
               <Board
-                status={status}
-                boardCurrent={boards[boards.length - 1]}
-                squarePerRow={16}
+                status={gameInfo.status}
+                boardCurrent={gameInfo.board}
                 handleClick={handlers.handleClickSquare}
+                resetGame={resetGame}
+                winArray={gameInfo.winArray}
               />
             ))}
         </StyledBoardOverlay>

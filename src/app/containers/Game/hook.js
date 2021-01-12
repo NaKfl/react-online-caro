@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'app/containers/Dashboard/slice';
@@ -23,24 +23,68 @@ export const useHooks = props => {
     },
     [dashboardActions, popupActions],
   );
-
+  console.log('render');
   const user = getUserFromStorage();
   const squarePerRow = useSelector(makeSquarePerRow);
-  const [boards, setBoards] = useState([Array(20 * 20).fill(null)]);
   const room = useParams();
   const history = useHistory();
   const { token } = queryString.parse(props.location.search);
   const [roomPanel, setRoomPanel] = useState({});
-  const [gameInfo, setGameInfo] = useState({});
-  const [status, setStatus] = useState(null);
+  const [gameInfo, setGameInfo] = useState({
+    board: Array(20 * 20).fill(null),
+    status: null,
+    winArray: [],
+  });
   const [toggleReady, setToggleReady] = useState(false);
   const isUserInViewingList = roomPanel?.viewingList?.some(
     item => item.id === user.id,
   );
 
-  const handleClickSquare = position => {
-    socket.emit('play-chess', position, room);
-  };
+  const handleClickSquare = useCallback(position => {
+    socket.emit('client-play-chess', { position, roomId: room.id });
+  }, []);
+
+  const resetGame = useCallback(() => {
+    socket.emit('reset-game', room.id);
+  }, []);
+
+  useEffect(() => {
+    socket.on('server-send-winner', ({ winner, boardData, winArray, turn }) => {
+      const user = getUserFromStorage();
+      if (user?.id === winner) {
+        setGameInfo(pre => ({
+          ...pre,
+          winner,
+          board: boardData,
+          winArray,
+          turn,
+          status: 'You win',
+        }));
+      } else {
+        setGameInfo(pre => ({
+          ...pre,
+          winner,
+          board: boardData,
+          winArray,
+          turn,
+          status: 'You lose',
+        }));
+      }
+    });
+    socket.on('reset-game', data => {
+      setGameInfo(pre => ({
+        ...pre,
+        board: Array(400).fill(null),
+        status: null,
+        winArray: [],
+      }));
+    });
+
+    return () => {
+      socket.off('server-send-winner');
+      socket.off('reset-game');
+    };
+  }, []);
 
   useEffect(() => {
     const user = getUserFromStorage();
@@ -49,20 +93,6 @@ export const useHooks = props => {
       updateOnlineUserList(userList);
     });
   }, [updateOnlineUserList]);
-
-  useEffect(() => {
-    socket.on('get-boards', data => {
-      setBoards([data]);
-    });
-    socket.on('get-status', data => {
-      setStatus(data);
-    });
-    return () => {
-      socket.off('get-boards');
-      socket.off('join-room');
-      socket.off('get-status');
-    };
-  });
 
   useEffect(() => {
     const user = getUserFromStorage();
@@ -130,8 +160,8 @@ export const useHooks = props => {
       setRoomPanel(roomPanel);
     });
 
-    socket.on('server-game-info', ({ gameInfo }) => {
-      setGameInfo(gameInfo);
+    socket.on('server-game-info', payload => {
+      setGameInfo(pre => ({ ...pre, ...payload }));
     });
   }, []);
 
@@ -175,21 +205,26 @@ export const useHooks = props => {
     });
   };
 
-  const handleUpdateGameInfo = type => {
+  const handleUpdateGameInfo = () => {
     const { id } = gameInfo;
-    switch (type) {
-      case 'switch-turn':
-        return socket.emit('client-update-game-info', { gameId: id, type });
-      default:
-        return;
-    }
+    return socket.emit('client-update-game-info', { gameId: id });
   };
 
+  const decreaseTime = () => {
+    socket.emit('decrease-time');
+  };
+  useEffect(() => {
+    socket.on('decrease-time', time => {
+      console.log('🚀 ~ file: hook.js ~ line 222 ~ useEffect ~ time', time);
+      setGameInfo(pre => ({ ...pre, timeLeft: time }));
+    });
+    return () => {
+      socket.off('decrease-time');
+    };
+  }, []);
   return {
     selector: {
       squarePerRow,
-      boards,
-      status,
       roomPanel,
       user,
       onlineUserList,
@@ -206,6 +241,8 @@ export const useHooks = props => {
       handleStartGame,
       handleConfirmOutRoom,
       handleUpdateGameInfo,
+      resetGame,
+      decreaseTime,
     },
   };
 };
