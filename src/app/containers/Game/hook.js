@@ -35,6 +35,7 @@ export const useHooks = props => {
     status: null,
     winArray: [],
   });
+
   const [toggleReady, setToggleReady] = useState(false);
   const isUserInViewingList = roomPanel?.viewingList?.some(
     item => item.id === user.id,
@@ -197,8 +198,8 @@ export const useHooks = props => {
       setRoomPanel(roomPanel);
     });
 
-    socket.on('server-game-info', payload => {
-      setGameInfo(pre => ({ ...pre, ...payload }));
+    socket.on('server-game-info', ({ gameInfo }) => {
+      setGameInfo(pre => ({ ...pre, ...gameInfo }));
     });
   }, []);
 
