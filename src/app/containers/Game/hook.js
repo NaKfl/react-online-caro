@@ -282,14 +282,30 @@ export const useHooks = props => {
   const decreaseTime = () => {
     socket.emit('decrease-time');
   };
-  useEffect(() => {
-    socket.on('decrease-time', time => {
-      setGameInfo(pre => ({ ...pre, timeLeft: time }));
-    });
-    return () => {
-      socket.off('decrease-time');
-    };
-  }, []);
+  // useEffect(() => {
+  //   socket.on('decrease-time', time => {
+  //     setGameInfo(pre => ({ ...pre, timeLeft: time }));
+  //   });
+  //   return () => {
+
+  //     socket.off('decrease-time');
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   socket.on('counter', time => {
+  //     setGameInfo(pre => ({ ...pre, timeLeft: time }));
+  //     if (time === 0) {
+  //       socket.emit('game-over', room.id);
+  //     }
+  //   });
+  //   socket.on('server-game-over', data => {
+  //     console.log('🚀 ~ file: hook.js ~ line 294 ~ useEffect ~ data', data);
+  //   });
+  //   return () => {
+  //     socket.off('counter');
+  //     socket.off('game-over');
+  //   };
+  // }, [room]);
   return {
     selector: {
       squarePerRow,
