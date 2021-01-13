@@ -7,11 +7,13 @@ export const StyledProfile = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
+  background-color: white;
+  padding: 20px;
 `;
 
 export const StyledInfo = styled.div`
-  display: flex;
-  justify-content: center;
+  margin-left: 20px;
+  margin-bottom: 30px;
   .profile-form {
     max-width: 800px;
     .group-info {

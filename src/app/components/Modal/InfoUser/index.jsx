@@ -9,7 +9,7 @@ import {
   StyledBadge,
   StyledName,
   StyledPart,
-} from './styles';
+} from '../styles';
 import Button from 'app/components/Button';
 import Form from 'app/components/Form';
 import Input from 'app/components/Input';
@@ -17,10 +17,26 @@ import { Row, Col, Avatar } from 'antd';
 import { USER_STATUS } from 'utils/constants';
 import classifyRank from 'utils/classifyRank';
 import moment from 'moment';
+import { sliceKey, reducer } from './slice';
+import { useInjectSaga, useInjectReducer } from 'utils/reduxInjectors';
+import saga from './saga';
+import useHooks from './hooks';
 
 const Confirm = memo(props => {
+  useInjectSaga({ key: sliceKey, saga });
+  useInjectReducer({ key: sliceKey, reducer });
+  const { selectors } = useHooks(props);
+  const { userInfo } = selectors;
   const { visible, onCancel, user, ...rest } = props;
-  const { status, name, avatar, point, createdAt, totalMatches } = user;
+  const {
+    status,
+    name,
+    avatar,
+    point,
+    createdAt,
+    totalMatches,
+    winMatches,
+  } = userInfo;
 
   return (
     <StyledModal
@@ -84,7 +100,13 @@ const Confirm = memo(props => {
             </Col>
             <Col span={12} className="final-input">
               <Form.Item label="Total matches">
-                <Input value={totalMatches ?? 0} disabled />
+                <Input
+                  value={`${totalMatches} (Win rate: ${Math.round(
+                    (winMatches / totalMatches) * 100,
+                    0,
+                  )}%)`}
+                  disabled
+                />
               </Form.Item>
             </Col>
             <Col span={12} className="final-input">

@@ -86,3 +86,13 @@ export const requestRecoveryPassword = payload => {
     .then(data => ({ response: data }))
     .catch(handleGeneralError);
 };
+
+export const fetchInfoUser = payload => {
+  return request(WEB_API, {
+    url: `user/${payload}`,
+    method: 'GET',
+  })
+    .then(response => response.data)
+    .then(data => ({ response: data }))
+    .catch(handleGeneralError);
+};
