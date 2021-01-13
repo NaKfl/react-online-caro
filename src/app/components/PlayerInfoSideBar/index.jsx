@@ -94,7 +94,7 @@ const PlayerInfoSideBar = ({
             handleShowInfo(roomPanel?.firstPlayer || gameInfo?.infoPlayerFirst)
           }
           user={roomPanel?.firstPlayer || gameInfo?.infoPlayerFirst}
-          myTurn={gameInfo?.turn === 0}
+          myTurn={gameInfo?.turn === 1}
         />
         <StyledScore>
           <img className="cross" src={cross} alt="x-icon" />
@@ -111,7 +111,7 @@ const PlayerInfoSideBar = ({
             )
           }
           user={roomPanel?.secondPlayer || gameInfo?.infoPlayerSecond}
-          myTurn={gameInfo?.turn === 1}
+          myTurn={gameInfo?.turn === 0}
           isHost
         />
       </StyledPanel>

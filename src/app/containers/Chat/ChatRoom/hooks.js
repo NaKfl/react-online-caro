@@ -35,7 +35,7 @@ export const useHooks = props => {
       });
       setMessages(list);
     });
-  }, [roomId, user.id]);
+  }, [roomId, user]);
 
   useEffect(() => {
     if (listRef) {

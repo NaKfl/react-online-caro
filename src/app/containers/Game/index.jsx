@@ -36,7 +36,6 @@ export const Game = memo(props => {
     handleStartGame,
     handleConfirmOutRoom,
     handleUpdateGameInfo,
-    decreaseTime,
     resetGame,
     handleConfirmRequestDraw,
     handleConfirmSurrender,

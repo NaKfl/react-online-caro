@@ -6,13 +6,11 @@ import useActions from 'hooks/useActions';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 import get from 'lodash/fp/get';
 import socket from 'utils/socket';
 import moment from 'moment';
 
 export const useHooks = props => {
-  const user = getUserFromStorage();
   const { id } = useParams();
   const [currentIndex, setCurrentIndex] = useState(0);
   const onlineUserList = useSelector(selectOnlineUserList);
@@ -40,10 +38,6 @@ export const useHooks = props => {
     boards?.map(board =>
       board?.split(', ')?.map(char => (char ? char : null)),
     ) ?? [];
-
-  useEffect(() => {
-    if (user) socket.emit('client-connect', { user });
-  }, [user]);
 
   useEffect(() => {
     socket.emit('client-get-history', { gameId: id });

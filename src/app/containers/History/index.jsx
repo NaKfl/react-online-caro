@@ -83,17 +83,21 @@ export const History = memo(props => {
         <span>{`Started at: ${moment(gameInfo?.createdAt).format(
           'YYYY-MM-DD HH:mm:ss',
         )}`}</span>
-        <span>{`Completed at: ${moment(gameInfo?.completeAt).format(
-          'YYYY-MM-DD HH:mm:ss',
-        )}`}</span>
+        <span>{` ${
+          gameInfo?.completeAt
+            ? `Completed at: ${moment(gameInfo.completeAt).format(
+                'YYYY-MM-DD HH:mm:ss',
+              )}`
+            : ''
+        }`}</span>
         <span>{`${
           gameInfo?.userWin
             ? `Winner: ${
                 gameInfo.userWin === gameInfo.infoPlayerFirst.id
                   ? `${gameInfo.infoPlayerFirst.name}`
-                  : `${gameInfo.playerSecond.name}`
+                  : `${gameInfo.infoPlayerSecond.name}`
               }`
-            : 'Draw'
+            : `${gameInfo?.completeAt ? 'Draw' : 'Undone'}`
         }`}</span>
       </StyledRoomFooter>
     </StyledRow>

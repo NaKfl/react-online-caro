@@ -51,28 +51,17 @@ export const useHooks = props => {
 
   useEffect(() => {
     socket.on('server-send-winner', ({ winner, boardData, winArray, turn }) => {
-      const user = getUserFromStorage();
-      if (user?.id === winner) {
+      if (winner) {
         setGameInfo(pre => ({
           ...pre,
-          winner,
+          status: `${winner.name}`,
           board: boardData,
           winArray,
           turn,
-          status: 'You win',
-        }));
-      } else {
-        setGameInfo(pre => ({
-          ...pre,
-          winner,
-          board: boardData,
-          winArray,
-          turn,
-          status: 'You lose',
         }));
       }
     });
-    socket.on('reset-game', data => {
+    socket.on('reset-game', () => {
       setGameInfo(pre => ({
         ...pre,
         board: Array(400).fill(null),
@@ -199,9 +188,14 @@ export const useHooks = props => {
     });
 
     socket.on('server-game-info', ({ gameInfo }) => {
+      if (gameInfo?.status === 'Draw') {
+        closePopup({
+          key: 'requestDraw',
+        });
+      }
       setGameInfo(pre => ({ ...pre, ...gameInfo }));
     });
-  }, []);
+  }, [closePopup]);
 
   const handleLeaveRoom = () => {
     const user = getUserFromStorage();
@@ -280,9 +274,6 @@ export const useHooks = props => {
     return socket.emit('client-update-game-info', { gameId: id });
   };
 
-  const decreaseTime = () => {
-    socket.emit('decrease-time');
-  };
   // useEffect(() => {
   //   socket.on('decrease-time', time => {
   //     setGameInfo(pre => ({ ...pre, timeLeft: time }));
@@ -295,9 +286,9 @@ export const useHooks = props => {
   // useEffect(() => {
   //   socket.on('counter', time => {
   //     setGameInfo(pre => ({ ...pre, timeLeft: time }));
-  //     if (time === 0) {
-  //       socket.emit('game-over', room.id);
-  //     }
+  //     // if (time === 0) {
+  //     //   socket.emit('game-over', room.id);
+  //     // }
   //   });
   //   socket.on('server-game-over', data => {
   //     console.log('🚀 ~ file: hook.js ~ line 294 ~ useEffect ~ data', data);
@@ -326,7 +317,6 @@ export const useHooks = props => {
       handleStartGame,
       handleConfirmOutRoom,
       resetGame,
-      decreaseTime,
       handleConfirmRequestDraw,
       handleConfirmSurrender,
     },

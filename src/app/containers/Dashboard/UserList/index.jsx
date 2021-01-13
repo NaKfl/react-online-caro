@@ -10,8 +10,8 @@ export const UserList = props => {
   const { handlers } = useHooks(props);
   const { showInfoUser, handleClickInvite } = handlers;
   let formattedUserList = [];
-  const me = userList?.find(item => item.id === user.id);
-  const others = userList?.filter(item => item.id !== user.id) ?? [];
+  const me = userList?.find(item => item?.id === user?.id);
+  const others = userList?.filter(item => item.id !== user?.id) ?? [];
   if (me) formattedUserList = [{ ...me, isMe: true }, ...others];
   else formattedUserList = [...others];
 
