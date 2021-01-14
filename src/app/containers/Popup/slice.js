@@ -18,7 +18,7 @@ const popupSlice = createSlice({
 
     closePopup(state, action) {
       const { key } = action.payload;
-      const list = state.popups.filter(item => item.key !== key);
+      const list = state.popups.filter(item => item?.key !== key);
       return set('popups', list)(state);
     },
   },

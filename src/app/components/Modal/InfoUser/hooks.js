@@ -7,9 +7,10 @@ import { actions } from './slice';
 export const useHooks = props => {
   const { user } = props;
   const userInfo = useSelector(selectInfoUserData);
-  const { fetchInfoUser } = useActions(
+  const { fetchInfoUser, resetState } = useActions(
     {
       fetchInfoUser: actions.fetchInfoUser,
+      resetState: actions.resetState,
     },
     [actions],
   );
@@ -17,6 +18,10 @@ export const useHooks = props => {
   useEffect(() => {
     fetchInfoUser(user.id);
   }, [fetchInfoUser, user.id]);
+
+  useEffect(() => {
+    return () => resetState();
+  }, [resetState]);
 
   return {
     handlers: {},

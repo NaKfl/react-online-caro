@@ -28,9 +28,10 @@ const Confirm = memo(props => {
   const { selectors } = useHooks(props);
   const { userInfo } = selectors;
   const { visible, onCancel, user, ...rest } = props;
+  const { status } = user;
   const {
-    status,
     name,
+    email,
     avatar,
     point,
     createdAt,
@@ -53,9 +54,10 @@ const Confirm = memo(props => {
     >
       <StyledProfile>
         <Form
+          // form={form}
           className="profile-form"
           requiredMark={false}
-          initialValues={user}
+          initialValues={userInfo}
           layout="vertical"
         >
           <Row className="mb-4">
@@ -79,13 +81,13 @@ const Confirm = memo(props => {
 
           <Row gutter={[24, 0]}>
             <Col span={12}>
-              <Form.Item label="Name" name="name">
-                <Input disabled />
+              <Form.Item label="Name">
+                <Input disabled value={name} />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Email" name="email">
-                <Input disabled />
+              <Form.Item label="Email">
+                <Input disabled value={email} />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -94,8 +96,8 @@ const Confirm = memo(props => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Point" name="point">
-                <Input disabled />
+              <Form.Item label="Point">
+                <Input disabled value={point} />
               </Form.Item>
             </Col>
             <Col span={12} className="final-input">

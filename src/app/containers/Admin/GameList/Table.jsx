@@ -22,7 +22,7 @@ export const MainTable = ({ dataSource }) => {
       render: (_, item) => {
         return (
           <Button size="small" type="primary">
-            <Link to={`/history/${item.id.game}`}>View History</Link>
+            <Link to={`/history/${item?.id.game}`}>View History</Link>
           </Button>
         );
       },

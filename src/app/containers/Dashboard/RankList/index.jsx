@@ -12,7 +12,7 @@ export const RankList = props => {
   const formattedRankList =
     rankList?.length > 0
       ? rankList.map(item => {
-          if (item.id === user.id) {
+          if (item?.id === user.id) {
             return { ...item, isMe: true };
           }
           return item;
@@ -26,7 +26,7 @@ export const RankList = props => {
           <UserRankItem
             no={index + 1}
             isShowPoint
-            key={item.id}
+            key={item?.id}
             user={item}
             handleShowInfor={() => showInfoUser(item)}
           />

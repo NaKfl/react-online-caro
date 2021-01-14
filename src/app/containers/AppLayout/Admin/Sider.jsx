@@ -38,16 +38,16 @@ export const StyledSider = memo(props => {
           mode="inline"
         >
           {MenuItemSider.map(item => (
-            <Menu.Item key={item.key} icon={item.icon}>
+            <Menu.Item key={item?.key} icon={item?.icon}>
               <Link
                 to={{
-                  pathname: item.path,
+                  pathname: item?.path,
                   state: {
-                    key: item.key,
+                    key: item?.key,
                   },
                 }}
               >
-                {item.title}
+                {item?.title}
               </Link>
             </Menu.Item>
           ))}

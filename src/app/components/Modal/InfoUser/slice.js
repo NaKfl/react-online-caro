@@ -34,6 +34,10 @@ const infoUserSlice = createSlice({
         set('status', ACTION_STATUS.FAILED),
       )(state);
     },
+
+    resetState() {
+      return { ...initialState };
+    },
   },
 });
 
