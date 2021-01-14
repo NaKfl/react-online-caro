@@ -50,17 +50,21 @@ export const useHooks = props => {
   }, []);
 
   useEffect(() => {
-    socket.on('server-send-winner', ({ winner, boardData, winArray, turn }) => {
-      if (winner) {
-        setGameInfo(pre => ({
-          ...pre,
-          status: `${winner.name}`,
-          board: boardData,
-          winArray,
-          turn,
-        }));
-      }
-    });
+    socket.on(
+      'server-send-winner',
+      ({ winner, boardData, winArray, turn, currentPosition }) => {
+        if (winner) {
+          setGameInfo(pre => ({
+            ...pre,
+            status: `${winner.name} win bruhhh`,
+            board: boardData,
+            winArray,
+            turn,
+            currentPosition,
+          }));
+        }
+      },
+    );
     socket.on('reset-game', () => {
       setGameInfo(pre => ({
         ...pre,
