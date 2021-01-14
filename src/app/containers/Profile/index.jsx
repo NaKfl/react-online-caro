@@ -26,10 +26,11 @@ import {
 export const Profile = memo(({ ...rest }) => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
-  const { selectors, handles, states } = useHooks();
-  const { listGame, user } = states;
+  const { selectors, states } = useHooks();
+  const { listGame } = states;
   const { userInfo } = selectors;
   const {
+    email,
     totalMatches,
     winMatches,
     status,
@@ -41,12 +42,7 @@ export const Profile = memo(({ ...rest }) => {
   return (
     <StyledProfile>
       <StyledInfo>
-        <Form
-          className="profile-form"
-          requiredMark={false}
-          initialValues={user}
-          layout="vertical"
-        >
+        <Form className="profile-form" requiredMark={false} layout="vertical">
           <Row className="mb-4">
             <StyledUserItem {...rest}>
               <StyledPart>
@@ -68,13 +64,13 @@ export const Profile = memo(({ ...rest }) => {
 
           <Row gutter={[24, 0]}>
             <Col span={12}>
-              <Form.Item label="Name" name="name">
-                <Input disabled />
+              <Form.Item label="Name">
+                <Input disabled value={name} />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Email" name="email">
-                <Input disabled />
+              <Form.Item label="Email">
+                <Input disabled value={email} />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -83,8 +79,8 @@ export const Profile = memo(({ ...rest }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Point" name="point">
-                <Input disabled />
+              <Form.Item label="Point">
+                <Input disabled value={point} />
               </Form.Item>
             </Col>
             <Col span={12} className="final-input">
