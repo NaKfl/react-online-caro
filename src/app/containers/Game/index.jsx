@@ -44,7 +44,6 @@ export const Game = memo(props => {
   const me = getMeFromRoom(roomPanel);
   const imReady = me?.status === 'READY';
   const imPlaying = me?.status === 'PLAYING';
-
   return (
     <StyledRow>
       <StyledRoomHeader>{`${roomPanel?.name} (ID: ${roomPanel?.joinId})`}</StyledRoomHeader>
@@ -89,6 +88,7 @@ export const Game = memo(props => {
                     return (
                       <Board
                         status={gameInfo.status}
+                        currentPosition={gameInfo.currentPosition}
                         boardCurrent={gameInfo?.board}
                         handleClick={handlers.handleClickSquare}
                         resetGame={resetGame}
@@ -109,6 +109,7 @@ export const Game = memo(props => {
             (isPlaying && (
               <Board
                 status={gameInfo.status}
+                currentPosition={gameInfo.currentPosition}
                 boardCurrent={gameInfo.board}
                 handleClick={handlers.handleClickSquare}
                 resetGame={resetGame}

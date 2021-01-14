@@ -10,6 +10,7 @@ const Board = memo(
     resetGame,
     handleClick,
     winArray,
+    currentPosition,
     ...rest
   }) => {
     return (
@@ -17,6 +18,7 @@ const Board = memo(
         <div className="square-content">
           {boardCurrent.map((square, i) => (
             <Square
+              isPosition={currentPosition === i}
               key={i}
               onClick={() => handleClick(i)}
               className={`${winArray.indexOf(i) !== -1 ? 'bold' : ''}`}
