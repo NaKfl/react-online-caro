@@ -28,8 +28,8 @@ export const useHooks = props => {
   const messages = get('room.message', gameInfo);
   const formattedMessages = messages?.map(item => ({
     ...item,
-    name: item.User?.name ?? 'Anonymous',
-    createdAt: moment(item.createdAt).format('LT'),
+    name: item?.User?.name ?? 'Anonymous',
+    createdAt: moment(item?.createdAt).format('LT'),
   }));
 
   const steps = get('step', gameInfo);

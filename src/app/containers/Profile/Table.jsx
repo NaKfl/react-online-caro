@@ -34,7 +34,9 @@ export const MainTable = ({ dataSource }) => {
     {
       title: 'Actions',
       width: '16.6%',
-      render: (_, item) => <Link to={`/history/${item.id}`}>View History</Link>,
+      render: (_, item) => (
+        <Link to={`/history/${item?.id}`}>View History</Link>
+      ),
     },
   ];
   return (

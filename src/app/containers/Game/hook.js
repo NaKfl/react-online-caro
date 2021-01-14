@@ -38,7 +38,7 @@ export const useHooks = props => {
 
   const [toggleReady, setToggleReady] = useState(false);
   const isUserInViewingList = roomPanel?.viewingList?.some(
-    item => item.id === user.id,
+    item => item?.id === user.id,
   );
 
   const handleClickSquare = useCallback(position => {

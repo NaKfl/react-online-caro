@@ -11,7 +11,7 @@ export const UserList = props => {
   const { showInfoUser, handleClickInvite } = handlers;
   let formattedUserList = [];
   const me = userList?.find(item => item?.id === user?.id);
-  const others = userList?.filter(item => item.id !== user?.id) ?? [];
+  const others = userList?.filter(item => item?.id !== user?.id) ?? [];
   if (me) formattedUserList = [{ ...me, isMe: true }, ...others];
   else formattedUserList = [...others];
 
@@ -22,7 +22,7 @@ export const UserList = props => {
           <UserItem
             isInRoom={isInRoom}
             handleClickInvite={handleClickInvite}
-            key={item.id}
+            key={item?.id}
             user={item}
             handleShowInfor={() => showInfoUser(item)}
           />
