@@ -193,7 +193,7 @@ export const useHooks = () => {
       });
       setRoomIdJoin(roomJoin.id);
     } else {
-      notifyError('Not have ROOM ID!');
+      notifyError('Room ID is incorrect');
     }
   };
 
