@@ -1,10 +1,12 @@
 import React, { memo } from 'react';
 import { StyledHeader } from '../styles';
-
+import { Link } from 'react-router-dom';
 export const PublicHeader = () => {
   return (
     <StyledHeader>
-      <div className="logo" />
+      <Link to="/">
+        <div className="logo" />
+      </Link>
     </StyledHeader>
   );
 };

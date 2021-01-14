@@ -56,6 +56,11 @@ export const adminRoutes = [
     component: GameList,
     key: 'gameList',
   },
+  {
+    path: '/admin',
+    component: UserList,
+    key: 'default',
+  },
 ];
 
 export const gameRoutes = [

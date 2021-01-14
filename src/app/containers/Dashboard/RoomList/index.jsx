@@ -1,5 +1,9 @@
 import { Button, Col, Input, Radio, Row, Typography } from 'antd';
-import { ChromeOutlined } from '@ant-design/icons';
+import {
+  ChromeOutlined,
+  DoubleRightOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
 import { ModalCreateRoom } from 'app/components/ModalCreateRoom';
 import Room from 'app/components/Room';
 import React, { memo } from 'react';
@@ -19,8 +23,17 @@ export const RoomList = props => {
   const { listRoom } = selectors;
   return (
     <div>
-      <Row justify="space-between" align="middle">
+      <Row align="middle">
         <Col style={{ padding: '0 20px' }}>
+          <Button
+            style={{ display: 'flex', alignItems: 'center' }}
+            icon={<ChromeOutlined />}
+            onClick={showModalMatching}
+          >
+            Find Game
+          </Button>
+        </Col>
+        {/* <Col style={{ padding: '0 20px' }}>
           <Radio.Group
             onChange={handleOnChangeRadio}
             defaultValue={0}
@@ -34,36 +47,25 @@ export const RoomList = props => {
               {STATUS.PLAYING.title}
             </Radio.Button>
           </Radio.Group>
-        </Col>
+        </Col> */}
         <Col>
           <Button onClick={handleShowModal}>Create Room</Button>
         </Col>
         <Col style={{ padding: '0 20px' }}>
-          <Input.Search
+          <Input
             placeholder="Input search text"
-            onSearch={handleSearch}
+            suffix={<SearchOutlined />}
             onChange={handleSearch}
             allowClear
           />
         </Col>
-        <Col style={{ padding: '0 20px' }}>
-          <Button
-            style={{ display: 'flex', alignItems: 'center' }}
-            icon={<ChromeOutlined />}
-            onClick={showModalMatching}
-          >
-            Find Game
-          </Button>
-        </Col>
-        <Col style={{ padding: '0 20px' }}>
+        <Col>
           <Input
-            placeholder="INPUT ID ROOM"
+            suffix={<DoubleRightOutlined />}
+            placeholder="Input room id"
             allowClear
             onPressEnter={handleEnterInput}
           />
-        </Col>
-        <Col flex={1} style={{ minWidth: '60px' }}>
-          <Typography.Text>Total: 50</Typography.Text>
         </Col>
       </Row>
       <Row>

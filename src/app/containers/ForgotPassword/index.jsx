@@ -52,7 +52,6 @@ export const ForgotPassword = memo(() => {
             icon={<MailOutlined />}
             title="Great, we sent email to you!"
             subTitle="Please check mail and flow the direction"
-            extra={<Button type="primary">Go to home</Button>}
           />
         );
       case 2:

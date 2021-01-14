@@ -7,7 +7,7 @@ export const Header = ({ step = 0, stepError, ...props }) => {
     <Steps current={step} status={stepError && 'error'}>
       <Step title="Input field" description="Input your email" />
       <Step title="Check your email" />
-      <Step title="Waiting" description="This is a description." />
+      <Step title="Change your password" />
     </Steps>
   );
 };

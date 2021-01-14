@@ -15,7 +15,7 @@ export const useHooks = props => {
     if (searchText) {
       let list = roomData.filter(
         room =>
-          room.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1,
+          room.joinId.toLowerCase().indexOf(searchText.toLowerCase()) !== -1,
       );
       setListRoom(list);
     } else setListRoom(roomData);
