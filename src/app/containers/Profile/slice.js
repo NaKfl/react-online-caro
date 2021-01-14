@@ -8,6 +8,7 @@ export const initialState = {
     data: [],
     status: '',
     error: null,
+    info: {},
   },
 };
 const gameListSlice = createSlice({
@@ -27,6 +28,24 @@ const gameListSlice = createSlice({
       )(state);
     },
     getListGameFailed(state, action) {
+      return flow(
+        set('gameList.error', action.payload),
+        set('gameList.status', ACTION_STATUS.FAILED),
+      )(state);
+    },
+    fetchInfoUser(state) {
+      return flow(
+        set('gameList.error', null),
+        set('gameList.status', ACTION_STATUS.PENDING),
+      )(state);
+    },
+    fetchInfoUserSuccess(state, action) {
+      return flow(
+        set('gameList.info', action.payload),
+        set('gameList.status', ACTION_STATUS.SUCCESS),
+      )(state);
+    },
+    fetchInfoUserFailed(state, action) {
       return flow(
         set('gameList.error', action.payload),
         set('gameList.status', ACTION_STATUS.FAILED),

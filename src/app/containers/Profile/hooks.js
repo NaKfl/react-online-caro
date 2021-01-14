@@ -2,17 +2,21 @@ import { useEffect, useState } from 'react';
 import useActions from 'hooks/useActions';
 import { useSelector } from 'react-redux';
 import { actions } from './slice';
-import { makeSelectListGame } from './selectors';
+import { makeSelectListGame, selectInfoUser } from './selectors';
 import { ACTION_STATUS } from 'utils/constants';
 import { getUser as getUserFromStorage } from 'utils/localStorageUtils';
 import moment from 'moment';
 
 export const useHooks = () => {
-  const { fetchListGameByUser } = useActions(
-    { fetchListGameByUser: actions.getListGame },
+  const { fetchInfoUser, fetchListGameByUser } = useActions(
+    {
+      fetchListGameByUser: actions.getListGame,
+      fetchInfoUser: actions.fetchInfoUser,
+    },
     [actions],
   );
   const gameListSelector = useSelector(makeSelectListGame);
+  const userInfo = useSelector(selectInfoUser);
   const [listGame, setListGame] = useState([]);
   const user = getUserFromStorage();
   user.createdAt = moment(user.createdAt).format('YYYY-MM-DD');
@@ -48,13 +52,17 @@ export const useHooks = () => {
     fetchListGameByUser();
   }, [fetchListGameByUser]);
 
+  useEffect(() => {
+    fetchInfoUser(user.id);
+  }, [fetchInfoUser, user.id]);
+
   return {
     states: {
       listGame,
       user,
     },
     handles: {},
-    selectors: { gameListSelector },
+    selectors: { gameListSelector, userInfo },
   };
 };
 export default useHooks;

@@ -7,3 +7,7 @@ export const makeSelectListGame = createSelector(
   selectListGameState,
   gameList => get('gameList', gameList),
 );
+
+export const selectInfoUser = createSelector(selectListGameState, gameList =>
+  get('gameList.info', gameList),
+);

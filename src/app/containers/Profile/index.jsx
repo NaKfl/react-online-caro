@@ -10,6 +10,7 @@ import Form from 'app/components/Form';
 import useHooks from './hooks';
 import { USER_STATUS } from 'utils/constants';
 import classifyRank from 'utils/classifyRank';
+import moment from 'moment';
 import {
   StyledProfile,
   StyledInfo,
@@ -22,77 +23,91 @@ import {
   StyledPart,
   StyledListGame,
 } from './styles';
-export const Profile = memo(() => {
+export const Profile = memo(({ ...rest }) => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
   const { selectors, handles, states } = useHooks();
   const { listGame, user } = states;
-  const { status, name, avatar, point } = user;
+  const { userInfo } = selectors;
+  const {
+    totalMatches,
+    winMatches,
+    status,
+    name,
+    avatar,
+    point,
+    createdAt,
+  } = userInfo;
   return (
     <StyledProfile>
       <StyledInfo>
-        <Row>
-          <Form
-            className="profile-form"
-            requiredMark={false}
-            initialValues={user}
-            layout="vertical"
-          >
-            <Row className="mb-4">
-              <StyledUserItem>
-                <StyledPart>
-                  <StyledAvatar>
-                    <Avatar size={80} src={avatar} />
-                    {status && (
-                      <StyledBadge color={USER_STATUS[status].color} />
-                    )}
-                  </StyledAvatar>
-                  <StyledUserStatus>
-                    <StyledName>{name}</StyledName>
-                    {status && (
-                      <StyledTextStatus color={USER_STATUS[status].color}>
-                        {USER_STATUS[status].title}
-                      </StyledTextStatus>
-                    )}
-                  </StyledUserStatus>
-                </StyledPart>
-              </StyledUserItem>
-            </Row>
+        <Form
+          className="profile-form"
+          requiredMark={false}
+          initialValues={user}
+          layout="vertical"
+        >
+          <Row className="mb-4">
+            <StyledUserItem {...rest}>
+              <StyledPart>
+                <StyledAvatar>
+                  <Avatar size={80} src={avatar} />
+                  {status && <StyledBadge color={USER_STATUS[status].color} />}
+                </StyledAvatar>
+                <StyledUserStatus>
+                  <StyledName>{name}</StyledName>
+                  {status && (
+                    <StyledTextStatus color={USER_STATUS[status].color}>
+                      {USER_STATUS[status].title}
+                    </StyledTextStatus>
+                  )}
+                </StyledUserStatus>
+              </StyledPart>
+            </StyledUserItem>
+          </Row>
 
-            <Row gutter={[24, 0]}>
-              <Col span={12}>
-                <Form.Item label="Name" name="name">
-                  <Input disabled />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="Email" name="email">
-                  <Input disabled />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="Rank">
-                  <Input value={classifyRank(point)} disabled />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="Point" name="point">
-                  <Input disabled />
-                </Form.Item>
-              </Col>
-              <Col span={12} className="final-input">
-                <Form.Item label="Total matches" name="total-matches">
-                  <Input disabled />
-                </Form.Item>
-              </Col>
-              <Col span={12} className="final-input">
-                <Form.Item label="Registration Date" name="createdAt">
-                  <Input disabled />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </Row>
+          <Row gutter={[24, 0]}>
+            <Col span={12}>
+              <Form.Item label="Name" name="name">
+                <Input disabled />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Email" name="email">
+                <Input disabled />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Rank">
+                <Input value={classifyRank(point)} disabled />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Point" name="point">
+                <Input disabled />
+              </Form.Item>
+            </Col>
+            <Col span={12} className="final-input">
+              <Form.Item label="Total matches">
+                <Input
+                  value={`${totalMatches} (Win rate: ${Math.round(
+                    (winMatches / totalMatches) * 100,
+                    0,
+                  )}%)`}
+                  disabled
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12} className="final-input">
+              <Form.Item label="Registration Date">
+                <Input
+                  disabled
+                  value={moment(createdAt).format('YYYY-MM-DD')}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
       </StyledInfo>
       <StyledListGame>
         <Title level={4}>List of Game</Title>
