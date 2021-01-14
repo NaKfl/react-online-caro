@@ -39,7 +39,11 @@ export const handleGeneralError = error => {
 
 const handleShowError = error => {
   const message = get('data.message', error);
+  const status = get('status', error);
   if (message) notifyError(message);
+  if (status === 403) {
+    window.location.replace('/');
+  }
 };
 
 export default request;

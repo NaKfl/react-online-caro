@@ -101,10 +101,14 @@ const Confirm = memo(props => {
             <Col span={12} className="final-input">
               <Form.Item label="Total matches">
                 <Input
-                  value={`${totalMatches} (Win rate: ${Math.round(
-                    (winMatches / totalMatches) * 100,
-                    0,
-                  )}%)`}
+                  value={`${totalMatches} ${
+                    totalMatches && winMatches
+                      ? `(Win rate: ${Math.round(
+                          (winMatches / totalMatches) * 100,
+                          0,
+                        )}%)`
+                      : ``
+                  }`}
                   disabled
                 />
               </Form.Item>
