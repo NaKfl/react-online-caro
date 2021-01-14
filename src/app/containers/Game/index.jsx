@@ -35,7 +35,6 @@ export const Game = memo(props => {
     handleShowInfo,
     handleStartGame,
     handleConfirmOutRoom,
-    handleUpdateGameInfo,
     resetGame,
     handleConfirmRequestDraw,
     handleConfirmSurrender,
@@ -139,18 +138,7 @@ export const Game = memo(props => {
       </StyledLayoutGame>
       <StyledRoomFooter>
         {(gameInfo?.timeLeft && (
-          <Countdown
-            date={Date.now() + gameInfo.timeLeft * 1000}
-            renderer={({ seconds, completed }) => {
-              if (completed) {
-                return <span>Time Out</span>;
-              } else {
-                return (
-                  <span className="time-left">{`Time Left: ${seconds}s`}</span>
-                );
-              }
-            }}
-          />
+          <span className="time-left">{`Time Left: ${gameInfo.timeLeft}s`}</span>
         )) ||
           `Time Per Step: ${roomPanel.timePerStep}s`}
       </StyledRoomFooter>
