@@ -27,7 +27,7 @@ export const useAuthenticatedRedirect = () => {
 
   useEffect(() => {
     if (isAuthenticated && isRedirect) {
-      if (info.isAdmin) {
+      if (info?.isAdmin) {
         history.push('/admin/user');
       } else history.replace(from);
     }
